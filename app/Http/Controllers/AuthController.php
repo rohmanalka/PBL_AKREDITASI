@@ -13,7 +13,7 @@ class AuthController extends Controller
             return redirect('/index');
         }
         if (Auth::guard('web')->check()) {
-            return redirect('/dashboard');
+            return redirect('/index');
         }
         return view('auth.login');
     }
@@ -48,8 +48,12 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::guard('superadmin')->logout();
-        Auth::guard('web')->logout();
+        // Logout sesuai guard yang sedang aktif
+        if (Auth::guard('superadmin')->check()) {
+            Auth::guard('superadmin')->logout();
+        } elseif (Auth::guard('web')->check()) {
+            Auth::guard('web')->logout();
+        }
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

@@ -63,3 +63,7 @@ Route::middleware(['auth.superadmin'])->group(function () {
         Route::delete('/{id}/delete', [RoleController::class, 'delete']);
     });
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/index', [WelcomeController::class, 'index']);
+});

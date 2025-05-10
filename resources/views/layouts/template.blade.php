@@ -280,6 +280,19 @@
             }
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            // Toggle panel
+            $('.fixed-plugin-button').on('click', function() {
+                $('.fixed-plugin').toggleClass('show');
+            });
+
+            // Close button
+            $('.fixed-plugin-close-button').on('click', function() {
+                $('.fixed-plugin').removeClass('show');
+            });
+        });
+    </script>
     @stack('js')
 </body>
 

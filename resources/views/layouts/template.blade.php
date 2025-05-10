@@ -23,29 +23,84 @@
     <title>
         Argon Dashboard 3 by Creative Tim
     </title>
-    <!--     Fonts and icons     -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!--Fonts and icons-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
     <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Add SweetAlert CDN before your custom scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('argon/assets/css/argon-dashboard.css?v=2.1.0') }}" rel="stylesheet" />
+    <style>
+        /* Ukuran font untuk bagian bawah dan atas tabel */
+        .dataTables_info,
+        .dataTables_paginate,
+        .dataTables_length,
+        .dataTables_filter {
+            font-size: 0.75rem;
+            /* text-xs */
+        }
+
+        /* Padding seragam kiri-kanan */
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate,
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Sesuaikan tombol pagination */
+        .paginate_button {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        /* Label teks */
+        .dataTables_length label,
+        .dataTables_filter label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Ukuran dan style input/select */
+        .dataTables_length select,
+        .dataTables_filter input {
+            font-size: 0.75rem;
+            height: 28px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Posisi search di kanan */
+        .dataTables_wrapper .dataTables_filter {
+            text-align: right;
+        }
+    </style>
+    @stack('css')
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
     <div class="min-height-300 bg-dark position-absolute w-100"></div>
     @include('layouts.sidebar')
-    <main class="main-content position-relative border-radius-lg ">
+    <main class="main-content d-flex flex-column min-vh-100">
         <!-- Navbar -->
         @include('layouts.header')
         <!-- End Navbar -->
-        <div class="container-fluid py-4">
+
+        <div class="flex-grow-1 container-fluid py-4">
             @yield('content')
-            @include('layouts.footer')
         </div>
+
+        @include('layouts.footer')
     </main>
+
     <div class="fixed-plugin">
         <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
             <i class="fa fa-cog py-2"> </i>
@@ -108,6 +163,14 @@
             </div>
         </div>
     </div>
+    <!-- Pastikan jQuery dimuat terlebih dahulu -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Tambahkan jQuery Validation -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js">
+    </script>
     <!--   Core JS Files   -->
     <script src="{{ asset('argon/assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('argon/assets/js/core/bootstrap.min.js') }}"></script>
@@ -210,6 +273,14 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('argon/assets/js/argon-dashboard.min.js?v=2.1.0') }}"></script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+    @stack('js')
 </body>
 
 </html>

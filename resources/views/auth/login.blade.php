@@ -1,35 +1,44 @@
 <form action="{{ url('login') }}" method="POST" id="form-login">
     @csrf
-    <div id="modal-master" class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Login Sistem</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" name="username" id="username" class="form-control" required>
-                    <small id="error-username" class="error-text form-text text-danger"></small>
+    <div id="modal-master" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="card card-plain">
+                        <div class="card-header pb-0 text-center">
+                            <h3 class="font-weight-bolder text-info text-gradient">Sistem Akreditasi</h3>
+                            <p class="mb-0">Enter username and password to sign in</p>
+                        </div>
+                        <div class="card-body">
+                            <form role="form text-left">
+                                <label>Username</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="username" id="username" class="form-control"
+                                        aria-label="username" aria-describedby="username-addon" required>
+                                    <small id="error-username" class="error-text form-text text-danger"></small>
+                                </div>
+                                <label>Password</label>
+                                <div class="input-group mb-3">
+                                    <input type="password" name="password" id="password" class="form-control"
+                                        aria-label="Password" aria-describedby="password-addon" required>
+                                    <small id="error-password" class="error-text form-text text-danger"></small>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                        checked="">
+                                    <label class="form-check-label" for="remember">Remember me</label>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" id="password" class="form-control" required>
-                    <small id="error-password" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                    <label class="form-check-label" for="remember">Remember Me</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                <button type="submit" class="btn btn-primary">Login</button>
             </div>
         </div>
-    </div>
 </form>
 
 <script>

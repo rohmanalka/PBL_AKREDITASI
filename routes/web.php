@@ -39,7 +39,7 @@ Route::middleware(['auth.superadmin'])->group(function () {
         // Ajax Tambah
         Route::get('/create', [UserController::class, 'create']);
         Route::post('/ajax', [UserController::class, 'store']);
-        Route::get('/{id}', [UserController::class, 'show']);
+        Route::get('/{id}/show', [UserController::class, 'show']);
         // Ajax Update
         Route::get('/{id}/edit', [UserController::class, 'edit']);
         Route::put('/{id}/update', [UserController::class, 'update']);
@@ -54,7 +54,7 @@ Route::middleware(['auth.superadmin'])->group(function () {
         // Ajax Tambah
         Route::get('/create', [RoleController::class, 'create']);
         Route::post('/ajax', [RoleController::class, 'store']);
-        Route::get('/{id}', [RoleController::class, 'show']);
+        Route::get('/{id}/show', [RoleController::class, 'show']);
         // Ajax Update
         Route::get('/{id}/edit', [RoleController::class, 'edit']);
         Route::put('/{id}/update', [RoleController::class, 'update']);

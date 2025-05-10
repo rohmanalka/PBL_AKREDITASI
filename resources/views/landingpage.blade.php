@@ -12,6 +12,16 @@
     <link href="{{ asset('gplanding/assets/img/favicon.png') }}" rel="icon">
     <link href="{{ asset('gplanding/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
+    <!-- Load jQuery first -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Then load Bootstrap JS -->
+    <script src="{{ asset('gplanding/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Load jQuery Validation Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <!-- SweetAlert untuk notifikasi -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -57,7 +67,10 @@
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-            <a class="btn-getstarted" href="{{ url('index') }}">Masuk</a>
+            <button onclick="modalAction('{{ url('login') }}')" class="btn-getstarted"
+                style="background-color: transparent">
+                Masuk
+            </button>
         </div>
     </header>
 
@@ -74,6 +87,10 @@
                 </div>
             </div>
         </section><!-- /Hero Section -->
+        <!-- Modal Container -->
+        <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
+            data-keyboard="false" data-width="75%">
+        </div>
 
         <!-- About Section -->
         <section id="about" class="about section">
@@ -347,6 +364,13 @@
     <!-- Main JS File -->
     <script src="{{ asset('gplanding/assets/js/main.js') }}"></script>
 
+    <script>
+        function modalAction(url = '') {
+            $('#myModal').load(url, function() {
+                $('#myModal').modal('show');
+            });
+        }
+    </script>
 </body>
 
 </html>

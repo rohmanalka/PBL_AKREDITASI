@@ -14,6 +14,11 @@ class KriteriaModel extends Model
     protected $primaryKey = "id_kriteria";
     protected $fillable = ['nama_kriteria'];
 
+    public function role(): HasMany
+    {
+        return $this->hasMany(RoleModel::class);
+    }
+
     public function penetapan(): HasMany
     {
         return $this->hasMany(PenetapanModel::class);

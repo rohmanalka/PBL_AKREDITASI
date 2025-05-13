@@ -51,76 +51,102 @@
 
                 {{-- Jika yang login adalah user biasa --}}
                 @auth('web')
-                    <li class="nav-item">
-                        <a class="nav-link {{ $activeMenu == 'kriteria' ? '' : 'collapsed' }}" data-bs-toggle="collapse"
-                            href="#kriteriaMenu" role="button"
-                            aria-expanded="{{ $activeMenu == 'kriteria' ? 'true' : 'false' }}" aria-controls="kriteriaMenu">
-                            <div
-                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-folder-open text-sm opacity-10"></i>
+                    @php
+                        $user = auth('web')->user();
+                        $roleKode = $user?->role?->role_kode ?? null;
+                    @endphp
+                    @if (!in_array($roleKode, ['KPSKJR', 'DIR']))
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeMenu == 'kriteria' ? '' : 'collapsed' }}" data-bs-toggle="collapse"
+                                href="#kriteriaMenu" role="button"
+                                aria-expanded="{{ $activeMenu == 'kriteria' ? 'true' : 'false' }}"
+                                aria-controls="kriteriaMenu">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-folder-open text-sm opacity-10"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Kriteria</span>
+                            </a>
+                            <div class="collapse {{ $activeMenu == 'kriteria' ? 'show' : '' }}" id="kriteriaMenu">
+                                <ul class="nav ms-4 ps-3">
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $activeSubmenu == 'kriteria1' ? 'active' : '' }}"
+                                            href="{{ url('/kriteria1') }}">
+                                            <span class="sidenav-normal">Kriteria 1</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $activeSubmenu == 'kriteria2' ? 'active' : '' }}"
+                                            href="{{ url('/kriteria2') }}">
+                                            <span class="sidenav-normal">Kriteria 2</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $activeSubmenu == 'kriteria3' ? 'active' : '' }}"
+                                            href="{{ url('/kriteria3') }}">
+                                            <span class="sidenav-normal">Kriteria 3</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $activeSubmenu == 'kriteria4' ? 'active' : '' }}"
+                                            href="{{ url('/kriteria4') }}">
+                                            <span class="sidenav-normal">Kriteria 4</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $activeSubmenu == 'kriteria5' ? 'active' : '' }}"
+                                            href="{{ url('/kriteria5') }}">
+                                            <span class="sidenav-normal">Kriteria 5</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $activeSubmenu == 'kriteria6' ? 'active' : '' }}"
+                                            href="{{ url('/kriteria6') }}">
+                                            <span class="sidenav-normal">Kriteria 6</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $activeSubmenu == 'kriteria7' ? 'active' : '' }}"
+                                            href="{{ url('/kriteria7') }}">
+                                            <span class="sidenav-normal">Kriteria 7</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $activeSubmenu == 'kriteria8' ? 'active' : '' }}"
+                                            href="{{ url('/kriteria8') }}">
+                                            <span class="sidenav-normal">Kriteria 8</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $activeSubmenu == 'kriteria9' ? 'active' : '' }}"
+                                            href="{{ url('/kriteria9') }}">
+                                            <span class="sidenav-normal">Kriteria 9</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <span class="nav-link-text ms-1">Kriteria</span>
-                        </a>
-                        <div class="collapse {{ $activeMenu == 'kriteria' ? 'show' : '' }}" id="kriteriaMenu">
-                            <ul class="nav ms-4 ps-3">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $activeSubmenu == 'kriteria1' ? 'active' : '' }}"
-                                        href="{{ url('/kriteria1') }}">
-                                        <span class="sidenav-normal">Kriteria 1</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $activeSubmenu == 'kriteria2' ? 'active' : '' }}"
-                                        href="{{ url('/kriteria2') }}">
-                                        <span class="sidenav-normal">Kriteria 2</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $activeSubmenu == 'kriteria3' ? 'active' : '' }}"
-                                        href="{{ url('/kriteria3') }}">
-                                        <span class="sidenav-normal">Kriteria 3</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $activeSubmenu == 'kriteria4' ? 'active' : '' }}"
-                                        href="{{ url('/kriteria4') }}">
-                                        <span class="sidenav-normal">Kriteria 4</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $activeSubmenu == 'kriteria5' ? 'active' : '' }}"
-                                        href="{{ url('/kriteria5') }}">
-                                        <span class="sidenav-normal">Kriteria 5</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $activeSubmenu == 'kriteria6' ? 'active' : '' }}"
-                                        href="{{ url('/kriteria6') }}">
-                                        <span class="sidenav-normal">Kriteria 6</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $activeSubmenu == 'kriteria7' ? 'active' : '' }}"
-                                        href="{{ url('/kriteria7') }}">
-                                        <span class="sidenav-normal">Kriteria 7</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $activeSubmenu == 'kriteria8' ? 'active' : '' }}"
-                                        href="{{ url('/kriteria8') }}">
-                                        <span class="sidenav-normal">Kriteria 8</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $activeSubmenu == 'kriteria9' ? 'active' : '' }}"
-                                        href="{{ url('/kriteria9') }}">
-                                        <span class="sidenav-normal">Kriteria 9</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                        </li>
+                    @endif
+                    {{-- Khusus untuk kpskajur atau direktur --}}
+                    @php
+                        $user = auth('web')->user();
+                        $roleKode = $user?->role?->role_kode ?? null;
+                    @endphp
+
+                    @if (in_array($roleKode, ['KPSKJR', 'DIR']))
+                        <li class="nav-item">
+                            <a href="{{ url('/validasi') }}"
+                                class="nav-link {{ $activeMenu == 'validasi' ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-chart-bar text-sm opacity-10"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Validasi</span>
+                            </a>
+                        </li>
+                    @endif
                 @endauth
+
                 <li class="nav-item mt-3">
                     <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
                         @csrf

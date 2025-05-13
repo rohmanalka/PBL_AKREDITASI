@@ -29,8 +29,7 @@
                                     <label class="form-check-label" for="remember">Remember me</label>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger"
-                                        data-bs-dismiss="modal">Batal</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                                     <button type="submit" class="btn btn-primary">Login</button>
                                 </div>
                             </form>
@@ -75,8 +74,14 @@
                     type: form.method,
                     data: $(form).serialize(),
                     success: function(response) {
-                        if (response.status) {
-                            window.location.href = response.redirect;
+                        if (response.status) { // jika sukses
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                            }).then(function() {
+                                window.location = response.redirect;
+                            });
                         } else {
                             $('.error-text').text('');
                             if (response.errors) {

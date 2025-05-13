@@ -57,7 +57,7 @@
                             aria-expanded="{{ $activeMenu == 'kriteria' ? 'true' : 'false' }}" aria-controls="kriteriaMenu">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="ni ni-folder-17 text-dark text-sm opacity-10"></i>
+                                <i class="fas fa-folder-open text-sm opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1">Kriteria</span>
                         </a>
@@ -119,15 +119,6 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/validasi') }}" class="nav-link d-flex align-items-center">
-                            <div
-                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-clipboard-check text-sm opacity-10"></i>
-                            </div>
-                            <span class="nav-link-text ms-1">Validasi</span>
-                        </a>
                     </li>
                 @endauth
                 <li class="nav-item mt-3">

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('t_pengendalian', function (Blueprint $table) {
             $table->id('id_pengendalian');
             $table->unsignedBigInteger('id_kriteria')->index();
-            $table->text('pengendalian');
-            $table->string('pendukung');
+            $table->text('pengendalian')->nullable();
+            $table->string('pendukung')->nullable();
             $table->timestamps();
 
             $table->foreign('id_kriteria')->references('id_kriteria')->on('m_kriteria');

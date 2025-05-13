@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('t_penetapan', function (Blueprint $table) {
             $table->id('id_penetapan');
             $table->unsignedBigInteger('id_kriteria')->index();
-            $table->text('penetapan');
-            $table->string('pendukung');
+            $table->text('penetapan')->nullable();
+            $table->string('pendukung')->nullable();
             $table->timestamps();
 
             $table->foreign('id_kriteria')->references('id_kriteria')->on('m_kriteria');

@@ -58,6 +58,7 @@
 
 @push('js')
     <script>
+        var dataRole;
         const base_url = "{{ url('superadmin/role') }}";
 
         function modalAction(url = '') {
@@ -66,7 +67,6 @@
             });
         }
 
-        var dataRole;
         $(document).ready(function() {
             dataRole = $('#table_role').DataTable({
                 serverSide: true,

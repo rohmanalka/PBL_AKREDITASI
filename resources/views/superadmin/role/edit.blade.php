@@ -28,15 +28,26 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label>Kriteria</label>
+                        <select name="id_kriteria" id="id_kriteria" class="form-control" required>
+                            <option value="">- Pilih Kriteria -</option>
+                            @foreach ($kriteria as $r)
+                                <option {{ $r->id_kriteria == $user->id_kriteria ? 'selected' : '' }} value="{{ $r->id_kriteria }}">
+                                    {{ $r->nama_kriteria }}</option>
+                            @endforeach
+                        </select>
+                        <small id="error-id_role" class="error-text form-text text-danger"></small>
+                    </div>
+                    <div class="form-group">
                         <label>Role Kode</label>
-                        <input value="{{ $role->role_kode }}" type="text" name="role_kode" id="role_kode" class="form-control"
-                            required>
+                        <input value="{{ $role->role_kode }}" type="text" name="role_kode" id="role_kode"
+                            class="form-control" required>
                         <small id="error-role_kode" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Role Name</label>
-                        <input value="{{ $role->role_name }}" type="text" name="role_name" id="role_name" class="form-control"
-                            required>
+                        <input value="{{ $role->role_name }}" type="text" name="role_name" id="role_name"
+                            class="form-control" required>
                         <small id="error-role_name" class="error-text form-text text-danger"></small>
                     </div>
                 </div>
@@ -61,7 +72,7 @@
                     },
                     role_name: {
                         required: true,
-                        minlength: 10,
+                        minlength: 5,
                         maxlength: 100
                     }
                 },
@@ -73,13 +84,10 @@
                         success: function(response) {
                             if (response.status) {
                                 $('#myModal').modal('hide');
-                                swal("Berhasil", response.message, {
-                                    icon: "success",
-                                    buttons: {
-                                        confirm: {
-                                            className: "btn btn-success"
-                                        }
-                                    }
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message
                                 });
                                 dataRole.ajax.reload();
                             } else {
@@ -87,13 +95,10 @@
                                 $.each(response.msgField, function(prefix, val) {
                                     $('#error-' + prefix).text(val[0]);
                                 });
-                                swal("Terjadi Kesalahan", response.message, {
-                                    icon: "error",
-                                    buttons: {
-                                        confirm: {
-                                            className: "btn btn-danger"
-                                        }
-                                    }
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi Kesalahan',
+                                    text: response.message
                                 });
                             }
                         }

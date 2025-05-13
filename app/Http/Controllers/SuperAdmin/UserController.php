@@ -22,7 +22,7 @@ class UserController extends Controller
             'title' => 'Daftar user yang terdaftar dalam sistem',
         ];
 
-        $activeMenu = 'user';
+        $activeMenu = 'supuser';
         $role = RoleModel::all();
 
         return view('superadmin.user.index', ['breadcrumb' => $breadcrumb,  'page' => $page, 'role' => $role, 'activeMenu' => $activeMenu]);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Models\RoleModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\KriteriaModel;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,15 +22,15 @@ class RoleController extends Controller
             'title' => 'Daftar role yang terdaftar dalam sistem',
         ];
 
-        $activeMenu = 'role';
-        $role = RoleModel::all();
+        $activeMenu = 'suprole';
+        $kriteria = KriteriaModel::all();
 
-        return view('superadmin.role.index', ['breadcrumb' => $breadcrumb,  'page' => $page, 'activeMenu' => $activeMenu, 'role' => $role]);
+        return view('superadmin.role.index', ['breadcrumb' => $breadcrumb,  'page' => $page, 'activeMenu' => $activeMenu, 'kriteria' => $kriteria]);
     }
     // Ambil data role dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        $roles = RoleModel::select('id_role', 'role_kode', 'role_name');
+        $roles = RoleModel::select('id_role', 'role_kode', 'role_name')->with('kriteria');
 
         //Filter data berdasarkan id_role
         if ($request->id_role) {
@@ -44,7 +45,10 @@ class RoleController extends Controller
 
     public function create()
     {
-        return view('superadmin.role.create');
+        $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
+
+        return view('superadmin.role.create')
+            ->with('kriteria', $kriteria);
     }
 
     public function store(Request $request)
@@ -52,8 +56,9 @@ class RoleController extends Controller
         // cek apakah request berupa ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'role_kode' => 'required|string|max:100|unique:m_role,role_kode',
-                'role_name' => 'required|string|max:100',
+                'id_kriteria' => 'nullable|integer',
+                'role_kode'   => 'required|string|max:100|unique:m_role,role_kode',
+                'role_name'   => 'required|string|max:100',
             ];
             // use Illuminate\Support\Facades\Validator;
             $validator = Validator::make($request->all(), $rules);
@@ -77,7 +82,7 @@ class RoleController extends Controller
 
     public function show(string $id)
     {
-        $role = RoleModel::find($id);
+        $role = RoleModel::with('kriteria')->find($id);
 
         $breadcrumb = (object) [
             'title' => 'Detail Role',
@@ -93,19 +98,22 @@ class RoleController extends Controller
         return view('superadmin.role.show', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu, 'page' => $page, 'role' => $role]);
     }
 
-    public function edit (string $id)
+    public function edit(string $id)
     {
         $role = RoleModel::find($id);
-        return view('superadmin.role.edit', ['role' => $role]);
+        $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
+
+        return view('superadmin.role.edit', ['role' => $role, 'kriteria' => $kriteria]);
     }
 
 
-    public function update (Request $request, string $id)
+    public function update(Request $request, string $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'role_kode' => 'required|string|max:10',
-                'role_name' => 'required|string|max:100',
+                'id_kriteria' => 'nullable|integer',
+                'role_kode'   => 'required|string|max:10',
+                'role_name'   => 'required|string|max:100',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -134,13 +142,13 @@ class RoleController extends Controller
         return redirect('superadmin/role');
     }
 
-    public function confirm (string $id)
+    public function confirm(string $id)
     {
         $role = RoleModel::find($id);
         return view('superadmin.role.confirm', ['role' => $role]);
     }
 
-    public function delete (Request $request, string $id)
+    public function delete(Request $request, string $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $role = RoleModel::find($id);

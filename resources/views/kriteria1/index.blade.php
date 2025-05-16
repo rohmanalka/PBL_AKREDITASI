@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>{{ $page->title }}</h6>
                         <a href="{{ url('kriteria1/input') }}" class="btn btn-sm btn-success">
-                            Input Kriteria
+                            {{ __('messages.input') }}
                         </a>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -29,7 +29,7 @@
                                             ID
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Nama Kriteria
+                                            {{ __('messages.nmkrit') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Status
@@ -125,11 +125,22 @@
                         searchable: false,
                         render: function(data, type, row, meta) {
                             let id = row.id_detail_kriteria;
-                            return `
-                                <button class="btn btn-info btn-xs" onclick="modalAction('${base_url}/${id}/show')">Detail</button>
-                                <button class="btn btn-warning btn-xs" onclick="modalAction('${base_url}/${id}/edit')">Edit</button>
-                                <button class="btn btn-danger btn-xs" onclick="modalAction('${base_url}/${id}/delete')">Hapus</button>
-                            `;
+                            let status = row.status;
+                            let detailBtn =
+                                `<button class="btn btn-info btn-xs" onclick="modalAction('${base_url}/${id}/show')">{{ __('messages.detail') }}</button>`;
+                            // Jika status submit, disable tombol edit
+                            let editBtn = '';
+                            if (status === 'submit') {
+                                editBtn =
+                                    `<a class="btn btn-secondary btn-xs disabled" href="#">{{ __('messages.edit') }}</a>`;
+                            } else {
+                                editBtn =
+                                    `<a class="btn btn-warning btn-xs" href="${base_url}/${id}/edit">{{ __('messages.edit') }}</a>`;
+                            }
+                            
+                            let deleteBtn =
+                                `<button class="btn btn-danger btn-xs" onclick="modalAction('${base_url}/${id}/delete')">{{ __('messages.delete') }}</button>`;
+                            return `${detailBtn} ${editBtn} ${deleteBtn}`;
                         }
 
                     }

@@ -10,36 +10,22 @@
                     </div>
                     <form id="formPPEPP" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="id_kriteria" id="id_kriteria_input" value="">
-                        <div class="form-group">
-                            <select name="id_kriteria_select" id="id_kriteria" class="form-control" required
-                                onchange="updateKriteria()">
-                                <option value="">- Pilih Kriteria -</option>
-                                @foreach ($kriteria as $l)
-                                    <option value="{{ $l->id_kriteria }}">{{ $l->nama_kriteria }}</option>
-                                @endforeach
-                            </select>
-                            <small id="error-id_kriteria" class="error-text form-text text-danger"></small>
-                        </div>
+                        <input type="hidden" name="id_kriteria" value="{{ auth()->user()->role->id_kriteria }}">
                         <!-- 1. Penetapan -->
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">1. Penetapan</h6>
+                                <h6 class="font-weight-bold">1. {{ __('messages.penetapan') }}</h6>
                                 <textarea id="editor-penetapan" name="penetapan" class="form-control"></textarea>
-                                <img id="preview-penetapan" src="" alt="Preview" class="img-fluid mt-2"
-                                    style="max-height: 200px; display: none;">
-
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-primary mb-2">
-                                            <i class="fas fa-upload"></i> Upload Gambar
-                                        </button>
-                                        <!-- Upload Gambar (Penetapan) -->
-                                        <input type="file" name="penetapan_file" class="form-control mt-2"
-                                            accept="image/*" onchange="previewAndInsertImage(this, 'editor-penetapan')">
-
+                                        <label class="btn btn-outline-primary btn-sm mb-2" for="input-penetapan">
+                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                        </label>
+                                        <input type="file" id="input-penetapan" name="penetapan_file"
+                                            class="form-control mt-2 d-none" accept="image/*"
+                                            onchange="previewAndInsertImage(this, 'editor-penetapan', 'penetapan')">
                                     </div>
                                 </div>
                             </div>
@@ -48,22 +34,18 @@
                         <!-- 2. Pelaksanaan -->
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">2. Pelaksanaan</h6>
+                                <h6 class="font-weight-bold">2. {{ __('messages.pelaksanaan') }}</h6>
                                 <textarea id="editor-pelaksanaan" name="pelaksanaan" class="form-control"></textarea>
-                                <img id="preview-pelaksanaan" src="" alt="Preview" class="img-fluid mt-2"
-                                    style="max-height: 200px; display: none;">
-
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-primary mb-2">
-                                            <i class="fas fa-upload"></i> Upload Gambar
-                                        </button>
-                                        <!-- Upload Gambar (Penetapan) -->
-                                        <input type="file" name="pelaksanaan_file" class="form-control mt-2"
-                                            accept="image/*" onchange="previewAndInsertImage(this, 'editor-pelaksanaan')">
-
+                                        <label class="btn btn-outline-primary btn-sm mb-2" for="input-pelaksanaan">
+                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                        </label>
+                                        <input type="file" id="input-pelaksanaan" name="pelaksanaan_file"
+                                            class="form-control mt-2 d-none" accept="image/*"
+                                            onchange="previewAndInsertImage(this, 'editor-pelaksanaan', 'pelaksanaan')">
                                     </div>
                                 </div>
                             </div>
@@ -72,22 +54,18 @@
                         <!-- 3. Evaluasi -->
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">3. Evaluasi</h6>
+                                <h6 class="font-weight-bold">3. {{ __('messages.evaluasi') }}</h6>
                                 <textarea id="editor-evaluasi" name="evaluasi" class="form-control"></textarea>
-                                <img id="preview-evaluasi" src="" alt="Preview" class="img-fluid mt-2"
-                                    style="max-height: 200px; display: none;">
-
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-primary mb-2">
-                                            <i class="fas fa-upload"></i> Upload Gambar
-                                        </button>
-                                        <!-- Upload Gambar (Penetapan) -->
-                                        <input type="file" name="evaluasi_file" class="form-control mt-2"
-                                            accept="image/*" onchange="previewAndInsertImage(this, 'editor-evaluasi')">
-
+                                        <label class="btn btn-outline-primary btn-sm mb-2" for="input-evaluasi">
+                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                        </label>
+                                        <input type="file" id="input-evaluasi" name="evaluasi_file"
+                                            class="form-control mt-2 d-none" accept="image/*"
+                                            onchange="previewAndInsertImage(this, 'editor-evaluasi', 'evaluasi')">
                                     </div>
                                 </div>
                             </div>
@@ -96,23 +74,18 @@
                         <!-- 4. Pengendalian -->
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">4. Pengendalian</h6>
+                                <h6 class="font-weight-bold">4. {{ __('messages.pengendalian') }}</h6>
                                 <textarea id="editor-pengendalian" name="pengendalian" class="form-control"></textarea>
-                                <img id="preview-pengendalian" src="" alt="Preview" class="img-fluid mt-2"
-                                    style="max-height: 200px; display: none;">
-
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-primary mb-2">
-                                            <i class="fas fa-upload"></i> Upload Gambar
-                                        </button>
-                                        <!-- Upload Gambar (Penetapan) -->
-                                        <input type="file" name="pengendalian_file" class="form-control mt-2"
-                                            accept="image/*"
-                                            onchange="previewAndInsertImage(this, 'editor-pengendalian')">
-
+                                        <label class="btn btn-outline-primary btn-sm mb-2" for="input-pengendalian">
+                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                        </label>
+                                        <input type="file" id="input-pengendalian" name="pengendalian_file"
+                                            class="form-control mt-2 d-none" accept="image/*"
+                                            onchange="previewAndInsertImage(this, 'editor-pengendalian', 'pengendalian')">
                                     </div>
                                 </div>
                             </div>
@@ -121,22 +94,18 @@
                         <!-- 5. Peningkatan -->
                         <div class="row mx-1 mt-3 pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">5. Peningkatan</h6>
+                                <h6 class="font-weight-bold">5. {{ __('messages.peningkatan') }}</h6>
                                 <textarea id="editor-peningkatan" name="peningkatan" class="form-control"></textarea>
-                                <img id="preview-peningkatan" src="" alt="Preview" class="img-fluid mt-2"
-                                    style="max-height: 200px; display: none;">
-
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-primary mb-2">
-                                            <i class="fas fa-upload"></i> Upload Gambar
-                                        </button>
-                                        <!-- Upload Gambar (Penetapan) -->
-                                        <input type="file" name="peningkatan_file" class="form-control mt-2"
-                                            accept="image/*" onchange="previewAndInsertImage(this, 'editor-peningkatan')">
-
+                                        <label class="btn btn-outline-primary btn-sm mb-2" for="input-peningkatan">
+                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                        </label>
+                                        <input type="file" id="input-peningkatan" name="peningkatan_file"
+                                            class="form-control mt-2 d-none" accept="image/*"
+                                            onchange="previewAndInsertImage(this, 'editor-peningkatan', 'peningkatan')">
                                     </div>
                                 </div>
                             </div>
@@ -147,10 +116,10 @@
                                 <!-- Left side buttons -->
                                 <div>
                                     <button type="reset" class="btn btn-outline-secondary me-2" onclick="resetForm()">
-                                        <i class="fas fa-undo-alt me-1"></i> Reset Form
+                                        <i class="fas fa-undo-alt me-1"></i> {{ __('messages.reset') }}
                                     </button>
                                     <a href="{{ url('kriteria1/') }}" class="btn btn-outline-danger">
-                                        <i class="fas fa-times me-1"></i> Cancel
+                                        <i class="fas fa-times me-1"></i> {{ __('messages.cancel') }}
                                     </a>
                                 </div>
 
@@ -160,12 +129,12 @@
 
                                     <button type="button" class="btn btn-outline-primary me-2"
                                         onclick="submitForm('save')">
-                                        <i class="fas fa-save me-1"></i> Save Draft
+                                        <i class="fas fa-save me-1"></i> {{ __('messages.save') }}
                                     </button>
 
                                     <button type="button" class="btn btn-primary" id="submitBtn"
                                         onclick="submitForm('submit')">
-                                        <i class="fas fa-paper-plane me-1"></i> Submit
+                                        <i class="fas fa-paper-plane me-1"></i> {{ __('messages.submit') }}
                                     </button>
                                 </div>
                             </div>
@@ -178,8 +147,8 @@
 @endsection
 
 @section('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.6.1/tinymce.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.6.1/icons/default/icons.min.js"></script>
+    <script src="{{ asset('tinymce\js\tinymce\tinymce.min.js') }}"></script>
+    <script src="{{ asset('tinymce\js\tinymce\icons\default\icons.min.js') }}"></script>
 
     <script type='text/javascript'>
         document.addEventListener('DOMContentLoaded', function() {
@@ -188,17 +157,10 @@
                 ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'].forEach(section => {
                     tinymce.init({
                         selector: `#editor-${section}`,
-                        license_key: 'gpl',
                         height: 400,
                         plugins: 'link',
                         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | link',
-                        skin_url: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.6.1/skins/ui/oxide',
-                        content_css: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.6.1/skins/content/default/content.min.css',
-                        setup: function(editor) {
-                            editor.on('change', function() {
-                                editor.save();
-                            });
-                        }
+                        branding: false,
                     });
                 });
             } else {
@@ -214,11 +176,85 @@
             }
         });
 
-        function submitForm(status) {
-            const form = document.getElementById('formPPEPP');
-            const formData = new FormData(form);
-            formData.set('status', status);
+        function previewAndInsertImage(input, targetId, section) {
+            if (input.files && input.files[0]) {
+                const formData = new FormData();
+                formData.append('image', input.files[0]);
+                formData.append('section', section);
 
+                fetch("{{ url('kriteria1/upload') }}", {
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                            'Accept': 'application/json',
+                        },
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status) {
+                            const url = data.url; // URL gambar yang disimpan di server
+
+                            // Sisipkan ke TinyMCE
+                            const editor = tinymce.get(targetId);
+                            if (editor) {
+                                editor.insertContent(`<img src="${url}" style="max-width:100%;"/>`);
+                            }
+
+                            // Tampilkan preview jika ingin
+                            const preview = document.getElementById(`preview-${targetId}`);
+                            if (preview) {
+                                preview.src = url;
+                                preview.style.display = 'block';
+                            }
+                        } else {
+                            Swal.fire('Gagal Upload', data.message || 'Gagal mengunggah gambar.', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        Swal.fire('Error', 'Terjadi kesalahan saat mengunggah gambar.', 'error');
+                    });
+            }
+        }
+
+        // function previewAndInsertImage(input, targetId, section) {
+        //     if (input.files && input.files[0]) {
+        //         const formData = new FormData();
+        //         formData.append('image', input.files[0]);
+        //         formData.append('section', section);
+
+        //         fetch("{{ url('kriteria1/upload') }}", {
+        //                 method: "POST",
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
+        //                     'Accept': 'application/json',
+        //                 },
+        //                 body: formData
+        //             })
+        //             .then(res => res.json())
+        //             .then(data => {
+        //                 if (data.status) {
+        //                     const url = data.url;
+
+        //                     // Hanya tampilkan preview (tidak insert ke TinyMCE)
+        //                     const preview = document.getElementById(`preview-${targetId}`);
+        //                     if (preview) {
+        //                         preview.src = url;
+        //                         preview.style.display = 'block';
+        //                     }
+        //                 } else {
+        //                     Swal.fire('Gagal Upload', data.message || 'Gagal mengunggah gambar.', 'error');
+        //                 }
+        //             })
+        //             .catch(err => {
+        //                 console.error(err);
+        //                 Swal.fire('Error', 'Terjadi kesalahan saat mengunggah gambar.', 'error');
+        //             });
+        //     }
+        // }
+
+        function submitForm(status) {
             // pastikan semua TinyMCE disimpan
             if (typeof tinymce !== 'undefined') {
                 ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'].forEach(sec => {
@@ -227,6 +263,10 @@
                 });
             }
 
+            const form = document.getElementById('formPPEPP');
+            const formData = new FormData(form);
+
+            formData.set('status', status);
             document.getElementById('statusInput').value = status;
 
             fetch("{{ url('kriteria1/store') }}", {
@@ -290,24 +330,4 @@
 @endpush
 
 @push('js')
-    <script>
-        function updateKriteria() {
-            const selectedKriteria = document.getElementById('id_kriteria').value;
-            document.getElementById('id_kriteria_input').value = selectedKriteria;
-        }
-
-        function previewAndInsertImage(input, editorId) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const editor = tinymce.get(editorId);
-                    if (editor) {
-                        // Sisipkan gambar langsung ke dalam editor
-                        editor.insertContent(`<img src="${e.target.result}" alt="Gambar" style="max-width:100%;" />`);
-                    }
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
 @endpush

@@ -20,7 +20,7 @@
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fas fa-home text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Dashboard</span>
+                        <span class="nav-link-text ms-1">{{ __('messages.sidedash') }}</span>
                     </a>
                 </li>
 
@@ -33,7 +33,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="fas fa-user-plus text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text">Kelola User</span>
+                            <span class="nav-link-text">{{ __('messages.sideuser') }}</span>
                         </a>
                     </li>
 
@@ -44,7 +44,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="fas fa-user-cog text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Kelola Role</span>
+                            <span class="nav-link-text ms-1">{{ __('messages.siderole') }}</span>
                         </a>
                     </li>
                 @endauth
@@ -65,62 +65,62 @@
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="fas fa-folder-open text-sm opacity-10"></i>
                                 </div>
-                                <span class="nav-link-text ms-1">Kriteria</span>
+                                <span class="nav-link-text ms-1">{{ __('messages.sidekrit') }}</span>
                             </a>
                             <div class="collapse {{ $activeMenu == 'kriteria' ? 'show' : '' }}" id="kriteriaMenu">
                                 <ul class="nav ms-4 ps-3">
                                     <li class="nav-item">
                                         <a class="nav-link {{ $activeSubmenu == 'kriteria1' ? 'active' : '' }}"
                                             href="{{ url('/kriteria1') }}">
-                                            <span class="sidenav-normal">Kriteria 1</span>
+                                            <span class="sidenav-normal">{{ __('messages.sidekrit1') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ $activeSubmenu == 'kriteria2' ? 'active' : '' }}"
                                             href="{{ url('/kriteria2') }}">
-                                            <span class="sidenav-normal">Kriteria 2</span>
+                                            <span class="sidenav-normal">{{ __('messages.sidekrit2') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ $activeSubmenu == 'kriteria3' ? 'active' : '' }}"
                                             href="{{ url('/kriteria3') }}">
-                                            <span class="sidenav-normal">Kriteria 3</span>
+                                            <span class="sidenav-normal">{{ __('messages.sidekrit3') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ $activeSubmenu == 'kriteria4' ? 'active' : '' }}"
                                             href="{{ url('/kriteria4') }}">
-                                            <span class="sidenav-normal">Kriteria 4</span>
+                                            <span class="sidenav-normal">{{ __('messages.sidekrit4') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ $activeSubmenu == 'kriteria5' ? 'active' : '' }}"
                                             href="{{ url('/kriteria5') }}">
-                                            <span class="sidenav-normal">Kriteria 5</span>
+                                            <span class="sidenav-normal">{{ __('messages.sidekrit5') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ $activeSubmenu == 'kriteria6' ? 'active' : '' }}"
                                             href="{{ url('/kriteria6') }}">
-                                            <span class="sidenav-normal">Kriteria 6</span>
+                                            <span class="sidenav-normal">{{ __('messages.sidekrit6') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ $activeSubmenu == 'kriteria7' ? 'active' : '' }}"
                                             href="{{ url('/kriteria7') }}">
-                                            <span class="sidenav-normal">Kriteria 7</span>
+                                            <span class="sidenav-normal">{{ __('messages.sidekrit7') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ $activeSubmenu == 'kriteria8' ? 'active' : '' }}"
                                             href="{{ url('/kriteria8') }}">
-                                            <span class="sidenav-normal">Kriteria 8</span>
+                                            <span class="sidenav-normal">{{ __('messages.sidekrit8') }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ $activeSubmenu == 'kriteria9' ? 'active' : '' }}"
                                             href="{{ url('/kriteria9') }}">
-                                            <span class="sidenav-normal">Kriteria 9</span>
+                                            <span class="sidenav-normal">{{ __('messages.sidekrit9') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -141,7 +141,7 @@
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="fas fa-chart-bar text-sm opacity-10"></i>
                                 </div>
-                                <span class="nav-link-text ms-1">Validasi</span>
+                                <span class="nav-link-text ms-1">{{ __('messages.sidevalid') }}</span>
                             </a>
                         </li>
                     @endif
@@ -156,7 +156,7 @@
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-button-power text-danger text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Logout</span>
+                        <span class="nav-link-text ms-1">{{ __('messages.logout') }}</span>
                     </a>
                 </li>
             </ul>

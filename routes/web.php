@@ -22,6 +22,13 @@ use App\Http\Controllers\SuperAdmin\UserController;
 
 Route::pattern('id', '[0-9]+');
 
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'id'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+});
+
 // Public routes
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
 Route::get('login', [AuthController::class, 'login'])->name('login');
@@ -77,7 +84,7 @@ Route::middleware(['authorize:KRIT1'])->group(function () {
         Route::post('/store', [KriteriaSatuController::class, 'store']);
         Route::get('/{id}/show', [KriteriaSatuController::class, 'show']);
         Route::get('/preview/{id}', [KriteriaSatuController::class, 'preview'])->name('preview.ppepp');
-
+        Route::post('/upload', [KriteriaSatuController::class, 'uploadImage'])->name('image.upload');
         // Ajax Update
         Route::get('/{id}/edit', [KriteriaSatuController::class, 'edit']);
         Route::put('/{id}/update', [KriteriaSatuController::class, 'update']);
@@ -96,7 +103,7 @@ Route::middleware(['authorize:KRIT2'])->group(function () {
         Route::post('/store', [KriteriaDuaController::class, 'store']);
         Route::get('/{id}/show', [KriteriaDuaController::class, 'show']);
         Route::get('/preview/{id}', [KriteriaDuaController::class, 'preview'])->name('preview.ppepp');
-
+        Route::post('/upload', [KriteriaDuaController::class, 'uploadImage'])->name('image.upload');
         // Ajax Update
         Route::get('/{id}/edit', [KriteriaDuaController::class, 'edit']);
         Route::put('/{id}/update', [KriteriaDuaController::class, 'update']);

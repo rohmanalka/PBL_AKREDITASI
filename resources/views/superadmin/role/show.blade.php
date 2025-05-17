@@ -39,6 +39,10 @@
                         <th class="text-right col-3">Role Name :</th>
                         <td class="col-9">{{ $role->role_name }}</td>
                     </tr>
+                    <tr>
+                        <th class="text-right col-3">Kriteria :</th>
+                        <td class="col-9">{{ $role->kriteria->nama_kriteria }}</td>
+                    </tr>
                 </table>
             </div>
             <div class="modal-footer">

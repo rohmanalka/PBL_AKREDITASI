@@ -32,7 +32,7 @@
                     Berikut adalah detail data kriteria dan isian PPEPP:
                 </div>
                 <div class="row g-3">
-                    <div class="col-md-5">
+                    <div class="col-md-12">
                         <table class="table table-sm table-bordered table-striped">
                             <tr>
                                 <th class="text-right col-4">Nama Kriteria:</th>
@@ -47,14 +47,11 @@
                                 <td>{{ $details->komentar->komentar ?? 'Belum ada komentar' }}</td>
                             </tr>
                         </table>
-                    </div>
-
-                    <div class="col-md-2 d-none d-md-block"></div>
-
-                    <div class="col-md-5">
-                        <iframe src="{{ url('/kriteria1/preview/' . $id) }}" width="100%" height="400px"
-                            style="border: 1px solid #ccc; border-radius: 4px;">
-                        </iframe>
+                        <div>
+                            <iframe src="{{ url('/kriteria1/preview/' . $id) }}" width="100%" height="400px"
+                                style="border: 1px solid #ccc; border-radius: 4px;">
+                            </iframe>
+                        </div>
                     </div>
                 </div>
             </div>

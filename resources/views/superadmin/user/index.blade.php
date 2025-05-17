@@ -61,6 +61,7 @@
 
 @push('js')
     <script>
+        var dataUser;
         const base_url = "{{ url('superadmin/user') }}";
 
         function modalAction(url = '') {
@@ -69,7 +70,6 @@
             });
         }
 
-        var dataUser;
         $(document).ready(function() {
             dataUser = $('#table_user').DataTable({
                 serverSide: true,

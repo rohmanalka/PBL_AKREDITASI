@@ -15,8 +15,10 @@
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
                                 <h6 class="font-weight-bold">1. {{ __('messages.penetapan') }}</h6>
-                                <textarea id="editor-penetapan" name="penetapan" class="form-control"></textarea>
-                            </div>
+                                <textarea id="editor-penetapan" name="penetapan" class="form-control">
+                                    {!! old('penetapan', $detail->penetapan->penetapan ?? '') !!}
+                                </textarea>
+                            </div>  
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
@@ -35,7 +37,9 @@
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
                                 <h6 class="font-weight-bold">2. {{ __('messages.pelaksanaan') }}</h6>
-                                <textarea id="editor-pelaksanaan" name="pelaksanaan" class="form-control"></textarea>
+                                <textarea id="editor-pelaksanaan" name="pelaksanaan" class="form-control">
+                                    {!! old('pelaksanaan', $detail->pelaksanaan->pelaksanaan ?? '') !!}
+                                </textarea>
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
@@ -55,7 +59,9 @@
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
                                 <h6 class="font-weight-bold">3. {{ __('messages.evaluasi') }}</h6>
-                                <textarea id="editor-evaluasi" name="evaluasi" class="form-control"></textarea>
+                                <textarea id="editor-evaluasi" name="evaluasi" class="form-control">
+                                    {!! old('evaluasi', $detail->evaluasi->evaluasi ?? '') !!}
+                                </textarea>
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
@@ -75,7 +81,9 @@
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
                                 <h6 class="font-weight-bold">4. {{ __('messages.pengendalian') }}</h6>
-                                <textarea id="editor-pengendalian" name="pengendalian" class="form-control"></textarea>
+                                <textarea id="editor-pengendalian" name="pengendalian" class="form-control">
+                                    {!! old('pengendalian', $detail->pengendalian->pengendalian ?? '') !!}
+                                </textarea>
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
@@ -95,7 +103,9 @@
                         <div class="row mx-1 mt-3 pb-3">
                             <div class="col-md-9">
                                 <h6 class="font-weight-bold">5. {{ __('messages.peningkatan') }}</h6>
-                                <textarea id="editor-peningkatan" name="peningkatan" class="form-control"></textarea>
+                                <textarea id="editor-peningkatan" name="peningkatan" class="form-control">
+                                    {!! old('peningkatan', $detail->peningkatan->peningkatan ?? '') !!}
+                                </textarea>
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
@@ -217,7 +227,7 @@
                     });
             }
         }
-        
+
         // function previewAndInsertImage(input, targetId, section) {
         //     if (input.files && input.files[0]) {
         //         const formData = new FormData();
@@ -269,7 +279,8 @@
             formData.set('status', status);
             document.getElementById('statusInput').value = status;
 
-            fetch("{{ url('kriteria1/store') }}", {
+            formData.append('_method', 'PUT');
+            fetch("{{ url('kriteria1/' . $detail->id_detail_kriteria . '/update') }}", {
                     method: "POST",
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",

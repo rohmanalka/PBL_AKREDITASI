@@ -50,27 +50,37 @@
   ======================================================== -->
 </head>
 
-<body class="index-page">
+<body class="index-page" data-locale="{{ app()->getLocale() }}">
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">AKREDITASI</h1>
+                <h1 class="sitename">{{ __('messages.judulhead') }}</h1>
                 <span></span>
             </a>
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="#hero" class="active">Home<br></a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#team">Team</a></li>
+                    <li><a href="#hero" class="active">{{ __('messages.home') }}<br></a></li>
+                    <li><a href="#about">{{ __('messages.about') }}</a></li>
+                    <li><a href="#team">{{ __('messages.team') }}</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-            <button onclick="modalAction('{{ url('login') }}')" class="btn-getstarted"
-                style="background-color: transparent">
-                Masuk
-            </button>
+            <div class="d-flex align-items-center">
+                <!-- Switch bahasa tanpa gambar -->
+                <div class="form-check form-switch mb-0 me-3">
+                    <input class="form-check-input" type="checkbox" id="languageToggle" onchange="toggleLanguage()" />
+                    <label class="form-check-label fw-bold" for="languageToggle" style="cursor:pointer;"
+                        id="language-label">ID</label>
+                </div>
+
+                <!-- Tombol Masuk -->
+                <button onclick="modalAction('{{ url('login') }}')" class="btn-getstarted"
+                    style="background-color: transparent">
+                    {{ __('messages.login') }}
+                </button>
+            </div>
         </div>
     </header>
 
@@ -81,8 +91,8 @@
             <div class="container">
                 <div class="row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
                     <div class="col-xl-6 col-lg-8">
-                        <h2>Sistem Akreditasi</h2>
-                        <p>Sistem Informasi Bisnis</p>
+                        <h2>{{ __('messages.judullanding') }}</h2>
+                        <p>{{ __('messages.prodi') }}</p>
                     </div>
                 </div>
             </div>
@@ -95,8 +105,8 @@
         <!-- About Section -->
         <section id="about" class="about section">
             <div class="container section-title" data-aos="fade-up">
-                <h2>About</h2>
-                <p>Profile</p>
+                <h2>{{ __('messages.about') }}</h2>
+                <p>{{ __('messages.profil') }}</p>
             </div><!-- End Section Title -->
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -134,8 +144,8 @@
         <section id="services" class="services section">
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>About</h2>
-                <p>Visi Misi</p>
+                <h2>{{ __('messages.about') }}</h2>
+                <p>{{ __('messages.vismis') }}</p>
             </div><!-- End Section Title -->
 
             <div class="container">
@@ -147,7 +157,7 @@
                                 <i class="fa-solid fa-bullseye"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
-                                <h3>Sasaran</h3>
+                                <h3>{{ __('messages.sasaran') }}</h3>
                             </a>
                             <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores
                                 iure perferendis tempore et consequatur.</p>
@@ -160,7 +170,7 @@
                                 <i class="bi bi-broadcast"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
-                                <h3>Visi</h3>
+                                <h3>{{ __('messages.visi') }}</h3>
                             </a>
                             <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum
                                 hic non ut nesciunt dolorem.</p>
@@ -173,7 +183,7 @@
                                 <i class="bi bi-easel"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
-                                <h3>Misi</h3>
+                                <h3>{{ __('messages.misi') }}</h3>
                             </a>
                             <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id
                                 voluptas adipisci eos earum corrupti.</p>
@@ -187,8 +197,8 @@
         <section id="team" class="team section">
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>Team</h2>
-                <p>our Team</p>
+                <h2>{{ __('messages.team') }}</h2>
+                <p>{{ __('messages.we') }}</p>
             </div><!-- End Section Title -->
 
             <div class="container">
@@ -294,33 +304,33 @@
                 <div class="row gy-4">
                     <div class="col-lg-4 col-md-6 footer-about">
                         <a href="index.html" class="logo d-flex align-items-center">
-                            <span class="sitename">AKREDITASI</span>
+                            <span class="sitename">{{ __('messages.judulhead') }}</span>
                         </a>
                         <div class="footer-contact pt-3">
                             <p>JTI POLINEMA</p>
-                            <p>Sistem Informasi Bisnis</p>
+                            <p>{{ __('messages.prodi') }}</p>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-3 footer-links">
-                        <h4>Useful Links</h4>
+                        <h4>{{ __('messages.link') }}</h4>
                         <ul>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> Home</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#about"> About</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> Team</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> {{ __('messages.home') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#about"> {{ __('messages.about') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> {{ __('messages.team') }}</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-3 col-md-3 footer-links">
-                        <h4>Information</h4>
+                        <h4>{{ __('messages.informasi') }}</h4>
                         <ul>
-                            <p><strong>Address:</strong> <span> Jl. Soekarno Hatta No.9</span></p>
-                            <p><strong>Contact:</strong> <span>(0341) 404424</span></p>
+                            <p><strong>{{ __('messages.alamat') }}:</strong> <span> Jl. Soekarno Hatta No.9</span></p>
+                            <p><strong>{{ __('messages.kontak') }}:</strong> <span>(0341) 404424</span></p>
                         </ul>
                     </div>
 
                     <div class="col-lg-2 col-md-3 footer-links">
-                        <h4>Follow Us</h4>
+                        <h4>{{ __('messages.follow') }}</h4>
                         <div class="social-links d-flex mt-2">
                             <a href=""><i class="bi bi-instagram"></i></a>
                         </div>
@@ -370,6 +380,34 @@
                 $('#myModal').modal('show');
             });
         }
+
+        function toggleLanguage() {
+            const checkbox = document.getElementById('languageToggle');
+            const label = document.getElementById('language-label');
+
+            // Tentukan bahasa berdasarkan status checkbox
+            let locale = checkbox.checked ? 'en' : 'id';
+
+            // Ubah label
+            label.textContent = locale.toUpperCase();
+
+            // Redirect ke route ganti bahasa
+            window.location.href = `/lang/${locale}`;
+        }
+
+        // Set label awal sesuai session yang sudah disimpan di server
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('languageToggle');
+            const label = document.getElementById('language-label');
+
+            // Ambil bahasa dari halaman, misal lewat data attribute di elemen body atau dari server (misal blade)
+            // Contoh jika menggunakan blade: <body data-locale="{{ app()->getLocale() }}">
+            const currentLocale = document.body.getAttribute('data-locale') || 'id';
+
+            // Set checkbox dan label sesuai bahasa saat ini
+            checkbox.checked = (currentLocale === 'en');
+            label.textContent = currentLocale.toUpperCase();
+        });
     </script>
 </body>
 

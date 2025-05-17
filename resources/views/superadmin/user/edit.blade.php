@@ -90,27 +90,21 @@
                         success: function(response) {
                             if (response.status) {
                                 $('#myModal').modal('hide');
-                                swal("Berhasil", response.message, {
-                                    icon: "success",
-                                    buttons: {
-                                        confirm: {
-                                            className: "btn btn-success"
-                                        }
-                                    }
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message
                                 });
-                                dataRole.ajax.reload();
+                                dataUser.ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
                                     $('#error-' + prefix).text(val[0]);
                                 });
-                                swal("Terjadi Kesalahan", response.message, {
-                                    icon: "error",
-                                    buttons: {
-                                        confirm: {
-                                            className: "btn btn-danger"
-                                        }
-                                    }
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi Kesalahan',
+                                    text: response.message
                                 });
                             }
                         }

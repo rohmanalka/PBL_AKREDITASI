@@ -9,6 +9,16 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <label>Kriteria</label>
+                    <select name="id_kriteria" id="id_kriteria" class="form-control">
+                        <option value="">- Pilih Kriteria -</option>
+                        @foreach ($kriteria as $l)
+                            <option value="{{ $l->id_kriteria }}">{{ $l->nama_kriteria }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_kriteria" class="error-text form-text text-danger"></small>
+                </div>
+                <div class="form-group">
                     <label>Role Code</label>
                     <input value="" type="text" name="role_kode" id="role_kode" class="form-control" required>
                     <small id="error-role_kode" class="error-text form-text text-danger"></small>
@@ -35,6 +45,9 @@
     $(document).ready(function() {
         $("#form-tambah").validate({
             rules: {
+                id_kriteria: {
+                    number: true
+                },
                 role_kode: {
                     required: true,
                     minlength: 5,
@@ -54,13 +67,10 @@
                     success: function(response) {
                         if (response.status) {
                             $('#myModal').modal('hide');
-                            swal("Berhasil", response.message, {
-                                icon: "success",
-                                buttons: {
-                                    confirm: {
-                                        className: "btn btn-success"
-                                    }
-                                }
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message
                             });
                             dataRole.ajax.reload();
                         } else {
@@ -68,13 +78,10 @@
                             $.each(response.msgField, function(prefix, val) {
                                 $('#error-' + prefix).text(val[0]);
                             });
-                            swal("Terjadi Kesalahan", response.message, {
-                                icon: "error",
-                                buttons: {
-                                    confirm: {
-                                        className: "btn btn-danger"
-                                    }
-                                }
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: response.message
                             });
                         }
                     }

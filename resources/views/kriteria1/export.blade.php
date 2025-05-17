@@ -87,13 +87,13 @@
         <div class="ppepp-number">1. Penetapan</div>
         <div class="ppepp-content">
             {!! $details->penetapan->penetapan ?? '<i>Tidak ada data</i>' !!}
-            @if ($details->penetapan && $details->penetapan->pendukung)
+            {{-- @if ($details->penetapan && $details->penetapan->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->penetapan->pendukung) }}"
                         class="supporting-image">
                     <div class="image-caption">Dokumen Pendukung Penetapan</div>
                 </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 
@@ -101,13 +101,13 @@
         <div class="ppepp-number">2. Pelaksanaan</div>
         <div class="ppepp-content">
             {!! $details->pelaksanaan->pelaksanaan ?? '<i>Tidak ada data</i>' !!}
-            @if ($details->pelaksanaan && $details->pelaksanaan->pendukung)
+            {{-- @if ($details->pelaksanaan && $details->pelaksanaan->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->pelaksanaan->pendukung) }}"
                         class="supporting-image">
                     <div class="image-caption">Dokumen Pendukung Pelaksanaan</div>
                 </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 
@@ -115,13 +115,13 @@
         <div class="ppepp-number">3. Evaluasi</div>
         <div class="ppepp-content">
             {!! $details->evaluasi->evaluasi ?? '<i>Tidak ada data</i>' !!}
-            @if ($details->evaluasi && $details->evaluasi->pendukung)
+            {{-- @if ($details->evaluasi && $details->evaluasi->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->evaluasi->pendukung) }}"
                         class="supporting-image">
                     <div class="image-caption">Dokumen Pendukung Evaluasi</div>
                 </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 
@@ -129,13 +129,13 @@
         <div class="ppepp-number">4. Pengendalian</div>
         <div class="ppepp-content">
             {!! $details->pengendalian->pengendalian ?? '<i>Tidak ada data</i>' !!}
-            @if ($details->pengendalian && $details->pengendalian->pendukung)
+            {{-- @if ($details->pengendalian && $details->pengendalian->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->pengendalian->pendukung) }}"
                         class="supporting-image">
                     <div class="image-caption">Dokumen Pendukung Pengendalian</div>
                 </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 
@@ -143,13 +143,13 @@
         <div class="ppepp-number">5. Peningkatan</div>
         <div class="ppepp-content">
             {!! $details->peningkatan->peningkatan ?? '<i>Tidak ada data</i>' !!}
-            @if ($details->peningkatan && $details->peningkatan->pendukung)
+            {{-- @if ($details->peningkatan && $details->peningkatan->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->peningkatan->pendukung) }}"
                         class="supporting-image">
                     <div class="image-caption">Dokumen Pendukung Peningkatan</div>
                 </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 

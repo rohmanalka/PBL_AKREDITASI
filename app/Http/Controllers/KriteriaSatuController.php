@@ -110,7 +110,7 @@ class KriteriaSatuController extends Controller
 
         // Upload helper
         $uploadFile = fn($file, $folder) =>
-        $file ? $file->store("pendukung/{$folder}", 'public') : null;
+        $file ? $file->store("storage/pendukung/{$folder}", 'public') : null;
 
         $path_penetapan    = $uploadFile($request->file('penetapan_file'), 'penetapan');
         $path_pelaksanaan  = $uploadFile($request->file('pelaksanaan_file'), 'pelaksanaan');
@@ -176,6 +176,15 @@ class KriteriaSatuController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
+        // Konversi path relatif ke absolut
+        if ($detail->penetapan && $detail->penetapan->penetapan) {
+            $detail->penetapan->penetapan = str_replace(
+                '../storage/',
+                rtrim(url('storage'), '/') . '/', // Gunakan url() helper bukan asset()
+                $detail->penetapan->penetapan
+            );
+        }
+
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
@@ -213,63 +222,71 @@ class KriteriaSatuController extends Controller
             'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status'              => 'sometimes|required|in:save,submit',
+            'status'              => 'required|in:save,submit',
         ]);
 
         $detail = DetailKriteriaModel::findOrFail($id);
 
-        // Update file jika ada
-        $penetapan_file = $request->file('penetapan_file');
-        $pelaksanaan_file = $request->file('pelaksanaan_file');
-        $evaluasi_file = $request->file('evaluasi_file');
-        $pengendalian_file = $request->file('pengendalian_file');
-        $peningkatan_file = $request->file('peningkatan_file');
-
-        // Update masing-masing model
-        $penetapan = \App\Models\PenetapanModel::findOrFail($detail->id_penetapan);
-        $penetapan->penetapan = $request->penetapan;
-        if ($penetapan_file) {
-            $penetapan->pendukung = $penetapan_file->store('pendukung/penetapan', 'public');
+        // Penetapan
+        $penetapan = PenetapanModel::find($detail->id_penetapan);
+        if ($penetapan) {
+            $penetapan->penetapan = $request->penetapan;
+            if ($request->hasFile('penetapan_file')) {
+                $penetapan->pendukung = $request->file('penetapan_file')->store('pendukung/penetapan');
+            }
+            $penetapan->save();
         }
-        $penetapan->save();
 
-        $pelaksanaan = \App\Models\PelaksanaanModel::findOrFail($detail->id_pelaksanaan);
-        $pelaksanaan->pelaksanaan = $request->pelaksanaan;
-        if ($pelaksanaan_file) {
-            $pelaksanaan->pendukung = $pelaksanaan_file->store('pendukung/pelaksanaan', 'public');
+        // Pelaksanaan
+        $pelaksanaan = PelaksanaanModel::find($detail->id_pelaksanaan);
+        if ($pelaksanaan) {
+            $pelaksanaan->pelaksanaan = $request->pelaksanaan;
+            if ($request->hasFile('pelaksanaan_file')) {
+                $pelaksanaan->pendukung = $request->file('pelaksanaan_file')->store('pendukung/pelaksanaan');
+            }
+            $pelaksanaan->save();
         }
-        $pelaksanaan->save();
 
-        $evaluasi = \App\Models\EvaluasiModel::findOrFail($detail->id_evaluasi);
-        $evaluasi->evaluasi = $request->evaluasi;
-        if ($evaluasi_file) {
-            $evaluasi->pendukung = $evaluasi_file->store('pendukung/evaluasi', 'public');
+        // Evaluasi
+        $evaluasi = EvaluasiModel::find($detail->id_evaluasi);
+        if ($evaluasi) {
+            $evaluasi->evaluasi = $request->evaluasi;
+            if ($request->hasFile('evaluasi_file')) {
+                $evaluasi->pendukung = $request->file('evaluasi_file')->store('pendukung/evaluasi');
+            }
+            $evaluasi->save();
         }
-        $evaluasi->save();
 
-        $pengendalian = \App\Models\PengendalianModel::findOrFail($detail->id_pengendalian);
-        $pengendalian->pengendalian = $request->pengendalian;
-        if ($pengendalian_file) {
-            $pengendalian->pendukung = $pengendalian_file->store('pendukung/pengendalian', 'public');
+        // Pengendalian
+        $pengendalian = PengendalianModel::find($detail->id_pengendalian);
+        if ($pengendalian) {
+            $pengendalian->pengendalian = $request->pengendalian;
+            if ($request->hasFile('pengendalian_file')) {
+                $pengendalian->pendukung = $request->file('pengendalian_file')->store('pendukung/pengendalian');
+            }
+            $pengendalian->save();
         }
-        $pengendalian->save();
 
-        $peningkatan = \App\Models\PeningkatanModel::findOrFail($detail->id_peningkatan);
-        $peningkatan->peningkatan = $request->peningkatan;
-        if ($peningkatan_file) {
-            $peningkatan->pendukung = $peningkatan_file->store('pendukung/peningkatan', 'public');
+        // Peningkatan
+        $peningkatan = PeningkatanModel::find($detail->id_peningkatan);
+        if ($peningkatan) {
+            $peningkatan->peningkatan = $request->peningkatan;
+            if ($request->hasFile('peningkatan_file')) {
+                $peningkatan->pendukung = $request->file('peningkatan_file')->store('pendukung/peningkatan');
+            }
+            $peningkatan->save();
         }
-        $peningkatan->save();
 
-        // Update status di detail
-        $detail->status = $request->status;
+        // Update status di DetailKriteria
+        $detail->status = $request->status; // 'save' atau 'submit'
         $detail->save();
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil diperbarui',
+            'message' => 'Data berhasil diupdate dengan status ' . $request->status
         ]);
     }
+
 
     public function show(string $id)
     {

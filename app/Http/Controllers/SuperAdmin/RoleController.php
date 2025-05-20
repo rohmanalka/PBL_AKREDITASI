@@ -23,9 +23,10 @@ class RoleController extends Controller
         ];
 
         $activeMenu = 'suprole';
+        $activeSubmenu = null;
         $kriteria = KriteriaModel::all();
 
-        return view('superadmin.role.index', ['breadcrumb' => $breadcrumb,  'page' => $page, 'activeMenu' => $activeMenu, 'kriteria' => $kriteria]);
+        return view('superadmin.role.index', ['breadcrumb' => $breadcrumb,  'page' => $page, 'activeMenu' => $activeMenu, 'kriteria' => $kriteria, 'activeSubmenu' => $activeSubmenu]);
     }
     // Ambil data role dalam bentuk json untuk datatables
     public function list(Request $request)

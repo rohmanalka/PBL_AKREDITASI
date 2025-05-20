@@ -23,9 +23,10 @@ class UserController extends Controller
         ];
 
         $activeMenu = 'supuser';
+        $activeSubmenu = null;
         $role = RoleModel::all();
 
-        return view('superadmin.user.index', ['breadcrumb' => $breadcrumb,  'page' => $page, 'role' => $role, 'activeMenu' => $activeMenu]);
+        return view('superadmin.user.index', ['breadcrumb' => $breadcrumb,  'page' => $page, 'role' => $role, 'activeMenu' => $activeMenu, 'activeSubmenu' => $activeSubmenu]);
     }
     // Ambil data user dalam bentuk json untuk datatables
     public function list(Request $request)

@@ -17,23 +17,23 @@ use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
-class KriteriaSatuController extends Controller
+class KriteriaDuaController extends Controller
 {
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => __('messages.krit1_title'),
-            'list' => __('messages.krit1_list'),
+            'title' => __('messages.krit2_title'),
+            'list' => __('messages.krit2_list'),
         ];
 
         $page = (object) [
-            'title' => __('messages.krit1_page'),
+            'title' => __('messages.krit2_page'),
         ];
 
         $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria1';
+        $activeSubmenu = 'kriteria2';
 
-        return view('kriteria1.index', [
+        return view('kriteria2.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu,
@@ -46,7 +46,7 @@ class KriteriaSatuController extends Controller
         $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
             ->select('id_detail_kriteria', 'id_kriteria', 'status');
 
-        $details->where('id_kriteria', 1);
+        $details->where('id_kriteria', 2);
 
         //Filter data berdasarkan id_detail_kriteria
         if ($request->id_detail_kriteria) {
@@ -64,18 +64,18 @@ class KriteriaSatuController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => __('messages.krit1_title'),
-            'list' => __('messages.krit1_list')
+            'title' => __('messages.krit2_title'),
+            'list' => __('messages.krit2_list')
         ];
 
         $page = (object) [
-            'title' => __('messages.krit1_page'),
+            'title' => __('messages.krit2_page'),
         ];
 
         $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria1';
+        $activeSubmenu = 'kriteria2';
 
-        return view('kriteria1.input', [
+        return view('kriteria2.input', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu,
@@ -190,7 +190,7 @@ class KriteriaSatuController extends Controller
 
         $breadcrumb = (object) [
             'title' => 'Edit Kriteria Satu',
-            'list' => ['Kriteria', 'Kriteria1', 'Edit']
+            'list' => ['Kriteria', 'kriteria2', 'Edit']
         ];
 
         $page = (object) [
@@ -198,9 +198,9 @@ class KriteriaSatuController extends Controller
         ];
 
         $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria1';
+        $activeSubmenu = 'kriteria2';
 
-        return view('kriteria1.edit', [
+        return view('kriteria2.edit', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu,
@@ -302,7 +302,7 @@ class KriteriaSatuController extends Controller
             'title' => 'Detail',
         ];
 
-        return view('kriteria1.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('kriteria2.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
     }
 
     private function convertImagesToBase64($html)
@@ -339,7 +339,7 @@ class KriteriaSatuController extends Controller
             }
         }
 
-        $pdf = Pdf::loadView('kriteria1.export', compact('details'));
+        $pdf = Pdf::loadView('kriteria2.export', compact('details'));
         return $pdf->stream('preview.pdf');
     }
 
@@ -382,7 +382,7 @@ class KriteriaSatuController extends Controller
             'title' => 'Hapus',
         ];
 
-        return view('kriteria1.confirm', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('kriteria2.confirm', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
     }
 
     public function delete(Request $request, $id)

@@ -11,6 +11,7 @@ use App\Models\PelaksanaanModel;
 use App\Models\PeningkatanModel;
 use App\Models\PengendalianModel;
 use App\Models\DetailKriteriaModel;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -366,5 +367,103 @@ class KriteriaSatuController extends Controller
                 'message' => 'Upload failed: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    public function confirm(string $id)
+    {
+        $details = DetailKriteriaModel::with('kriteria')->find($id);
+
+        $breadcrumb = (object) [
+            'title' => 'Data Kriteria 1',
+            'list' => ['Home', 'Hapus'],
+        ];
+
+        $page = (object) [
+            'title' => 'Hapus',
+        ];
+
+        return view('kriteria1.confirm', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $detail = DetailKriteriaModel::with([
+            'penetapan',
+            'pelaksanaan',
+            'evaluasi',
+            'pengendalian',
+            'peningkatan'
+        ])->findOrFail($id);
+
+        // Simpan relasi sebelum hapus detail
+        $penetapan    = $detail->penetapan;
+        $pelaksanaan  = $detail->pelaksanaan;
+        $evaluasi     = $detail->evaluasi;
+        $pengendalian = $detail->pengendalian;
+        $peningkatan  = $detail->peningkatan;
+
+        // Hapus dulu data utama yang punya foreign key
+        $detail->delete();
+
+        // Hapus file dari storage jika ada
+        $deleteFile = function ($model) {
+            if ($model && $model->pendukung) {
+                // Ubah ke path relatif dari storage/app/public
+                $relativePath = ltrim(str_replace('../storage/', '', $model->pendukung), '/');
+
+                Log::info("Cek file: " . $relativePath);
+
+                if (Storage::disk('public')->exists($relativePath)) {
+                    Log::info("File ditemukan, menghapus: " . $relativePath);
+                    Storage::disk('public')->delete($relativePath);
+                } else {
+                    Log::warning("File tidak ditemukan: " . $relativePath);
+                }
+            }
+        };
+
+        // Hapus semua <img src="..."> di dalam HTML
+        $deleteImageFilesFromHtml = function ($html) {
+            if (!$html) return;
+
+            // Ambil semua <img src="..."> dari konten
+            preg_match_all('/<img[^>]+src=["\']([^"\']+)["\']/', $html, $matches);
+
+            foreach ($matches[1] as $src) {
+                // Hapus prefix "../storage/" atau "storage/"
+                $relativePath = ltrim(str_replace(['../storage/', 'storage/'], '', $src), '/');
+
+                // Full path di public
+                $fullPath = public_path('storage/' . $relativePath);
+                if (file_exists($fullPath)) {
+                    unlink($fullPath);
+                }
+            }
+        };
+
+        $deleteFile($penetapan);
+        $deleteFile($pelaksanaan);
+        $deleteFile($evaluasi);
+        $deleteFile($pengendalian);
+        $deleteFile($peningkatan);
+
+        // Hapus juga semua file di dalam isi HTML
+        $deleteImageFilesFromHtml($penetapan->penetapan ?? '');
+        $deleteImageFilesFromHtml($pelaksanaan->pelaksanaan ?? '');
+        $deleteImageFilesFromHtml($evaluasi->evaluasi ?? '');
+        $deleteImageFilesFromHtml($pengendalian->pengendalian ?? '');
+        $deleteImageFilesFromHtml($peningkatan->peningkatan ?? '');
+
+        // Hapus relasi setelah detail dihapus
+        $penetapan?->delete();
+        $pelaksanaan?->delete();
+        $evaluasi?->delete();
+        $pengendalian?->delete();
+        $peningkatan?->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data berhasil dihapus.',
+        ]);
     }
 }

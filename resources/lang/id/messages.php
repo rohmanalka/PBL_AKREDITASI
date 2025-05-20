@@ -27,7 +27,7 @@ return [
     'krit1_list' => ['Kriteria', 'Kriteria1'],
     'krit1_page' => 'Kriteria 1 - SIB Polinema',
     'sidedash' => 'Beranda',
-    'sidekrit' => 'Criteria',
+    'sidekrit' => 'Kriteria',
     'sidekrit1' => 'Kriteria 1',
     'sidekrit2' => 'Kriteria 2',
     'sidekrit3' => 'Kriteria 3',

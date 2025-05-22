@@ -80,14 +80,11 @@ class WelcomeController extends Controller
             }
 
             // Arahkan ke dashboard sesuai role_kode
-            switch ($roleKode) {
-                case 'KRIT1':
-                    return view('dashboard.kriteria', compact('breadcrumb', 'activeMenu', 'activeSubmenu', 'jumlah_tervalidasi', 'jumlah_revisi', 'menunggu_validasi'));
-                case 'KRIT2':
-                    return view('dashboard.kriteria', compact('breadcrumb', 'activeMenu', 'activeSubmenu', 'jumlah_tervalidasi', 'jumlah_revisi', 'menunggu_validasi'));
-                case 'DIR':
-                case 'KPSKJR':
-                    return view('dashboard.kds', compact('breadcrumb', 'activeMenu', 'activeSubmenu', 'jumlah_tervalidasi', 'jumlah_revisi', 'menunggu_validasi'));
+            switch (true) {
+                case in_array($roleKode, ['KRIT1', 'KRIT2', 'KRIT3', 'KRIT4', 'KRIT5', 'KRIT6', 'KRIT7', 'KRIT8', 'KRIT9', 'DIR', 'KPSKJR']):
+                    return view('dashboard.kriteria', compact('breadcrumb', 'activeMenu', 'activeSubmenu'));
+                case in_array($roleKode, ['SPI']):
+                    return view('dashboard.kds', compact('breadcrumb', 'activeMenu', 'activeSubmenu'));
                 default:
                     abort(403, 'Role tidak dikenali: ' . $roleKode);
             }

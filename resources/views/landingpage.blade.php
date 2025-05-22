@@ -87,7 +87,7 @@
     <main class="main">
         <!-- Hero Section -->
         <section id="hero" class="hero section dark-background">
-            <img src="{{ asset('gplanding/assets/img/hero-bg.jpg') }}" alt="" data-aos="fade-in">
+            <img src="{{ asset('gplanding/assets/img/landingpage-bg.png') }}" alt="" data-aos="fade-in">
             <div class="container">
                 <div class="row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
                     <div class="col-xl-6 col-lg-8">
@@ -112,29 +112,21 @@
 
                 <div class="row gy-4">
                     <div class="col-lg-6 order-1 order-lg-2">
-                        <img src="{{ asset('gplanding/assets/img/about.jpg') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('gplanding/assets/img/profilti-bg.png') }}" class="img-fluid" alt="">
                     </div>
                     <div class="col-lg-6 order-2 order-lg-1 content">
                         <p class="fst-italic">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore
-                            magna aliqua.
+                            Berawal dari Fakultas Non Gelar Teknologi Universitas Brawijaya yang beroperasi setelah disahkannya Surat Keputusan Presiden Republik Indonesia No. 59 Tahun 1982, 
+                            Politeknik Negeri Malang saat ini telah berkembang menjadi institusi pendidikan vokasi mandiri. Perubahan status tersebut tercantum dalam Surat Keputusan Menteri Pendidikan dan Kebudayaan No. 0313/O/1991.
+                            Politeknik Negeri Malang berupaya secara terus menerus untuk melakukan perubahan ke arah perbaikan, khususnya dalam bidang Pendidikan, Penelitian dan Pengabdian kepada Masyarakat yang berorientasi pada teknologi terapan. 
+                            Usaha tersebut menunjukkan hasil yang positif, yang ditunjukkan dengan pencapaian akreditasi A pada tahun 2018 (SK 409/SK/BANPT/Akred/PT/XII/2018) dan akreditasi internasional ASIC (Acreditation Service for International School Collage and University) pada tahun 2020 untuk 20 program studi.
                         </p>
                         <ul>
-                            <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat.</span></li>
-                            <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in
-                                    voluptate velit.</span></li>
-                            <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate trideta
-                                    storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
+                            <li><i class="bi bi-clock"></i> <span>Program studi D4-SIB didirikan pada tahun 2010 berdasarkan Surat Keputusan Menteri Pendidikan Nasional no.50/D/O/2010.
+                                Pada awalnya berdirinya, program studi D4 Sistem informasi bisnis berada di bawah jurusan Teknik Elektro, Politeknik NegeriMalang, sebelum pada akhirnya mulai tahun 2015, 
+                                setelah didirikannya jurusan Teknologi Informasi, program studi D4-SIB masuk ke dalamnya. 
+                                Pada tahun 2018, program studi D4-SIBmendapatkan peringkat B untuk akreditasi program studi dari BAN-PT, berdasarkan SK Nomor1810/SK/BANPT/Akred/DiplIV/VII/2018..</span></li>
                         </ul>
-                        <p>
-                            Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                            proident
-                        </p>
                     </div>
                 </div>
             </div>
@@ -172,8 +164,7 @@
                             <a href="service-details.html" class="stretched-link">
                                 <h3>{{ __('messages.visi') }}</h3>
                             </a>
-                            <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum
-                                hic non ut nesciunt dolorem.</p>
+                            <p>Menjadi Program Studi Unggul dalam Bidang Sistem Informasi Bisnis di Tingkat Nasional dan Internasional.</p>
                         </div>
                     </div><!-- End Service Item -->
 
@@ -185,8 +176,11 @@
                             <a href="service-details.html" class="stretched-link">
                                 <h3>{{ __('messages.misi') }}</h3>
                             </a>
-                            <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id
-                                voluptas adipisci eos earum corrupti.</p>
+                            <p>1. Melaksanakan pendidikan vokasi yang inovatif berdasarkan pada sistem pendidikan terapan dengan memanfaatkan kemajuan teknologi, sehingga mampu menghasilkan lulusan yang memiliki kompetensi di bidang sistem informasi bisnis dan siap bersaing di tingkat nasional dan global.
+                                2. Melaksanakan penelitian terapan berbasis produk dan jasa bidang Sistem Informasi Bisnis.
+                                3. Melaksanakan pengabdian masyarakat dengan menggunakan kemajuan Sistem Informasi Bisnis untuk meningkatkan kesejahteraan.
+                                4. Mewujudkan kerja sama yang saling menguntungkan dengan berbagai pihak baik di dalam maupun di luar negeri pada bidang Sistem Informasi Bisnis
+                            </p>
                         </div>
                     </div><!-- End Service Item -->
                 </div>

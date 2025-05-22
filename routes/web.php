@@ -8,7 +8,7 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\KriteriaSatuController;
 use App\Http\Controllers\KriteriaTigaController;
 use App\Http\Controllers\KriteriaEmpatController;
-use App\Http\Controllers\KriteriaLImaController;
+use App\Http\Controllers\KriteriaLimaController;
 use App\Http\Controllers\KriteriaEnamController;
 use App\Http\Controllers\KriteriaTujuhController;
 use App\Http\Controllers\KriteriaDelapanController;
@@ -164,7 +164,7 @@ Route::middleware(['authorize:KRIT5'])->group(function () {
         Route::post('/list', [KriteriaLimaController::class, 'list']);
         // Ajax Tambah
         Route::get('/input', [KriteriaLimaController::class, 'create']);
-        Route::post('/store', [KriteriaLimaontroller::class, 'store']);
+        Route::post('/store', [KriteriaLimaCntroller::class, 'store']);
         Route::get('/{id}/show', [KriteriaLimaController::class, 'show']);
         Route::get('/preview/{id}', [KriteriaLimaController::class, 'preview'])->name('preview.ppepp');
         Route::post('/upload', [KriteriaLimaController::class, 'uploadImage'])->name('image.upload');
@@ -177,8 +177,8 @@ Route::middleware(['authorize:KRIT5'])->group(function () {
     });
 });
 
-Route::middleware(['authorize:KRIT7'])->group(function () {
-    Route::group(['prefix' => '/kriteria2'], function () {
+Route::middleware(['authorize:KRIT6'])->group(function () {
+    Route::group(['prefix' => '/kriteria6'], function () {
         Route::get('/', [KriteriaEnamController::class, 'index']);
         Route::post('/list', [KriteriaEnamController::class, 'list']);
         // Ajax Tambah
@@ -197,7 +197,7 @@ Route::middleware(['authorize:KRIT7'])->group(function () {
 });
 
 Route::middleware(['authorize:KRIT7'])->group(function () {
-    Route::group(['prefix' => '/kriteria2'], function () {
+    Route::group(['prefix' => '/kriteria7'], function () {
         Route::get('/', [KriteriaTujuhController::class, 'index']);
         Route::post('/list', [KriteriaTujuhController::class, 'list']);
         // Ajax Tambah
@@ -215,8 +215,8 @@ Route::middleware(['authorize:KRIT7'])->group(function () {
     });
 });
 
-Route::middleware(['authorize:KRIT7'])->group(function () {
-    Route::group(['prefix' => '/kriteria2'], function () {
+Route::middleware(['authorize:KRIT8'])->group(function () {
+    Route::group(['prefix' => '/kriteria8'], function () {
         Route::get('/', [KriteriaDelapanController::class, 'index']);
         Route::post('/list', [KriteriaDelapanController::class, 'list']);
         // Ajax Tambah
@@ -234,8 +234,8 @@ Route::middleware(['authorize:KRIT7'])->group(function () {
     });
 });
 
-Route::middleware(['authorize:KRIT7'])->group(function () {
-    Route::group(['prefix' => '/kriteria2'], function () {
+Route::middleware(['authorize:KRIT9'])->group(function () {
+    Route::group(['prefix' => '/kriteria9'], function () {
         Route::get('/', [KriteriaSembilanController::class, 'index']);
         Route::post('/list', [KriteriaSembilanController::class, 'list']);
         // Ajax Tambah

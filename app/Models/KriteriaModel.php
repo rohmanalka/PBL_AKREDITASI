@@ -46,6 +46,6 @@ class KriteriaModel extends Model
 
     public function detail(): HasMany
     {
-        return $this->hasMany(DetailKriteriaModel::class);
+        return $this->hasMany(DetailKriteriaModel::class, 'id_kriteria', 'id_kriteria');
     }
 }

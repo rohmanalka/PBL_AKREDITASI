@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('argon/assets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('argon/assets/img/favicon.png') }}">
     <title>
-        Argon Dashboard 3 by Creative Tim
+        Sistem Akreditasi by Kelompok 2
     </title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--Fonts and icons-->

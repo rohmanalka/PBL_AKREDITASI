@@ -3,18 +3,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\ValidateController;
 use App\Http\Controllers\KriteriaDuaController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\KriteriaEnamController;
+use App\Http\Controllers\KriteriaLimaController;
 use App\Http\Controllers\KriteriaSatuController;
 use App\Http\Controllers\KriteriaTigaController;
 use App\Http\Controllers\KriteriaEmpatController;
-use App\Http\Controllers\KriteriaLimaController;
-use App\Http\Controllers\KriteriaEnamController;
 use App\Http\Controllers\KriteriaTujuhController;
 use App\Http\Controllers\KriteriaDelapanController;
-use App\Http\Controllers\KriteriaSembilanController;
 use App\Http\Controllers\SuperAdmin\RoleController;
 use App\Http\Controllers\SuperAdmin\UserController;
+use App\Http\Controllers\KriteriaSembilanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -164,7 +165,7 @@ Route::middleware(['authorize:KRIT5'])->group(function () {
         Route::post('/list', [KriteriaLimaController::class, 'list']);
         // Ajax Tambah
         Route::get('/input', [KriteriaLimaController::class, 'create']);
-        Route::post('/store', [KriteriaLimaCntroller::class, 'store']);
+        Route::post('/store', [KriteriaLimaController::class, 'store']);
         Route::get('/{id}/show', [KriteriaLimaController::class, 'show']);
         Route::get('/preview/{id}', [KriteriaLimaController::class, 'preview'])->name('preview.ppepp');
         Route::post('/upload', [KriteriaLimaController::class, 'uploadImage'])->name('image.upload');
@@ -250,5 +251,15 @@ Route::middleware(['authorize:KRIT9'])->group(function () {
         // Ajax Delete
         Route::get('/{id}/delete', [KriteriaSembilanController::class, 'confirm']);
         Route::delete('/{id}/delete', [KriteriaSembilanController::class, 'delete']);
+    });
+});
+
+Route::middleware(['authorize:KPSKJR'])->group(function () {
+    Route::group(['prefix' => '/validasi'], function () {
+        Route::get('/', [ValidateController::class, 'index']);
+        Route::post('/list', [ValidateController::class, 'list']);
+        Route::get('/{id}/show', [ValidateController::class, 'show']);
+        Route::get('/preview/{id}', [ValidateController::class, 'preview'])->name('preview.ppepp');
+        Route::put('/{id}/update', [ValidateController::class, 'update']);
     });
 });

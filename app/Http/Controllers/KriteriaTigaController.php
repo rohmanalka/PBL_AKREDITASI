@@ -22,12 +22,12 @@ class KriteriaTigaController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => ('Criterion Three'),
-            'list' => ['Criterion','Criterion3']
+            'title' => __('kriteria.kriteria.3.title'),
+            'list' => __('kriteria.kriteria.3.list'),
         ];
 
         $page = (object) [
-            'title' => ('Criterion 3 - SIB Polinema'),
+            'title' => __('kriteria.kriteria.3.page'),
         ];
 
         $activeMenu = 'kriteria';
@@ -64,12 +64,12 @@ class KriteriaTigaController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => ('Criterion Three'),
-            'list' => ['Criterion','Criterion3']
+            'title' => __('kriteria.kriteria.3.title'),
+            'list' => __('kriteria.kriteria.3.list'),
         ];
 
         $page = (object) [
-            'title' => ('Criterion 3 - SIB Polinema'),
+            'title' => __('kriteria.kriteria.3.page'),
         ];
 
         $activeMenu = 'kriteria';
@@ -109,7 +109,6 @@ class KriteriaTigaController extends Controller
             ]);
         }
 
-        // Upload helper
         $uploadFile = fn($file, $folder) =>
         $file ? $file->store("storage/pendukung/{$folder}", 'public') : null;
 
@@ -177,11 +176,10 @@ class KriteriaTigaController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
-        // Konversi path relatif ke absolut
         if ($detail->penetapan && $detail->penetapan->penetapan) {
             $detail->penetapan->penetapan = str_replace(
                 '../storage/',
-                rtrim(url('storage'), '/') . '/', // Gunakan url() helper bukan asset()
+                rtrim(url('storage'), '/') . '/',
                 $detail->penetapan->penetapan
             );
         }
@@ -189,12 +187,12 @@ class KriteriaTigaController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => 'Edit Kriteria Tiga',
-            'list' => ['Kriteria', 'kriteria3', 'Edit']
+            'title' => __('kriteria.kriteria.3.titleedit'),
+            'list' => __('kriteria.kriteria.3.listedit'),
         ];
 
         $page = (object) [
-            'title' => 'Edit Kriteria 3 - Statuta Polinema',
+            'title' => __('kriteria.kriteria.3.pageedit'),
         ];
 
         $activeMenu = 'kriteria';
@@ -278,8 +276,7 @@ class KriteriaTigaController extends Controller
             $peningkatan->save();
         }
 
-        // Update status di DetailKriteria
-        $detail->status = $request->status; // 'save' atau 'submit'
+        $detail->status = $request->status;
         $detail->save();
 
         return response()->json([
@@ -291,17 +288,7 @@ class KriteriaTigaController extends Controller
     public function show(string $id)
     {
         $details = DetailKriteriaModel::with('kriteria')->find($id);
-
-        $breadcrumb = (object) [
-            'title' => 'Detail Kriteria 3',
-            'list' => ['Home', 'Detail'],
-        ];
-
-        $page = (object) [
-            'title' => 'Detail',
-        ];
-
-        return view('kriteria3.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('kriteria3.show', ['details' => $details, 'id' => $id]);
     }
 
     private function convertImagesToBase64($html)
@@ -314,7 +301,6 @@ class KriteriaTigaController extends Controller
         foreach ($images as $img) {
             $src = $img->getAttribute('src');
 
-            // Bersihkan path agar sesuai dengan public_path
             $src = str_replace(['../', '/storage'], ['', 'storage'], $src);
             $fullPath = public_path($src);
 
@@ -352,9 +338,8 @@ class KriteriaTigaController extends Controller
         try {
             $section = $request->input('section');
 
-            // Simpan ke folder "pendukung/{section}"
             $path = $request->file('image')->store("pendukung/{$section}", 'public');
-            $url = asset("storage/{$path}"); // Gunakan URL publik
+            $url = asset("storage/{$path}");
 
             return response()->json([
                 'status' => true,
@@ -371,17 +356,7 @@ class KriteriaTigaController extends Controller
     public function confirm(string $id)
     {
         $details = DetailKriteriaModel::with('kriteria')->find($id);
-
-        $breadcrumb = (object) [
-            'title' => 'Data Kriteria 3',
-            'list' => ['Home', 'Hapus'],
-        ];
-
-        $page = (object) [
-            'title' => 'Hapus',
-        ];
-
-        return view('kriteria3.confirm', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('kriteria3.confirm', ['details' => $details, 'id' => $id]);
     }
 
     public function delete(Request $request, $id)
@@ -394,20 +369,16 @@ class KriteriaTigaController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
-        // Simpan relasi sebelum hapus detail
         $penetapan    = $detail->penetapan;
         $pelaksanaan  = $detail->pelaksanaan;
         $evaluasi     = $detail->evaluasi;
         $pengendalian = $detail->pengendalian;
         $peningkatan  = $detail->peningkatan;
 
-        // Hapus dulu data utama yang punya foreign key
         $detail->delete();
 
-        // Hapus file dari storage jika ada
         $deleteFile = function ($model) {
             if ($model && $model->pendukung) {
-                // Ubah ke path relatif dari storage/app/public
                 $relativePath = ltrim(str_replace('../storage/', '', $model->pendukung), '/');
 
                 Log::info("Cek file: " . $relativePath);
@@ -421,18 +392,13 @@ class KriteriaTigaController extends Controller
             }
         };
 
-        // Hapus semua <img src="..."> di dalam HTML
         $deleteImageFilesFromHtml = function ($html) {
             if (!$html) return;
 
-            // Ambil semua <img src="..."> dari konten
             preg_match_all('/<img[^>]+src=["\']([^"\']+)["\']/', $html, $matches);
 
             foreach ($matches[1] as $src) {
-                // Hapus prefix "../storage/" atau "storage/"
-                $relativePath = ltrim(str_replace(['../storage/', 'storage/'], '', $src), '/');
-
-                // Full path di public
+                $relativePath = ltrim(str_replace(['../../storage/', '../storage/', 'storage/'], '', $src), '/');
                 $fullPath = public_path('storage/' . $relativePath);
                 if (file_exists($fullPath)) {
                     unlink($fullPath);
@@ -446,14 +412,12 @@ class KriteriaTigaController extends Controller
         $deleteFile($pengendalian);
         $deleteFile($peningkatan);
 
-        // Hapus juga semua file di dalam isi HTML
         $deleteImageFilesFromHtml($penetapan->penetapan ?? '');
         $deleteImageFilesFromHtml($pelaksanaan->pelaksanaan ?? '');
         $deleteImageFilesFromHtml($evaluasi->evaluasi ?? '');
         $deleteImageFilesFromHtml($pengendalian->pengendalian ?? '');
         $deleteImageFilesFromHtml($peningkatan->peningkatan ?? '');
 
-        // Hapus relasi setelah detail dihapus
         $penetapan?->delete();
         $pelaksanaan?->delete();
         $evaluasi?->delete();

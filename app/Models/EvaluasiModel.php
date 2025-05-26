@@ -13,7 +13,7 @@ class EvaluasiModel extends Model
 
     protected $table = "t_evaluasi";
     protected $primaryKey = "id_evaluasi";
-    protected $fillable = ['id_kriteria', 'evaluasi', 'pendukung'];
+    protected $fillable = ['id_kriteria', 'deskripsi', 'pendukung'];
 
     public function kriteria(): BelongsTo
     {

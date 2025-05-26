@@ -4,33 +4,33 @@
         <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content shadow-lg glass-effect border-0 p-4">
                 <div class="text-center mb-4">
-                    <h4 class="text-white fw-bold">🔐 Sistem Akreditasi</h4>
-                    <p class="text-light mb-0">Silakan masuk untuk melanjutkan</p>
+                    <h4 class="text-white fw-bold">🔐 {{ __('landingpg.judullanding') }}</h4>
+                    <p class="text-light mb-0">{{ __('landingpg.login_title') }}</p>
                 </div>
 
                 <div class="form-group mb-4 position-relative floating-label-group">
                     <input type="text" name="username" id="username" class="form-control text-white" placeholder=" "
                         required>
-                    <label for="username" class="floating-label">Username</label>
+                    <label for="username" class="floating-label">{{ __('landingpg.username') }}</label>
                     <small id="error-username" class="error-text form-text text-danger"></small>
                 </div>
 
                 <div class="form-group mb-4 position-relative floating-label-group">
                     <input type="password" name="password" id="password" class="form-control text-white"
                         placeholder=" " required>
-                    <label for="password" class="floating-label">Password</label>
+                    <label for="password" class="floating-label">{{ __('landingpg.pass') }}</label>
                     <small id="error-password" class="error-text form-text text-danger"></small>
                 </div>
 
 
                 <div class="form-check form-switch mb-3">
                     <input class="form-check-input" type="checkbox" name="remember" id="remember" checked>
-                    <label class="form-check-label text-light" for="remember">Remember me</label>
+                    <label class="form-check-label text-light" for="remember">{{ __('landingpg.remember') }}</label>
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-danger me-4" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-info">Login</button>
+                    <button type="button" class="btn btn-outline-danger me-4" data-bs-dismiss="modal">{{ __('landingpg.cancel') }}</button>
+                    <button type="submit" class="btn btn-info">{{ __('landingpg.log') }}</button>
                 </div>
             </div>
         </div>

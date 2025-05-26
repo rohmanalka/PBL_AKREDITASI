@@ -22,12 +22,12 @@ class KriteriaDuaController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => __('messages.krit2_title'),
-            'list' => __('messages.krit2_list'),
+            'title' => __('kriteria.kriteria.2.title'),
+            'list' => __('kriteria.kriteria.2.list'),
         ];
 
         $page = (object) [
-            'title' => __('messages.krit2_page'),
+            'title' => __('kriteria.kriteria.2.page'),
         ];
 
         $activeMenu = 'kriteria';
@@ -64,12 +64,12 @@ class KriteriaDuaController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => __('messages.krit2_title'),
-            'list' => __('messages.krit2_list')
+            'title' => __('kriteria.kriteria.2.title'),
+            'list' => __('kriteria.kriteria.2.list'),
         ];
 
         $page = (object) [
-            'title' => __('messages.krit2_page'),
+            'title' => __('kriteria.kriteria.2.page'),
         ];
 
         $activeMenu = 'kriteria';
@@ -177,11 +177,10 @@ class KriteriaDuaController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
-        // Konversi path relatif ke absolut
         if ($detail->penetapan && $detail->penetapan->penetapan) {
             $detail->penetapan->penetapan = str_replace(
                 '../storage/',
-                rtrim(url('storage'), '/') . '/', // Gunakan url() helper bukan asset()
+                rtrim(url('storage'), '/') . '/',
                 $detail->penetapan->penetapan
             );
         }
@@ -189,12 +188,12 @@ class KriteriaDuaController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => 'Edit Kriteria Satu',
-            'list' => ['Kriteria', 'kriteria2', 'Edit']
+            'title' => __('kriteria.kriteria.2.titleedit'),
+            'list' => __('kriteria.kriteria.2.listedit'),
         ];
 
         $page = (object) [
-            'title' => 'Edit Kriteria 1 - Statuta Polinema',
+            'title' => __('kriteria.kriteria.2.pageedit'),
         ];
 
         $activeMenu = 'kriteria';
@@ -278,8 +277,7 @@ class KriteriaDuaController extends Controller
             $peningkatan->save();
         }
 
-        // Update status di DetailKriteria
-        $detail->status = $request->status; // 'save' atau 'submit'
+        $detail->status = $request->status;
         $detail->save();
 
         return response()->json([
@@ -292,17 +290,7 @@ class KriteriaDuaController extends Controller
     public function show(string $id)
     {
         $details = DetailKriteriaModel::with('kriteria')->find($id);
-
-        $breadcrumb = (object) [
-            'title' => 'Detail Kriteria 1',
-            'list' => ['Home', 'Detail'],
-        ];
-
-        $page = (object) [
-            'title' => 'Detail',
-        ];
-
-        return view('kriteria2.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('kriteria2.show', ['details' => $details, 'id' => $id]);
     }
 
     private function convertImagesToBase64($html)
@@ -315,7 +303,6 @@ class KriteriaDuaController extends Controller
         foreach ($images as $img) {
             $src = $img->getAttribute('src');
 
-            // Bersihkan path agar sesuai dengan public_path
             $src = str_replace(['../', '/storage'], ['', 'storage'], $src);
             $fullPath = public_path($src);
 
@@ -352,10 +339,8 @@ class KriteriaDuaController extends Controller
 
         try {
             $section = $request->input('section');
-
-            // Simpan ke folder "pendukung/{section}"
             $path = $request->file('image')->store("pendukung/{$section}", 'public');
-            $url = asset("storage/{$path}"); // Gunakan URL publik
+            $url = asset("storage/{$path}");
 
             return response()->json([
                 'status' => true,
@@ -372,17 +357,7 @@ class KriteriaDuaController extends Controller
     public function confirm(string $id)
     {
         $details = DetailKriteriaModel::with('kriteria')->find($id);
-
-        $breadcrumb = (object) [
-            'title' => 'Data Kriteria 1',
-            'list' => ['Home', 'Hapus'],
-        ];
-
-        $page = (object) [
-            'title' => 'Hapus',
-        ];
-
-        return view('kriteria2.confirm', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('kriteria2.confirm', ['details' => $details, 'id' => $id]);
     }
 
     public function delete(Request $request, $id)
@@ -395,20 +370,16 @@ class KriteriaDuaController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
-        // Simpan relasi sebelum hapus detail
         $penetapan    = $detail->penetapan;
         $pelaksanaan  = $detail->pelaksanaan;
         $evaluasi     = $detail->evaluasi;
         $pengendalian = $detail->pengendalian;
         $peningkatan  = $detail->peningkatan;
 
-        // Hapus dulu data utama yang punya foreign key
         $detail->delete();
 
-        // Hapus file dari storage jika ada
         $deleteFile = function ($model) {
             if ($model && $model->pendukung) {
-                // Ubah ke path relatif dari storage/app/public
                 $relativePath = ltrim(str_replace('../storage/', '', $model->pendukung), '/');
 
                 Log::info("Cek file: " . $relativePath);
@@ -422,18 +393,13 @@ class KriteriaDuaController extends Controller
             }
         };
 
-        // Hapus semua <img src="..."> di dalam HTML
         $deleteImageFilesFromHtml = function ($html) {
             if (!$html) return;
 
-            // Ambil semua <img src="..."> dari konten
             preg_match_all('/<img[^>]+src=["\']([^"\']+)["\']/', $html, $matches);
 
             foreach ($matches[1] as $src) {
-                // Hapus prefix "../storage/" atau "storage/"
-                $relativePath = ltrim(str_replace(['../storage/', 'storage/'], '', $src), '/');
-
-                // Full path di public
+                $relativePath = ltrim(str_replace(['../../storage/', '../storage/', 'storage/'], '', $src), '/');
                 $fullPath = public_path('storage/' . $relativePath);
                 if (file_exists($fullPath)) {
                     unlink($fullPath);
@@ -447,14 +413,12 @@ class KriteriaDuaController extends Controller
         $deleteFile($pengendalian);
         $deleteFile($peningkatan);
 
-        // Hapus juga semua file di dalam isi HTML
         $deleteImageFilesFromHtml($penetapan->penetapan ?? '');
         $deleteImageFilesFromHtml($pelaksanaan->pelaksanaan ?? '');
         $deleteImageFilesFromHtml($evaluasi->evaluasi ?? '');
         $deleteImageFilesFromHtml($pengendalian->pengendalian ?? '');
         $deleteImageFilesFromHtml($peningkatan->peningkatan ?? '');
 
-        // Hapus relasi setelah detail dihapus
         $penetapan?->delete();
         $pelaksanaan?->delete();
         $evaluasi?->delete();

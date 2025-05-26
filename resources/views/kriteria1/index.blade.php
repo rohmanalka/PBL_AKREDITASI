@@ -130,7 +130,9 @@
                                 `<button class="btn btn-info btn-xs mt-3" onclick="modalAction('${base_url}/${id}/show')">{{ __('kriteria.detail') }}</button>`;
                             // Jika status submit, disable tombol edit
                             let editBtn = '';
-                            if (status === 'submitted') {
+
+                            if (status === 'submitted' || status === 'divalidasi_kajur' ||
+                                status === 'tervalidasi') {
                                 editBtn =
                                     `<a class="btn btn-secondary btn-xs disabled mt-3" href="#">{{ __('kriteria.edit') }}</a>`;
                             } else {

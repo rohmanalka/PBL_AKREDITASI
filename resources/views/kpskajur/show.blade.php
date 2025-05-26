@@ -23,10 +23,10 @@
                 @csrf
                 @method('PUT')
 
-                <div class="modal-header">
-                    <h5 class="modal-title">Detail Data Kriteria</h5>
+                <div class="modal-header position-relative">
+                    <h5 class="modal-title w-100 text-center">Validasi Data Kriteria</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
 
@@ -47,7 +47,8 @@
                                     <td>
                                         <select name="status" class="form-control" required>
                                             <option value="">-- Pilih Status --</option>
-                                            <option value="acc1" {{ $details->status == 'acc1' ? 'selected' : '' }}>
+                                            <option value="divalidasi_kajur"
+                                                {{ $details->status == 'divalidasi_kajur' ? 'selected' : '' }}>
                                                 Dokumen Diterima</option>
                                             <option value="revisi" {{ $details->status == 'revisi' ? 'selected' : '' }}>
                                                 Dokumen Ditolak</option>
@@ -79,6 +80,24 @@
         </div>
     </div>
 
+    <style>
+        .close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 10;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+    </style>
 
     <script>
         $('.close, .btn-secondary').on('click', function() {

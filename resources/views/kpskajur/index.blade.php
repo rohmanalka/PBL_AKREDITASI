@@ -116,16 +116,16 @@
                                     case 'save':
                                         badgeClass = 'bg-secondary';
                                         break;
-                                    case 'submit':
+                                    case 'submitted':
                                         badgeClass = 'bg-primary';
                                         break;
                                     case 'revisi':
                                         badgeClass = 'bg-warning text-dark';
                                         break;
-                                    case 'acc1':
+                                    case 'divalidasi_kajur':
                                         badgeClass = 'bg-success';
                                         break;
-                                    case 'acc2':
+                                    case 'tervalidasi':
                                         badgeClass = 'bg-info';
                                         break;
                                 }
@@ -140,13 +140,16 @@
                             render: function(data, type, row) {
                                 let id = row.id_detail_kriteria;
                                 let status = row.status;
-                                let disabled = (status === 'revisi' || status === 'acc1') ?
-                                    'disabled' : '';
+                                let isDisabled = (status === 'revisi' || status === 'divalidasi_kajur');
+                                let disabledAttr = isDisabled ? 'disabled' : '';
+                                let buttonClass = isDisabled ? 'btn-secondary' : 'btn-info';
+
                                 let detailBtn = `
-                                    <button class="btn btn-info btn-xs mt-3" onclick="modalAction('${base_url}/${id}/show')" ${disabled}>
+                                    <button class="btn ${buttonClass} btn-xs mt-3" onclick="modalAction('${base_url}/${id}/show')" ${disabledAttr}>
                                         Validasi
                                     </button>`;
                                 return `${detailBtn}`;
+
                             }
                         }
                     ]

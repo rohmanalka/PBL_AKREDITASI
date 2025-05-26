@@ -81,7 +81,6 @@ class ValidateController extends Controller
         foreach ($images as $img) {
             $src = $img->getAttribute('src');
 
-            // Bersihkan path agar sesuai dengan public_path
             $src = str_replace(['../', '/storage'], ['', 'storage'], $src);
             $fullPath = public_path($src);
 
@@ -112,7 +111,7 @@ class ValidateController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:acc1,revisi',
+            'status' => 'required|in:divalidasi_kajur,revisi',
             'komentar' => 'required|string',
         ]);
 

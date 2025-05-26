@@ -26,12 +26,12 @@ class DetailKriteriaModel extends Model
     public function getStatusBadgeClass(): string
     {
         return match ($this->status) {
-            'save'    => 'bg-secondary',
-            'submit'  => 'bg-primary',
-            'revisi'  => 'bg-warning text-dark',
-            'acc1'    => 'bg-success',
-            'acc2'    => 'bg-info',
-            default   => 'bg-secondary'
+            'save'              => 'bg-secondary',
+            'submitted'         => 'bg-primary',
+            'revisi'            => 'bg-warning text-dark',
+            'divalidasi_kajur'  => 'bg-success',
+            'tervalidasi'       => 'bg-info',
+            default             => 'bg-secondary'
         };
     }
     public function penetapan(): BelongsTo

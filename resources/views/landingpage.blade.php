@@ -56,14 +56,14 @@
             <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">{{ __('messages.judulhead') }}</h1>
+                <h1 class="sitename">{{ __('landingpg.judulhead') }}</h1>
                 <span></span>
             </a>
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="#hero" class="active">{{ __('messages.home') }}<br></a></li>
-                    <li><a href="#about">{{ __('messages.about') }}</a></li>
-                    <li><a href="#team">{{ __('messages.team') }}</a></li>
+                    <li><a href="#hero" class="active">{{ __('landingpg.home') }}<br></a></li>
+                    <li><a href="#about">{{ __('landingpg.about') }}</a></li>
+                    <li><a href="#team">{{ __('landingpg.team') }}</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -71,14 +71,14 @@
                 <!-- Switch bahasa tanpa gambar -->
                 <div class="form-check form-switch mb-0 me-3">
                     <input class="form-check-input" type="checkbox" id="languageToggle" onchange="toggleLanguage()" />
-                    <label class="form-check-label fw-bold" for="languageToggle" style="cursor:pointer;"
+                    <label class="form-check-label text-white" for="languageToggle" style="cursor:pointer;"
                         id="language-label">ID</label>
                 </div>
 
                 <!-- Tombol Masuk -->
                 <button onclick="modalAction('{{ url('login') }}')" class="btn-getstarted"
                     style="background-color: transparent">
-                    {{ __('messages.login') }}
+                    {{ __('landingpg.login') }}
                 </button>
             </div>
         </div>
@@ -91,8 +91,8 @@
             <div class="container">
                 <div class="row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
                     <div class="col-xl-6 col-lg-8">
-                        <h2>{{ __('messages.judullanding') }}</h2>
-                        <p>{{ __('messages.prodi') }}</p>
+                        <h2>{{ __('landingpg.judullanding') }}</h2>
+                        <p>{{ __('landingpg.prodi') }}</p>
                     </div>
                 </div>
             </div>
@@ -105,8 +105,8 @@
         <!-- About Section -->
         <section id="about" class="about section">
             <div class="container section-title" data-aos="fade-up">
-                <h2>{{ __('messages.about') }}</h2>
-                <p>{{ __('messages.profil') }}</p>
+                <h2>{{ __('landingpg.about') }}</h2>
+                <p>{{ __('landingpg.profil') }}</p>
             </div><!-- End Section Title -->
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -116,16 +116,10 @@
                     </div>
                     <div class="col-lg-6 order-2 order-lg-1 content">
                         <p class="fst-italic">
-                            Berawal dari Fakultas Non Gelar Teknologi Universitas Brawijaya yang beroperasi setelah disahkannya Surat Keputusan Presiden Republik Indonesia No. 59 Tahun 1982, 
-                            Politeknik Negeri Malang saat ini telah berkembang menjadi institusi pendidikan vokasi mandiri. Perubahan status tersebut tercantum dalam Surat Keputusan Menteri Pendidikan dan Kebudayaan No. 0313/O/1991.
-                            Politeknik Negeri Malang berupaya secara terus menerus untuk melakukan perubahan ke arah perbaikan, khususnya dalam bidang Pendidikan, Penelitian dan Pengabdian kepada Masyarakat yang berorientasi pada teknologi terapan. 
-                            Usaha tersebut menunjukkan hasil yang positif, yang ditunjukkan dengan pencapaian akreditasi A pada tahun 2018 (SK 409/SK/BANPT/Akred/PT/XII/2018) dan akreditasi internasional ASIC (Acreditation Service for International School Collage and University) pada tahun 2020 untuk 20 program studi.
+                            {{ __('landingpg.profile')}}
                         </p>
                         <ul>
-                            <li><i class="bi bi-clock"></i> <span>Program studi D4-SIB didirikan pada tahun 2010 berdasarkan Surat Keputusan Menteri Pendidikan Nasional no.50/D/O/2010.
-                                Pada awalnya berdirinya, program studi D4 Sistem informasi bisnis berada di bawah jurusan Teknik Elektro, Politeknik NegeriMalang, sebelum pada akhirnya mulai tahun 2015, 
-                                setelah didirikannya jurusan Teknologi Informasi, program studi D4-SIB masuk ke dalamnya. 
-                                Pada tahun 2018, program studi D4-SIBmendapatkan peringkat B untuk akreditasi program studi dari BAN-PT, berdasarkan SK Nomor1810/SK/BANPT/Akred/DiplIV/VII/2018..</span></li>
+                            <li><i class="bi bi-clock"></i> <span>{{ __('landingpg.profile_prodi')}}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -136,8 +130,8 @@
         <section id="services" class="services section">
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>{{ __('messages.about') }}</h2>
-                <p>{{ __('messages.vismis') }}</p>
+                <h2>{{ __('landingpg.about') }}</h2>
+                <p>{{ __('landingpg.vismis') }}</p>
             </div><!-- End Section Title -->
 
             <div class="container">
@@ -149,7 +143,7 @@
                                 <i class="fa-solid fa-bullseye"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
-                                <h3>{{ __('messages.sasaran') }}</h3>
+                                <h3>{{ __('landingpg.sasaran') }}</h3>
                             </a>
                             <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores
                                 iure perferendis tempore et consequatur.</p>
@@ -162,7 +156,7 @@
                                 <i class="bi bi-broadcast"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
-                                <h3>{{ __('messages.visi') }}</h3>
+                                <h3>{{ __('landingpg.visi') }}</h3>
                             </a>
                             <p>Menjadi Program Studi Unggul dalam Bidang Sistem Informasi Bisnis di Tingkat Nasional dan Internasional.</p>
                         </div>
@@ -174,7 +168,7 @@
                                 <i class="bi bi-easel"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
-                                <h3>{{ __('messages.misi') }}</h3>
+                                <h3>{{ __('landingpg.misi') }}</h3>
                             </a>
                             <p>1. Melaksanakan pendidikan vokasi yang inovatif berdasarkan pada sistem pendidikan terapan dengan memanfaatkan kemajuan teknologi, sehingga mampu menghasilkan lulusan yang memiliki kompetensi di bidang sistem informasi bisnis dan siap bersaing di tingkat nasional dan global.
                                 2. Melaksanakan penelitian terapan berbasis produk dan jasa bidang Sistem Informasi Bisnis.
@@ -191,8 +185,8 @@
         <section id="team" class="team section">
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>{{ __('messages.team') }}</h2>
-                <p>{{ __('messages.we') }}</p>
+                <h2>{{ __('landingpg.team') }}</h2>
+                <p>{{ __('landingpg.we') }}</p>
             </div><!-- End Section Title -->
 
             <div class="container">
@@ -298,33 +292,33 @@
                 <div class="row gy-4">
                     <div class="col-lg-4 col-md-6 footer-about">
                         <a href="index.html" class="logo d-flex align-items-center">
-                            <span class="sitename">{{ __('messages.judulhead') }}</span>
+                            <span class="sitename">{{ __('landingpg.judulhead') }}</span>
                         </a>
                         <div class="footer-contact pt-3">
                             <p>JTI POLINEMA</p>
-                            <p>{{ __('messages.prodi') }}</p>
+                            <p>{{ __('landingpg.prodi') }}</p>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-3 footer-links">
-                        <h4>{{ __('messages.link') }}</h4>
+                        <h4>{{ __('landingpg.link') }}</h4>
                         <ul>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> {{ __('messages.home') }}</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#about"> {{ __('messages.about') }}</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> {{ __('messages.team') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> {{ __('landingpg.home') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#about"> {{ __('landingpg.about') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> {{ __('landingpg.team') }}</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-3 col-md-3 footer-links">
-                        <h4>{{ __('messages.informasi') }}</h4>
+                        <h4>{{ __('landingpg.informasi') }}</h4>
                         <ul>
-                            <p><strong>{{ __('messages.alamat') }}:</strong> <span> Jl. Soekarno Hatta No.9</span></p>
-                            <p><strong>{{ __('messages.kontak') }}:</strong> <span>(0341) 404424</span></p>
+                            <p><strong>{{ __('landingpg.alamat') }}:</strong> <span> Jl. Soekarno Hatta No.9</span></p>
+                            <p><strong>{{ __('landingpg.kontak') }}:</strong> <span>(0341) 404424</span></p>
                         </ul>
                     </div>
 
                     <div class="col-lg-2 col-md-3 footer-links">
-                        <h4>{{ __('messages.follow') }}</h4>
+                        <h4>{{ __('landingpg.follow') }}</h4>
                         <div class="social-links d-flex mt-2">
                             <a href=""><i class="bi bi-instagram"></i></a>
                         </div>

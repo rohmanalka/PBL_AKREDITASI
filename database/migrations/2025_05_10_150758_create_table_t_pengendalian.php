@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('t_pengendalian', function (Blueprint $table) {
             $table->id('id_pengendalian');
             $table->unsignedBigInteger('id_kriteria')->index();
-            $table->text('pengendalian')->nullable();
+            $table->text('deskripsi')->nullable();
             $table->string('pendukung')->nullable();
             $table->timestamps();
 

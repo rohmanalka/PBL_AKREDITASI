@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('t_evaluasi', function (Blueprint $table) {
             $table->id('id_evaluasi');
             $table->unsignedBigInteger('id_kriteria')->index();
-            $table->text('evaluasi')->nullable();
+            $table->text('deskripsi')->nullable();
             $table->string('pendukung')->nullable();
             $table->timestamps();
 

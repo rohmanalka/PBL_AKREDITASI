@@ -22,12 +22,12 @@ class KriteriaEmpatController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => ('Criterion Four'),
-            'list' => ['Criterion','Criterion4']
+            'title' => __('kriteria.kriteria.4.title'),
+            'list' => __('kriteria.kriteria.4.list'),
         ];
 
         $page = (object) [
-            'title' => ('Criterion 4 - SIB Polinema'),
+            'title' => __('kriteria.kriteria.4.page'),
         ];
 
         $activeMenu = 'kriteria';
@@ -54,7 +54,6 @@ class KriteriaEmpatController extends Controller
         }
 
         return DataTables::of($details)
-            // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addIndexColumn()
             ->make(true);
     }
@@ -64,12 +63,12 @@ class KriteriaEmpatController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => ('Criterion Four'),
-            'list' => ['Criterion','Criterion4']
+            'title' => __('kriteria.kriteria.4.title'),
+            'list' => __('kriteria.kriteria.4.list'),
         ];
 
         $page = (object) [
-            'title' => ('Criterion 4 - SIB Polinema'),
+            'title' => __('kriteria.kriteria.4.page'),
         ];
 
         $activeMenu = 'kriteria';
@@ -91,13 +90,13 @@ class KriteriaEmpatController extends Controller
             'evaluasi'            => 'nullable|string',
             'pengendalian'        => 'nullable|string',
             'peningkatan'         => 'nullable|string',
-            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
             'id_kriteria'         => 'required|exists:m_kriteria,id_kriteria',
-            'status'              => 'required|in:save,submit',
+            'status'              => 'required|in:save,submitted',
         ]);
 
         $user = Auth::user();
@@ -122,38 +121,38 @@ class KriteriaEmpatController extends Controller
         // Simpan data ke masing-masing model
         $penetapan = PenetapanModel::create([
             'id_kriteria' => $request->id_kriteria,
-            'penetapan'   => $request->penetapan,
+            'deskripsi'   => $request->penetapan,
             'pendukung'   => $path_penetapan,
         ]);
 
         $pelaksanaan = PelaksanaanModel::create([
             'id_kriteria'  => $request->id_kriteria,
-            'pelaksanaan'  => $request->pelaksanaan,
+            'deskripsi'  => $request->pelaksanaan,
             'pendukung'    => $path_pelaksanaan,
         ]);
 
         $evaluasi = EvaluasiModel::create([
             'id_kriteria' => $request->id_kriteria,
-            'evaluasi'    => $request->evaluasi,
+            'deskripsi'    => $request->evaluasi,
             'pendukung'   => $path_evaluasi,
         ]);
 
         $pengendalian = PengendalianModel::create([
             'id_kriteria'   => $request->id_kriteria,
-            'pengendalian'  => $request->pengendalian,
+            'deskripsi'  => $request->pengendalian,
             'pendukung'     => $path_pengendalian,
         ]);
 
         $peningkatan = PeningkatanModel::create([
             'id_kriteria'  => $request->id_kriteria,
-            'peningkatan'  => $request->peningkatan,
+            'deskripsi'  => $request->peningkatan,
             'pendukung'    => $path_peningkatan,
         ]);
 
         DetailKriteriaModel::create([
             'id_kriteria'     => $request->id_kriteria,
             'id_komentar'     => null,
-            'status'          => $request->status, // 'save' atau 'submit'
+            'status'          => $request->status,
             'id_penetapan'    => $penetapan->id_penetapan,
             'id_pelaksanaan'  => $pelaksanaan->id_pelaksanaan,
             'id_evaluasi'     => $evaluasi->id_evaluasi,
@@ -177,24 +176,27 @@ class KriteriaEmpatController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
-        // Konversi path relatif ke absolut
-        if ($detail->penetapan && $detail->penetapan->penetapan) {
-            $detail->penetapan->penetapan = str_replace(
-                '../storage/',
-                rtrim(url('storage'), '/') . '/', // Gunakan url() helper bukan asset()
-                $detail->penetapan->penetapan
-            );
+        $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
+
+        foreach ($ppeppRelations as $relasi) {
+            if ($detail->$relasi && $detail->$relasi->deskripsi) {
+                $detail->$relasi->deskripsi = str_replace(
+                    '../storage/',
+                    rtrim(url('storage'), '/') . '/',
+                    $detail->$relasi->deskripsi
+                );
+            }
         }
 
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => 'Edit Kriteria Empat',
-            'list' => ['Kriteria', 'kriteria4', 'Edit']
+            'title' =>  __('kriteria.kriteria.4.titleedit'),
+            'list' =>  __('kriteria.kriteria.4.listedit'),
         ];
 
         $page = (object) [
-            'title' => 'Edit Kriteria 4 - Statuta Polinema',
+            'title' =>  __('kriteria.kriteria.4.pageedit'),
         ];
 
         $activeMenu = 'kriteria';
@@ -210,6 +212,7 @@ class KriteriaEmpatController extends Controller
         ]);
     }
 
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -218,12 +221,12 @@ class KriteriaEmpatController extends Controller
             'evaluasi'            => 'nullable|string',
             'pengendalian'        => 'nullable|string',
             'peningkatan'         => 'nullable|string',
-            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status'              => 'required|in:save,submit',
+            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'status'              => 'required|in:save,submitted',
         ]);
 
         $detail = DetailKriteriaModel::findOrFail($id);
@@ -231,7 +234,7 @@ class KriteriaEmpatController extends Controller
         // Penetapan
         $penetapan = PenetapanModel::find($detail->id_penetapan);
         if ($penetapan) {
-            $penetapan->penetapan = $request->penetapan;
+            $penetapan->deskripsi = $request->penetapan;
             if ($request->hasFile('penetapan_file')) {
                 $penetapan->pendukung = $request->file('penetapan_file')->store('pendukung/penetapan');
             }
@@ -241,7 +244,7 @@ class KriteriaEmpatController extends Controller
         // Pelaksanaan
         $pelaksanaan = PelaksanaanModel::find($detail->id_pelaksanaan);
         if ($pelaksanaan) {
-            $pelaksanaan->pelaksanaan = $request->pelaksanaan;
+            $pelaksanaan->deskripsi = $request->pelaksanaan;
             if ($request->hasFile('pelaksanaan_file')) {
                 $pelaksanaan->pendukung = $request->file('pelaksanaan_file')->store('pendukung/pelaksanaan');
             }
@@ -251,7 +254,7 @@ class KriteriaEmpatController extends Controller
         // Evaluasi
         $evaluasi = EvaluasiModel::find($detail->id_evaluasi);
         if ($evaluasi) {
-            $evaluasi->evaluasi = $request->evaluasi;
+            $evaluasi->deskripsi = $request->evaluasi;
             if ($request->hasFile('evaluasi_file')) {
                 $evaluasi->pendukung = $request->file('evaluasi_file')->store('pendukung/evaluasi');
             }
@@ -261,7 +264,7 @@ class KriteriaEmpatController extends Controller
         // Pengendalian
         $pengendalian = PengendalianModel::find($detail->id_pengendalian);
         if ($pengendalian) {
-            $pengendalian->pengendalian = $request->pengendalian;
+            $pengendalian->deskripsi = $request->pengendalian;
             if ($request->hasFile('pengendalian_file')) {
                 $pengendalian->pendukung = $request->file('pengendalian_file')->store('pendukung/pengendalian');
             }
@@ -271,7 +274,7 @@ class KriteriaEmpatController extends Controller
         // Peningkatan
         $peningkatan = PeningkatanModel::find($detail->id_peningkatan);
         if ($peningkatan) {
-            $peningkatan->peningkatan = $request->peningkatan;
+            $peningkatan->deskripsi = $request->peningkatan;
             if ($request->hasFile('peningkatan_file')) {
                 $peningkatan->pendukung = $request->file('peningkatan_file')->store('pendukung/peningkatan');
             }
@@ -279,7 +282,7 @@ class KriteriaEmpatController extends Controller
         }
 
         // Update status di DetailKriteria
-        $detail->status = $request->status; // 'save' atau 'submit'
+        $detail->status = $request->status; // 'save' atau 'submitted'
         $detail->save();
 
         return response()->json([
@@ -288,33 +291,23 @@ class KriteriaEmpatController extends Controller
         ]);
     }
 
+
     public function show(string $id)
     {
         $details = DetailKriteriaModel::with('kriteria')->find($id);
-
-        $breadcrumb = (object) [
-            'title' => 'Detail Kriteria 4',
-            'list' => ['Home', 'Detail'],
-        ];
-
-        $page = (object) [
-            'title' => 'Detail',
-        ];
-
-        return view('kriteria4.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('kriteria4.show', ['details' => $details, 'id' => $id]);
     }
 
     private function convertImagesToBase64($html)
     {
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
-        $doc->loadHTML('<?xml encoding="UTF-8">' . $html);
+        $doc->loadHTML('<?xml encoding="UTF-4">' . $html);
         $images = $doc->getElementsByTagName('img');
 
         foreach ($images as $img) {
             $src = $img->getAttribute('src');
 
-            // Bersihkan path agar sesuai dengan public_path
             $src = str_replace(['../', '/storage'], ['', 'storage'], $src);
             $fullPath = public_path($src);
 
@@ -333,8 +326,8 @@ class KriteriaEmpatController extends Controller
         $details = DetailKriteriaModel::with(['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan', 'kriteria'])->findOrFail($id);
 
         foreach (['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'] as $bagian) {
-            if ($details->$bagian && $details->$bagian->$bagian) {
-                $details->$bagian->$bagian = $this->convertImagesToBase64($details->$bagian->$bagian);
+            if ($details->$bagian && $details->$bagian->deskripsi) {
+                $details->$bagian->deskripsi = $this->convertImagesToBase64($details->$bagian->deskripsi);
             }
         }
 
@@ -345,7 +338,7 @@ class KriteriaEmpatController extends Controller
     public function uploadImage(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2044',
             'section' => 'required|string'
         ]);
 
@@ -371,17 +364,7 @@ class KriteriaEmpatController extends Controller
     public function confirm(string $id)
     {
         $details = DetailKriteriaModel::with('kriteria')->find($id);
-
-        $breadcrumb = (object) [
-            'title' => 'Data Kriteria 4',
-            'list' => ['Home', 'Hapus'],
-        ];
-
-        $page = (object) [
-            'title' => 'Hapus',
-        ];
-
-        return view('kriteria4.confirm', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('kriteria4.confirm', ['details' => $details, 'id' => $id]);
     }
 
     public function delete(Request $request, $id)
@@ -394,20 +377,16 @@ class KriteriaEmpatController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
-        // Simpan relasi sebelum hapus detail
         $penetapan    = $detail->penetapan;
         $pelaksanaan  = $detail->pelaksanaan;
         $evaluasi     = $detail->evaluasi;
         $pengendalian = $detail->pengendalian;
         $peningkatan  = $detail->peningkatan;
 
-        // Hapus dulu data utama yang punya foreign key
         $detail->delete();
 
-        // Hapus file dari storage jika ada
         $deleteFile = function ($model) {
             if ($model && $model->pendukung) {
-                // Ubah ke path relatif dari storage/app/public
                 $relativePath = ltrim(str_replace('../storage/', '', $model->pendukung), '/');
 
                 Log::info("Cek file: " . $relativePath);
@@ -421,18 +400,13 @@ class KriteriaEmpatController extends Controller
             }
         };
 
-        // Hapus semua <img src="..."> di dalam HTML
         $deleteImageFilesFromHtml = function ($html) {
             if (!$html) return;
 
-            // Ambil semua <img src="..."> dari konten
             preg_match_all('/<img[^>]+src=["\']([^"\']+)["\']/', $html, $matches);
 
-            foreach ($matches[1] as $src) {
-                // Hapus prefix "../storage/" atau "storage/"
-                $relativePath = ltrim(str_replace(['../storage/', 'storage/'], '', $src), '/');
-
-                // Full path di public
+            foreach ($matches[1 ] as $src) {
+                $relativePath = ltrim(str_replace(['../../storage/', '../storage/', 'storage/'], '', $src), '/');
                 $fullPath = public_path('storage/' . $relativePath);
                 if (file_exists($fullPath)) {
                     unlink($fullPath);
@@ -446,14 +420,12 @@ class KriteriaEmpatController extends Controller
         $deleteFile($pengendalian);
         $deleteFile($peningkatan);
 
-        // Hapus juga semua file di dalam isi HTML
-        $deleteImageFilesFromHtml($penetapan->penetapan ?? '');
-        $deleteImageFilesFromHtml($pelaksanaan->pelaksanaan ?? '');
-        $deleteImageFilesFromHtml($evaluasi->evaluasi ?? '');
-        $deleteImageFilesFromHtml($pengendalian->pengendalian ?? '');
-        $deleteImageFilesFromHtml($peningkatan->peningkatan ?? '');
+        $deleteImageFilesFromHtml($penetapan->deskripsi ?? '');
+        $deleteImageFilesFromHtml($pelaksanaan->deskripsi ?? '');
+        $deleteImageFilesFromHtml($evaluasi->deskripsi ?? '');
+        $deleteImageFilesFromHtml($pengendalian->deskripsi ?? '');
+        $deleteImageFilesFromHtml($peningkatan->deskripsi ?? '');
 
-        // Hapus relasi setelah detail dihapus
         $penetapan?->delete();
         $pelaksanaan?->delete();
         $evaluasi?->delete();

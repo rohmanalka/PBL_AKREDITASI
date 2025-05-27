@@ -55,11 +55,7 @@
                         $user = auth('web')->user();
                         $roleKode = $user?->role?->role_kode ?? null;
                     @endphp
-<<<<<<< HEAD
-                    @if (!in_array($roleKode, ['KPSKJR', 'DIRKJM']))
-=======
                     @if (!in_array($roleKode, ['KPSKJR', 'DIRKJM', 'USERSPI']))
->>>>>>> b7e662c58bc06b560f5ca1e4f497ebd64022ddfd
                         <li class="nav-item">
                             <a class="nav-link {{ $activeMenu == 'kriteria' ? 'active' : 'collapsed' }}"
                                 data-bs-toggle="collapse" href="#kriteriaMenu" role="button"
@@ -139,7 +135,7 @@
 
                     @if (in_array($roleKode, ['KPSKJR', 'DIRKJM']))
                         <li class="nav-item">
-                            <a href="{{ url('/validasi') }}"
+                            <a href="{{ $roleKode === 'KPSKJR' ? url('/validasi-kpskjr') : url('/validasi-dir') }}"
                                 class="nav-link {{ $activeMenu == 'validasi' ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">

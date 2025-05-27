@@ -40,10 +40,10 @@ class SPIController extends Controller
 
     public function list(Request $request)
     {
-$details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-    ->select('id_detail_kriteria', 'id_kriteria', 'status')
-    ->whereNotIn('status', ['save', 'submitted', 'divalidasi_kajur', 'revisi'])
-    ->get();
+        $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
+            ->select('id_detail_kriteria', 'id_kriteria', 'status')
+            ->whereNotIn('status', ['save', 'submitted', 'divalidasi_kajur', 'revisi'])
+            ->get();
 
 
         // Jika ada filter id_kriteria dari request
@@ -101,8 +101,8 @@ $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
         $details = DetailKriteriaModel::with(['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan', 'kriteria'])->findOrFail($id);
 
         foreach (['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'] as $bagian) {
-            if ($details->$bagian && $details->$bagian->$bagian) {
-                $details->$bagian->$bagian = $this->convertImagesToBase64($details->$bagian->$bagian);
+            if ($details->$bagian && $details->$bagian->deskripsi) {
+                $details->$bagian->deskripsi = $this->convertImagesToBase64($details->$bagian->deskripsi);
             }
         }
 

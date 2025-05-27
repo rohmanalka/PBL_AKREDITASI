@@ -12,14 +12,14 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data detail tidak ditemukan.
                 </div>
-                <a href="{{ url('validasi/') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('validasi-kpskjr/') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ url('validasi/' . $id . '/update') }}">
+            <form method="POST" action="{{ url('validasi-kpskjr/' . $id . '/update') }}">
                 @csrf
                 @method('PUT')
 
@@ -58,13 +58,13 @@
                                 <tr>
                                     <th class="text-right">Komentar:</th>
                                     <td>
-                                        <textarea name="komentar" class="form-control" rows="3" placeholder="Tuliskan komentar..." required>{{ $details->komentar->komentar ?? '' }}</textarea>
+                                        <textarea name="komentar" class="form-control" rows="3" placeholder="Tuliskan komentar...">{{ $details->komentar->komentar ?? '' }}</textarea>
                                     </td>
                                 </tr>
                             </table>
 
                             <div>
-                                <iframe src="{{ url('/validasi/preview/' . $id) }}" width="100%" height="400px"
+                                <iframe src="{{ url('/validasi-kpskjr/preview/' . $id) }}" width="100%" height="400px"
                                     style="border: 1px solid #ccc; border-radius: 4px;">
                                 </iframe>
                             </div>

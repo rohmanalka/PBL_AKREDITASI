@@ -70,7 +70,7 @@
 
 @push('js')
     <script>
-        const base_url = "{{ url('validasi') }}";
+        const base_url = "{{ url('validasi-kpskjr') }}";
 
         function modalAction(url = '') {
             $('#myModal').load(url, function() {
@@ -87,7 +87,7 @@
                     processing: true,
                     destroy: true,
                     ajax: {
-                        url: "{{ url('validasi/list') }}",
+                        url: "{{ url('validasi-kpskjr/list') }}",
                         type: "POST",
                         data: function(d) {
                             d.id_kriteria = id_kriteria;

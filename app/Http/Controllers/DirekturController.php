@@ -99,8 +99,8 @@ class DirekturController extends Controller
         $details = DetailKriteriaModel::with(['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan', 'kriteria'])->findOrFail($id);
 
         foreach (['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'] as $bagian) {
-            if ($details->$bagian && $details->$bagian->$bagian) {
-                $details->$bagian->$bagian = $this->convertImagesToBase64($details->$bagian->$bagian);
+            if ($details->$bagian && $details->$bagian->deskripsi) {
+                $details->$bagian->deskripsi = $this->convertImagesToBase64($details->$bagian->deskripsi);
             }
         }
 
@@ -112,7 +112,7 @@ class DirekturController extends Controller
     {
         $request->validate([
             'status' => 'required|in:tervalidasi,revisi',
-            'komentar' => 'required|string',
+            'komentar' => 'nullable|string',
         ]);
 
         $detail = DetailKriteriaModel::with('kriteria')->findOrFail($id);
@@ -125,6 +125,6 @@ class DirekturController extends Controller
         $detail->id_komentar = $komentar->id_komentar;
         $detail->save();
 
-        return redirect('validasi')->with('success', 'Validasi berhasil disimpan.');
+        return redirect('validasi-dir')->with('success', 'Validasi berhasil disimpan.');
     }
 }

@@ -257,7 +257,7 @@ Route::middleware(['authorize:KRIT9'])->group(function () {
 });
 
 Route::middleware(['authorize:KPSKJR'])->group(function () {
-    Route::group(['prefix' => '/validasi'], function () {
+    Route::group(['prefix' => '/validasi-kpskjr'], function () {
         Route::get('/', [ValidateController::class, 'index']);
         Route::post('/list', [ValidateController::class, 'list']);
         Route::get('/{id}/show', [ValidateController::class, 'show']);
@@ -267,7 +267,7 @@ Route::middleware(['authorize:KPSKJR'])->group(function () {
 });
 
 Route::middleware(['authorize:DIRKJM'])->group(function () {
-    Route::group(['prefix' => '/validasi'], function () {
+    Route::group(['prefix' => '/validasi-dir'], function () {
         Route::get('/', [DirekturController::class, 'index']);
         Route::post('/list', [DirekturController::class, 'list']);
         Route::get('/{id}/show', [DirekturController::class, 'show']);

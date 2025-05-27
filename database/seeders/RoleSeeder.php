@@ -80,6 +80,12 @@ class RoleSeeder extends Seeder
                 'role_kode' => 'DIRKJM',
                 'role_name' => 'Direktur / KJM'
             ],
+            [
+                'id_role' => 12,
+                'id_kriteria' => null,
+                'role_kode' => 'USERSPI',
+                'role_name' => 'USERSPI'
+            ],
         ];
 
         DB::table('m_role')->insert($data);

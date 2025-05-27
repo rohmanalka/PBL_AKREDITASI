@@ -140,7 +140,7 @@
                             render: function(data, type, row) {
                                 let id = row.id_detail_kriteria;
                                 let status = row.status;
-                                let isDisabled = (status === 'revisi' || status === 'divalidasi_kajur');
+                                let isDisabled = (status === 'revisi' || status === 'tervalidasi');
                                 let disabledAttr = isDisabled ? 'disabled' : '';
                                 let buttonClass = isDisabled ? 'btn-secondary' : 'btn-info';
 

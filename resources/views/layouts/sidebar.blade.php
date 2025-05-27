@@ -55,7 +55,7 @@
                         $user = auth('web')->user();
                         $roleKode = $user?->role?->role_kode ?? null;
                     @endphp
-                    @if (!in_array($roleKode, ['KPSKJR', 'DIR']))
+                    @if (!in_array($roleKode, ['KPSKJR', 'DIRKJM']))
                         <li class="nav-item">
                             <a class="nav-link {{ $activeMenu == 'kriteria' ? 'active' : 'collapsed' }}"
                                 data-bs-toggle="collapse" href="#kriteriaMenu" role="button"

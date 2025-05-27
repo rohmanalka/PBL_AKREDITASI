@@ -47,8 +47,8 @@
                                     <td>
                                         <select name="status" class="form-control" required>
                                             <option value="">-- Pilih Status --</option>
-                                            <option value="divalidasi_kajur"
-                                                {{ $details->status == 'divalidasi_kajur' ? 'selected' : '' }}>
+                                            <option value="tervalidasi"
+                                                {{ $details->status == 'tervalidasi' ? 'selected' : '' }}>
                                                 Dokumen Diterima</option>
                                             <option value="revisi" {{ $details->status == 'revisi' ? 'selected' : '' }}>
                                                 Dokumen Ditolak</option>

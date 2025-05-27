@@ -46,7 +46,7 @@ class KriteriaSembilanController extends Controller
         $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
             ->select('id_detail_kriteria', 'id_kriteria', 'status');
 
-        $details->where('id_kriteria', 1);
+        $details->where('id_kriteria', 9);
 
         //Filter data berdasarkan id_detail_kriteria
         if ($request->id_detail_kriteria) {

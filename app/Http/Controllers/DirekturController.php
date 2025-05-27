@@ -111,7 +111,7 @@ class DirekturController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:tervalidasi_direktur,revisi',
+            'status' => 'required|in:tervalidasi,revisi',
             'komentar' => 'required|string',
         ]);
 

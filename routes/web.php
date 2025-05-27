@@ -16,6 +16,7 @@ use App\Http\Controllers\KriteriaDelapanController;
 use App\Http\Controllers\SuperAdmin\RoleController;
 use App\Http\Controllers\SuperAdmin\UserController;
 use App\Http\Controllers\KriteriaSembilanController;
+use App\Http\Controllers\DirekturController;
 
 /*
 |--------------------------------------------------------------------------
@@ -261,5 +262,15 @@ Route::middleware(['authorize:KPSKJR'])->group(function () {
         Route::get('/{id}/show', [ValidateController::class, 'show']);
         Route::get('/preview/{id}', [ValidateController::class, 'preview'])->name('preview.ppepp');
         Route::put('/{id}/update', [ValidateController::class, 'update']);
+    });
+});
+
+Route::middleware(['authorize:DIRKJM'])->group(function () {
+    Route::group(['prefix' => '/validasi'], function () {
+        Route::get('/', [DirekturController::class, 'index']);
+        Route::post('/list', [DirekturController::class, 'list']);
+        Route::get('/{id}/show', [DirekturController::class, 'show']);
+        Route::get('/preview/{id}', [DirekturController::class, 'preview'])->name('preview.ppepp');
+        Route::put('/{id}/update', [DirekturController::class, 'update']);
     });
 });

@@ -51,7 +51,7 @@ class WelcomeController extends Controller
             $jumlah_revisi = DetailKriteriaModel::where('status', 'revisi')->count();
             $menunggu_validasi = DetailKriteriaModel::where('status', 'submit')->count();
 
-            if (in_array($roleKode, ['KRIT1', 'KRIT2', 'KRIT3', 'KRIT4', 'KRIT5', 'KRIT6', 'KRIT7', 'KRIT8', 'KRIT9', 'KPSKJR'])) {
+            if (in_array($roleKode, ['KRIT1', 'KRIT2', 'KRIT3', 'KRIT4', 'KRIT5', 'KRIT6', 'KRIT7', 'KRIT8', 'KRIT9', 'KPSKJR', 'DIRKJM'])) {
                 $daftar_kriteria = KriteriaModel::with('detail')->get();
 
                 $data = $daftar_kriteria->map(function ($kriteria) {
@@ -81,7 +81,7 @@ class WelcomeController extends Controller
 
             // Arahkan ke dashboard sesuai role_kode
             switch (true) {
-                case in_array($roleKode, ['KRIT1', 'KRIT2', 'KRIT3', 'KRIT4', 'KRIT5', 'KRIT6', 'KRIT7', 'KRIT8', 'KRIT9', 'DIR', 'KPSKJR']):
+                case in_array($roleKode, ['KRIT1', 'KRIT2', 'KRIT3', 'KRIT4', 'KRIT5', 'KRIT6', 'KRIT7', 'KRIT8', 'KRIT9', 'DIRKJM', 'KPSKJR',]):
                     return view('dashboard.kriteria', compact('breadcrumb', 'activeMenu', 'activeSubmenu'));
                 case in_array($roleKode, ['SPI']):
                     return view('dashboard.kds', compact('breadcrumb', 'activeMenu', 'activeSubmenu'));

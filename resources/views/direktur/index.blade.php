@@ -40,7 +40,7 @@
                                             ID
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            {{ __('messages.nmkrit') }}
+                                            {{ __('nmkrit') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Status
@@ -70,7 +70,7 @@
 
 @push('js')
     <script>
-        const base_url = "{{ url('validasi-kpskjr') }}";
+        const base_url = "{{ url('validasi-dir') }}";
 
         function modalAction(url = '') {
             $('#myModal').load(url, function() {
@@ -87,7 +87,7 @@
                     processing: true,
                     destroy: true,
                     ajax: {
-                        url: "{{ url('validasi-kpskjr/list') }}",
+                        url: "{{ url('validasi-dir/list') }}",
                         type: "POST",
                         data: function(d) {
                             d.id_kriteria = id_kriteria;
@@ -140,7 +140,7 @@
                             render: function(data, type, row) {
                                 let id = row.id_detail_kriteria;
                                 let status = row.status;
-                                let isDisabled = (status === 'revisi' || status === 'divalidasi_kajur');
+                                let isDisabled = (status === 'revisi' || status === 'tervalidasi');
                                 let disabledAttr = isDisabled ? 'disabled' : '';
                                 let buttonClass = isDisabled ? 'btn-secondary' : 'btn-info';
 

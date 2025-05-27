@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>{{ $page->title }}</h6>
                     </div>
-                    <div class="card-body px-4 pt-3 pb-2"> {{-- padding kiri-kanan dibuat px-4 supaya lebih lega --}}
+                    <div class="card-body px-4 pt-3 pb-2">
                         <div class="mb-3">
                             @if (session('success'))
                                 <div class="alert alert-success">{{ session('success') }}</div>
@@ -70,7 +70,7 @@
 
 @push('js')
     <script>
-        const base_url = "{{ url('validasi-kpskjr') }}";
+        const base_url = "{{ url('preview') }}";
 
         function modalAction(url = '') {
             $('#myModal').load(url, function() {
@@ -87,7 +87,7 @@
                     processing: true,
                     destroy: true,
                     ajax: {
-                        url: "{{ url('validasi-kpskjr/list') }}",
+                        url: "{{ url('preview/list') }}",
                         type: "POST",
                         data: function(d) {
                             d.id_kriteria = id_kriteria;
@@ -140,13 +140,10 @@
                             render: function(data, type, row) {
                                 let id = row.id_detail_kriteria;
                                 let status = row.status;
-                                let isDisabled = (status === 'revisi' || status === 'divalidasi_kajur');
-                                let disabledAttr = isDisabled ? 'disabled' : '';
-                                let buttonClass = isDisabled ? 'btn-secondary' : 'btn-info';
 
                                 let detailBtn = `
-                                    <button class="btn ${buttonClass} btn-xs mt-3" onclick="modalAction('${base_url}/${id}/show')" ${disabledAttr}>
-                                        Validasi
+                                    <button class="btn btn-info btn-xs mt-3" onclick="modalAction('${base_url}/${id}/show')">
+                                        Preview
                                     </button>`;
                                 return `${detailBtn}`;
 

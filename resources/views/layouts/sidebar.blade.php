@@ -55,7 +55,7 @@
                         $user = auth('web')->user();
                         $roleKode = $user?->role?->role_kode ?? null;
                     @endphp
-                    @if (!in_array($roleKode, ['KPSKJR', 'DIR']))
+                    @if (!in_array($roleKode, ['KPSKJR', 'DIRKJM', 'USERSPI']))
                         <li class="nav-item">
                             <a class="nav-link {{ $activeMenu == 'kriteria' ? 'active' : 'collapsed' }}"
                                 data-bs-toggle="collapse" href="#kriteriaMenu" role="button"
@@ -133,15 +133,33 @@
                         $roleKode = $user?->role?->role_kode ?? null;
                     @endphp
 
-                    @if (in_array($roleKode, ['KPSKJR', 'DIR']))
+                    @if (in_array($roleKode, ['KPSKJR', 'DIRKJM']))
                         <li class="nav-item">
-                            <a href="{{ url('/validasi') }}"
+                            <a href="{{ $roleKode === 'KPSKJR' ? url('/validasi-kpskjr') : url('/validasi-dir') }}"
                                 class="nav-link {{ $activeMenu == 'validasi' ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="fas fa-chart-bar text-sm opacity-10"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">{{ __('sidebar.sidevalid') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @php
+                        $user = auth('web')->user();
+                        $roleKode = $user?->role?->role_kode ?? null;
+                    @endphp
+
+                    @if (in_array($roleKode, ['USERSPI']))
+                        <li class="nav-item">
+                            <a href="{{ url('/preview') }}"
+                                class="nav-link {{ $activeMenu == 'preview' ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-chart-bar text-sm opacity-10"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Preview</span>
                             </a>
                         </li>
                     @endif

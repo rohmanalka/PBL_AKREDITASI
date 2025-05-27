@@ -9,26 +9,26 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DetailKriteriaModel;
 use Yajra\DataTables\Facades\DataTables;
 
-class ValidateController extends Controller
+class SPIController extends Controller
 {
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'KPS Kajur',
-            'list' => ['KPS Kajur', 'Validasi'],
+            'title' => 'SPI',
+            'list' => ['SPI', 'Preview'],
         ];
 
         $page = (object) [
-            'title' => 'KPS Kajur - Validasi Kriteria',
+            'title' => 'SPI - Preview Kriteria',
         ];
 
-        $activeMenu = 'validasi';
+        $activeMenu = 'preview';
         $activeSubmenu = 'null';
 
         $details = DetailKriteriaModel::all();
         $kriteria = KriteriaModel::all();
 
-        return view('kpskajur.index', [
+        return view('spi.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu,
@@ -42,7 +42,9 @@ class ValidateController extends Controller
     {
         $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
             ->select('id_detail_kriteria', 'id_kriteria', 'status')
-            ->where('status', '!=', 'save');
+            ->whereNotIn('status', ['save', 'submitted', 'divalidasi_kajur', 'revisi'])
+            ->get();
+
 
         // Jika ada filter id_kriteria dari request
         if ($request->id_kriteria) {
@@ -68,7 +70,7 @@ class ValidateController extends Controller
             'title' => 'Detail',
         ];
 
-        return view('kpskajur.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('spi.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
     }
 
     private function convertImagesToBase64($html)
@@ -104,27 +106,7 @@ class ValidateController extends Controller
             }
         }
 
-        $pdf = Pdf::loadView('kpskajur.export', compact('details'));
+        $pdf = Pdf::loadView('spi.export', compact('details'));
         return $pdf->stream('preview.pdf');
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required|in:divalidasi_kajur,revisi',
-            'komentar' => 'nullable|string',
-        ]);
-
-        $detail = DetailKriteriaModel::with('kriteria')->findOrFail($id);
-
-        $komentar = KomentarModel::create([
-            'komentar' => $request->komentar
-        ]);
-
-        $detail->status = $request->status;
-        $detail->id_komentar = $komentar->id_komentar;
-        $detail->save();
-
-        return redirect('validasi-kpskjr')->with('success', 'Validasi berhasil disimpan.');
     }
 }

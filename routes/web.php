@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SPIController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\DirekturController;
 use App\Http\Controllers\ValidateController;
 use App\Http\Controllers\KriteriaDuaController;
 use App\Http\Controllers\LandingPageController;
@@ -255,11 +257,31 @@ Route::middleware(['authorize:KRIT9'])->group(function () {
 });
 
 Route::middleware(['authorize:KPSKJR'])->group(function () {
-    Route::group(['prefix' => '/validasi'], function () {
+    Route::group(['prefix' => '/validasi-kpskjr'], function () {
         Route::get('/', [ValidateController::class, 'index']);
         Route::post('/list', [ValidateController::class, 'list']);
         Route::get('/{id}/show', [ValidateController::class, 'show']);
         Route::get('/preview/{id}', [ValidateController::class, 'preview'])->name('preview.ppepp');
         Route::put('/{id}/update', [ValidateController::class, 'update']);
+    });
+});
+
+Route::middleware(['authorize:DIRKJM'])->group(function () {
+    Route::group(['prefix' => '/validasi-dir'], function () {
+        Route::get('/', [DirekturController::class, 'index']);
+        Route::post('/list', [DirekturController::class, 'list']);
+        Route::get('/{id}/show', [DirekturController::class, 'show']);
+        Route::get('/preview/{id}', [DirekturController::class, 'preview'])->name('preview.ppepp');
+        Route::put('/{id}/update', [DirekturController::class, 'update']);
+    });
+});
+
+Route::middleware(['authorize:USERSPI'])->group(function () {
+    Route::group(['prefix' => '/preview'], function () {
+        Route::get('/', [SPIController::class, 'index']);
+        Route::post('/list', [SPIController::class, 'list']);
+        Route::get('/{id}/show', [SPIController::class, 'show']);
+        Route::get('/preview/{id}', [SPIController::class, 'preview'])->name('preview.ppepp');
+        Route::put('/{id}/update', [SPIController::class, 'update']);
     });
 });

@@ -9,17 +9,17 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DetailKriteriaModel;
 use Yajra\DataTables\Facades\DataTables;
 
-class ValidateController extends Controller
+class DirekturController extends Controller
 {
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'KPS Kajur',
-            'list' => ['KPS Kajur', 'Validasi'],
+            'title' => 'Direktur',
+            'list' => ['Direktur', 'Validasi'],
         ];
 
         $page = (object) [
-            'title' => 'KPS Kajur - Validasi Kriteria',
+            'title' => 'Direktur - Validasi Kriteria',
         ];
 
         $activeMenu = 'validasi';
@@ -28,7 +28,7 @@ class ValidateController extends Controller
         $details = DetailKriteriaModel::all();
         $kriteria = KriteriaModel::all();
 
-        return view('kpskajur.index', [
+        return view('direktur.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu,
@@ -68,7 +68,7 @@ class ValidateController extends Controller
             'title' => 'Detail',
         ];
 
-        return view('kpskajur.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('direktur.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
     }
 
     private function convertImagesToBase64($html)
@@ -104,14 +104,14 @@ class ValidateController extends Controller
             }
         }
 
-        $pdf = Pdf::loadView('kpskajur.export', compact('details'));
+        $pdf = Pdf::loadView('direktur.export', compact('details'));
         return $pdf->stream('preview.pdf');
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:divalidasi_kajur,revisi',
+            'status' => 'required|in:tervalidasi,revisi',
             'komentar' => 'nullable|string',
         ]);
 
@@ -125,6 +125,6 @@ class ValidateController extends Controller
         $detail->id_komentar = $komentar->id_komentar;
         $detail->save();
 
-        return redirect('validasi-kpskjr')->with('success', 'Validasi berhasil disimpan.');
+        return redirect('validasi-dir')->with('success', 'Validasi berhasil disimpan.');
     }
 }

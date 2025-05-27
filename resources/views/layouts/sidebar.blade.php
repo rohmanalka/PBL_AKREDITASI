@@ -55,7 +55,11 @@
                         $user = auth('web')->user();
                         $roleKode = $user?->role?->role_kode ?? null;
                     @endphp
+<<<<<<< HEAD
                     @if (!in_array($roleKode, ['KPSKJR', 'DIRKJM']))
+=======
+                    @if (!in_array($roleKode, ['KPSKJR', 'DIRKJM', 'USERSPI']))
+>>>>>>> b7e662c58bc06b560f5ca1e4f497ebd64022ddfd
                         <li class="nav-item">
                             <a class="nav-link {{ $activeMenu == 'kriteria' ? 'active' : 'collapsed' }}"
                                 data-bs-toggle="collapse" href="#kriteriaMenu" role="button"
@@ -142,6 +146,24 @@
                                     <i class="fas fa-chart-bar text-sm opacity-10"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">{{ __('sidebar.sidevalid') }}</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @php
+                        $user = auth('web')->user();
+                        $roleKode = $user?->role?->role_kode ?? null;
+                    @endphp
+
+                    @if (in_array($roleKode, ['USERSPI']))
+                        <li class="nav-item">
+                            <a href="{{ url('/preview') }}"
+                                class="nav-link {{ $activeMenu == 'preview' ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-chart-bar text-sm opacity-10"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">Preview</span>
                             </a>
                         </li>
                     @endif

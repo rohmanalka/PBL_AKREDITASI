@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SPIController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\DirekturController;
 use App\Http\Controllers\ValidateController;
 use App\Http\Controllers\KriteriaDuaController;
 use App\Http\Controllers\LandingPageController;
@@ -16,7 +18,6 @@ use App\Http\Controllers\KriteriaDelapanController;
 use App\Http\Controllers\SuperAdmin\RoleController;
 use App\Http\Controllers\SuperAdmin\UserController;
 use App\Http\Controllers\KriteriaSembilanController;
-use App\Http\Controllers\DirekturController;
 
 /*
 |--------------------------------------------------------------------------
@@ -272,5 +273,15 @@ Route::middleware(['authorize:DIRKJM'])->group(function () {
         Route::get('/{id}/show', [DirekturController::class, 'show']);
         Route::get('/preview/{id}', [DirekturController::class, 'preview'])->name('preview.ppepp');
         Route::put('/{id}/update', [DirekturController::class, 'update']);
+    });
+});
+
+Route::middleware(['authorize:USERSPI'])->group(function () {
+    Route::group(['prefix' => '/preview'], function () {
+        Route::get('/', [SPIController::class, 'index']);
+        Route::post('/list', [SPIController::class, 'list']);
+        Route::get('/{id}/show', [SPIController::class, 'show']);
+        Route::get('/preview/{id}', [SPIController::class, 'preview'])->name('preview.ppepp');
+        Route::put('/{id}/update', [SPIController::class, 'update']);
     });
 });

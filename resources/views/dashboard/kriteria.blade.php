@@ -114,9 +114,33 @@
                                             <td class="text-center">{{ $i + 1 }}</td>
                                             <td>{{ $item['dokumen'] }}</td>
                                             <td>
-                                                <span
-                                                    class="badge {{ $item['status'] === 'Terpenuhi' ? 'bg-success' : 'bg-warning text-dark' }}">
-                                                    {{ $item['status'] }}
+                                                @php
+                                                    $badgeClass = 'bg-secondary';
+                                                    $badgeText = ucfirst($item['status']);
+
+                                                    switch ($item['status']) {
+                                                        case 'terpenuhi':
+                                                            $badgeClass = 'bg-success';
+                                                            $badgeText = 'Terpenuhi';
+                                                            break;
+                                                        case 'revisi':
+                                                            $badgeClass = 'bg-danger';
+                                                            $badgeText = 'Revisi';
+                                                            break;
+                                                        case 'menunggu':
+                                                            $badgeClass = 'bg-warning text-dark';
+                                                            $badgeText = 'Menunggu Validasi';
+                                                            break;
+                                                        case 'belum terpenuhi':
+                                                        default:
+                                                            $badgeClass = 'bg-secondary';
+                                                            $badgeText = 'Belum Terpenuhi';
+                                                            break;
+                                                    }
+                                                @endphp
+
+                                                <span class="badge {{ $badgeClass }}">
+                                                    {{ $badgeText }}
                                                 </span>
                                             </td>
                                             <td class="text-center">

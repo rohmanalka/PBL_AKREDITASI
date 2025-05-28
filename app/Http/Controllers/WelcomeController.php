@@ -47,9 +47,10 @@ class WelcomeController extends Controller
             $activeMenu = 'dashboard';
             $activeSubmenu = null;
 
-            $jumlah_tervalidasi = DetailKriteriaModel::whereIn('status', ['acc1', 'acc2'])->count();
+            $jumlah_tervalidasi = DetailKriteriaModel::where('status', 'tervalidasi')->count();
             $jumlah_revisi = DetailKriteriaModel::where('status', 'revisi')->count();
-            $menunggu_validasi = DetailKriteriaModel::where('status', 'submit')->count();
+            $menunggu_validasi = DetailKriteriaModel::where('status', 'divalidasi_kajur')->count();
+
 
             if (in_array($roleKode, ['KRIT1', 'KRIT2', 'KRIT3', 'KRIT4', 'KRIT5', 'KRIT6', 'KRIT7', 'KRIT8', 'KRIT9', 'KPSKJR', 'DIRKJM', 'USERSPI'])) {
                 $daftar_kriteria = KriteriaModel::with('detail')->get();
@@ -57,12 +58,14 @@ class WelcomeController extends Controller
                 $data = $daftar_kriteria->map(function ($kriteria) {
                     $semua_status = $kriteria->detail->pluck('status');
 
-                    if ($semua_status->isEmpty()) {
-                        $status = 'Belum Terpenuhi';
-                    } elseif ($semua_status->contains('revisi')) {
-                        $status = 'Belum Terpenuhi';
-                    } else {
-                        $status = 'Terpenuhi';
+                    $status = 'belum terpenuhi'; // default
+
+                    if ($semua_status->contains('revisi')) {
+                        $status = 'revisi';
+                    } elseif ($semua_status->contains('divalidasi_kajur')) {
+                        $status = 'menunggu';
+                    } elseif ($semua_status->contains('tervalidasi')) {
+                        $status = 'terpenuhi';
                     }
 
                     return [

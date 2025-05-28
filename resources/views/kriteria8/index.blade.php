@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>{{ $page->title }}</h6>
                         <a href="{{ url('kriteria8/input') }}" class="btn btn-sm btn-success">
-                            {{ __('messages.input') }}
+                            {{ __('kriteria.input') }}
                         </a>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -29,7 +29,7 @@
                                             ID
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            {{ __('messages.nmkrit') }}
+                                            {{ __('kriteria.nmkrit') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Status
@@ -101,16 +101,16 @@
                                 case 'save':
                                     badgeClass = 'bg-secondary';
                                     break;
-                                case 'submit':
+                                case 'submitted':
                                     badgeClass = 'bg-primary';
                                     break;
                                 case 'revisi':
                                     badgeClass = 'bg-warning text-dark';
                                     break;
-                                case 'acc1':
+                                case 'divalidasi_kajur':
                                     badgeClass = 'bg-success';
                                     break;
-                                case 'acc2':
+                                case 'tervalidasi':
                                     badgeClass = 'bg-info';
                                     break;
                             }
@@ -127,19 +127,21 @@
                             let id = row.id_detail_kriteria;
                             let status = row.status;
                             let detailBtn =
-                                `<button class="btn btn-info btn-xs" onclick="modalAction('${base_url}/${id}/show')">{{ __('messages.detail') }}</button>`;
+                                `<button class="btn btn-info btn-xs mt-3" onclick="modalAction('${base_url}/${id}/show')">{{ __('kriteria.detail') }}</button>`;
                             // Jika status submit, disable tombol edit
                             let editBtn = '';
-                            if (status === 'submit') {
+
+                            if (status === 'submitted' || status === 'divalidasi_kajur' ||
+                                status === 'tervalidasi') {
                                 editBtn =
-                                    `<a class="btn btn-secondary btn-xs disabled" href="#">{{ __('messages.edit') }}</a>`;
+                                    `<a class="btn btn-secondary btn-xs disabled mt-3" href="#">{{ __('kriteria.edit') }}</a>`;
                             } else {
                                 editBtn =
-                                    `<a class="btn btn-warning btn-xs" href="${base_url}/${id}/edit">{{ __('messages.edit') }}</a>`;
+                                    `<a class="btn btn-warning btn-xs mt-3" href="${base_url}/${id}/edit">{{ __('kriteria.edit') }}</a>`;
                             }
-                            
+
                             let deleteBtn =
-                                `<button class="btn btn-danger btn-xs" onclick="modalAction('${base_url}/${id}/delete')">{{ __('messages.delete') }}</button>`;
+                                `<button class="btn btn-danger btn-xs mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
                             return `${detailBtn} ${editBtn} ${deleteBtn}`;
                         }
 

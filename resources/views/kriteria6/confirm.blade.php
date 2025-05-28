@@ -22,17 +22,17 @@
         @method('DELETE')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Detail Data Kriteria</h5>
+                <div class="modal-header position-relative">
+                    <h5 class="modal-title w-100 text-center">Hapus Data Kriteria</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
 
                 <div class="modal-body">
-                    <div class="alert alert-info">
-                        <h5><i class="icon fas fa-info-circle"></i> Informasi</h5>
-                        Berikut adalah detail data kriteria dan isian PPEPP:
+                    <div class="alert alert-danger">
+                        <h5><i class="icon fas fa-exclamation-triangle"></i> Perhatian!</h5>
+                        Berikut adalah detail data kriteria yang ingin dihapus:
                     </div>
                     <div class="row g-3">
                         <div class="col-md-12">
@@ -65,7 +65,31 @@
             </div>
         </div>
     </form>
+
+    <style>
+        .close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 10;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+    </style>
+
     <script>
+        $('.close, .btn-warning').on('click', function() {
+            $('#myModal').modal('hide');
+        });
+        
         var dataDetail
         $(document).ready(function() {
             $("#form-delete").validate({

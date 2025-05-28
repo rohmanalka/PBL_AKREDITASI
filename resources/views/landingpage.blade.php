@@ -56,14 +56,14 @@
             <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">{{ __('messages.judulhead') }}</h1>
+                <h1 class="sitename">{{ __('landingpg.judulhead') }}</h1>
                 <span></span>
             </a>
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="#hero" class="active">{{ __('messages.home') }}<br></a></li>
-                    <li><a href="#about">{{ __('messages.about') }}</a></li>
-                    <li><a href="#team">{{ __('messages.team') }}</a></li>
+                    <li><a href="#hero" class="active">{{ __('landingpg.home') }}<br></a></li>
+                    <li><a href="#about">{{ __('landingpg.about') }}</a></li>
+                    <li><a href="#team">{{ __('landingpg.team') }}</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -71,14 +71,14 @@
                 <!-- Switch bahasa tanpa gambar -->
                 <div class="form-check form-switch mb-0 me-3">
                     <input class="form-check-input" type="checkbox" id="languageToggle" onchange="toggleLanguage()" />
-                    <label class="form-check-label fw-bold" for="languageToggle" style="cursor:pointer;"
+                    <label class="form-check-label text-white" for="languageToggle" style="cursor:pointer;"
                         id="language-label">ID</label>
                 </div>
 
                 <!-- Tombol Masuk -->
                 <button onclick="modalAction('{{ url('login') }}')" class="btn-getstarted"
                     style="background-color: transparent">
-                    {{ __('messages.login') }}
+                    {{ __('landingpg.login') }}
                 </button>
             </div>
         </div>
@@ -87,12 +87,12 @@
     <main class="main">
         <!-- Hero Section -->
         <section id="hero" class="hero section dark-background">
-            <img src="{{ asset('gplanding/assets/img/hero-bg.jpg') }}" alt="" data-aos="fade-in">
+            <img src="{{ asset('gplanding/assets/img/landingpage-bg.png') }}" alt="" data-aos="fade-in">
             <div class="container">
                 <div class="row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
                     <div class="col-xl-6 col-lg-8">
-                        <h2>{{ __('messages.judullanding') }}</h2>
-                        <p>{{ __('messages.prodi') }}</p>
+                        <h2>{{ __('landingpg.judullanding') }}</h2>
+                        <p>{{ __('landingpg.prodi') }}</p>
                     </div>
                 </div>
             </div>
@@ -105,36 +105,22 @@
         <!-- About Section -->
         <section id="about" class="about section">
             <div class="container section-title" data-aos="fade-up">
-                <h2>{{ __('messages.about') }}</h2>
-                <p>{{ __('messages.profil') }}</p>
+                <h2>{{ __('landingpg.about') }}</h2>
+                <p>{{ __('landingpg.profil') }}</p>
             </div><!-- End Section Title -->
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
                 <div class="row gy-4">
                     <div class="col-lg-6 order-1 order-lg-2">
-                        <img src="{{ asset('gplanding/assets/img/about.jpg') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('gplanding/assets/img/profilti-bg.png') }}" class="img-fluid" alt="">
                     </div>
                     <div class="col-lg-6 order-2 order-lg-1 content">
                         <p class="fst-italic">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore
-                            magna aliqua.
+                            {{ __('landingpg.profile')}}
                         </p>
                         <ul>
-                            <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat.</span></li>
-                            <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in
-                                    voluptate velit.</span></li>
-                            <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate trideta
-                                    storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
+                            <li><i class="bi bi-clock"></i> <span>{{ __('landingpg.profile_prodi')}}</span></li>
                         </ul>
-                        <p>
-                            Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                            proident
-                        </p>
                     </div>
                 </div>
             </div>
@@ -144,8 +130,8 @@
         <section id="services" class="services section">
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>{{ __('messages.about') }}</h2>
-                <p>{{ __('messages.vismis') }}</p>
+                <h2>{{ __('landingpg.about') }}</h2>
+                <p>{{ __('landingpg.vismis') }}</p>
             </div><!-- End Section Title -->
 
             <div class="container">
@@ -157,7 +143,7 @@
                                 <i class="fa-solid fa-bullseye"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
-                                <h3>{{ __('messages.sasaran') }}</h3>
+                                <h3>{{ __('landingpg.sasaran') }}</h3>
                             </a>
                             <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores
                                 iure perferendis tempore et consequatur.</p>
@@ -170,10 +156,9 @@
                                 <i class="bi bi-broadcast"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
-                                <h3>{{ __('messages.visi') }}</h3>
+                                <h3>{{ __('landingpg.visi') }}</h3>
                             </a>
-                            <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum
-                                hic non ut nesciunt dolorem.</p>
+                            <p>Menjadi Program Studi Unggul dalam Bidang Sistem Informasi Bisnis di Tingkat Nasional dan Internasional.</p>
                         </div>
                     </div><!-- End Service Item -->
 
@@ -183,10 +168,13 @@
                                 <i class="bi bi-easel"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
-                                <h3>{{ __('messages.misi') }}</h3>
+                                <h3>{{ __('landingpg.misi') }}</h3>
                             </a>
-                            <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id
-                                voluptas adipisci eos earum corrupti.</p>
+                            <p>1. Melaksanakan pendidikan vokasi yang inovatif berdasarkan pada sistem pendidikan terapan dengan memanfaatkan kemajuan teknologi, sehingga mampu menghasilkan lulusan yang memiliki kompetensi di bidang sistem informasi bisnis dan siap bersaing di tingkat nasional dan global.
+                                2. Melaksanakan penelitian terapan berbasis produk dan jasa bidang Sistem Informasi Bisnis.
+                                3. Melaksanakan pengabdian masyarakat dengan menggunakan kemajuan Sistem Informasi Bisnis untuk meningkatkan kesejahteraan.
+                                4. Mewujudkan kerja sama yang saling menguntungkan dengan berbagai pihak baik di dalam maupun di luar negeri pada bidang Sistem Informasi Bisnis
+                            </p>
                         </div>
                     </div><!-- End Service Item -->
                 </div>
@@ -197,8 +185,8 @@
         <section id="team" class="team section">
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>{{ __('messages.team') }}</h2>
-                <p>{{ __('messages.we') }}</p>
+                <h2>{{ __('landingpg.team') }}</h2>
+                <p>{{ __('landingpg.we') }}</p>
             </div><!-- End Section Title -->
 
             <div class="container">
@@ -304,33 +292,33 @@
                 <div class="row gy-4">
                     <div class="col-lg-4 col-md-6 footer-about">
                         <a href="index.html" class="logo d-flex align-items-center">
-                            <span class="sitename">{{ __('messages.judulhead') }}</span>
+                            <span class="sitename">{{ __('landingpg.judulhead') }}</span>
                         </a>
                         <div class="footer-contact pt-3">
                             <p>JTI POLINEMA</p>
-                            <p>{{ __('messages.prodi') }}</p>
+                            <p>{{ __('landingpg.prodi') }}</p>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-3 footer-links">
-                        <h4>{{ __('messages.link') }}</h4>
+                        <h4>{{ __('landingpg.link') }}</h4>
                         <ul>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> {{ __('messages.home') }}</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#about"> {{ __('messages.about') }}</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> {{ __('messages.team') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> {{ __('landingpg.home') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#about"> {{ __('landingpg.about') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> {{ __('landingpg.team') }}</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-3 col-md-3 footer-links">
-                        <h4>{{ __('messages.informasi') }}</h4>
+                        <h4>{{ __('landingpg.informasi') }}</h4>
                         <ul>
-                            <p><strong>{{ __('messages.alamat') }}:</strong> <span> Jl. Soekarno Hatta No.9</span></p>
-                            <p><strong>{{ __('messages.kontak') }}:</strong> <span>(0341) 404424</span></p>
+                            <p><strong>{{ __('landingpg.alamat') }}:</strong> <span> Jl. Soekarno Hatta No.9</span></p>
+                            <p><strong>{{ __('landingpg.kontak') }}:</strong> <span>(0341) 404424</span></p>
                         </ul>
                     </div>
 
                     <div class="col-lg-2 col-md-3 footer-links">
-                        <h4>{{ __('messages.follow') }}</h4>
+                        <h4>{{ __('landingpg.follow') }}</h4>
                         <div class="social-links d-flex mt-2">
                             <a href=""><i class="bi bi-instagram"></i></a>
                         </div>

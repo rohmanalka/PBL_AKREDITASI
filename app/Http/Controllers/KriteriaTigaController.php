@@ -108,7 +108,6 @@ class KriteriaTigaController extends Controller
             ]);
         }
 
-        // Upload helper
         $uploadFile = fn($file, $folder) =>
         $file ? $file->store("storage/pendukung/{$folder}", 'public') : null;
 
@@ -281,8 +280,7 @@ class KriteriaTigaController extends Controller
             $peningkatan->save();
         }
 
-        // Update status di DetailKriteria
-        $detail->status = $request->status; // 'save' atau 'submitted'
+        $detail->status = $request->status;
         $detail->save();
 
         return response()->json([
@@ -345,9 +343,8 @@ class KriteriaTigaController extends Controller
         try {
             $section = $request->input('section');
 
-            // Simpan ke folder "pendukung/{section}"
             $path = $request->file('image')->store("pendukung/{$section}", 'public');
-            $url = asset("storage/{$path}"); // Gunakan URL publik
+            $url = asset("storage/{$path}");
 
             return response()->json([
                 'status' => true,
@@ -420,11 +417,11 @@ class KriteriaTigaController extends Controller
         $deleteFile($pengendalian);
         $deleteFile($peningkatan);
 
-        $deleteImageFilesFromHtml($penetapan->deskripsi ?? '');
-        $deleteImageFilesFromHtml($pelaksanaan->deskripsi ?? '');
-        $deleteImageFilesFromHtml($evaluasi->deskripsi ?? '');
-        $deleteImageFilesFromHtml($pengendalian->deskripsi ?? '');
-        $deleteImageFilesFromHtml($peningkatan->deskripsi ?? '');
+        $deleteImageFilesFromHtml($penetapan->penetapan ?? '');
+        $deleteImageFilesFromHtml($pelaksanaan->pelaksanaan ?? '');
+        $deleteImageFilesFromHtml($evaluasi->evaluasi ?? '');
+        $deleteImageFilesFromHtml($pengendalian->pengendalian ?? '');
+        $deleteImageFilesFromHtml($peningkatan->peningkatan ?? '');
 
         $penetapan?->delete();
         $pelaksanaan?->delete();

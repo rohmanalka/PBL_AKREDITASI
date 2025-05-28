@@ -92,6 +92,13 @@ class UserSeeder extends Seeder
                 'name' => 'Direktur / KJM',
                 'password' => Hash::make('DirekturKJM'),
             ],
+            [
+                'id_user' => 12,
+                'id_role' => 12,
+                'username' => 'userspi',
+                'name' => 'User SPI',
+                'password' => Hash::make('userspi'),
+            ],
         ];
 
         DB::table('m_user')->insert($data);

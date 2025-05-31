@@ -32,6 +32,9 @@
                                             {{ __('kriteria.nmkrit') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                            Bagian
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Status
                                         </th>
                                         <th
@@ -85,6 +88,12 @@
                     },
                     {
                         data: "kriteria.nama_kriteria",
+                        className: "text-sm",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "pengisian.nama_pengisian",
                         className: "text-sm",
                         orderable: true,
                         searchable: true

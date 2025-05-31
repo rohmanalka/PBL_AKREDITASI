@@ -271,7 +271,7 @@
                 .then(data => {
                     if (data.status) {
                         Swal.fire({
-                            title: 'Sukses!',
+                            title: "{{ __('kriteria.success') }}.",
                             text: data.message,
                             icon: 'success',
                             confirmButtonText: 'OK'

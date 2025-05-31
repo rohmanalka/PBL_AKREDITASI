@@ -89,5 +89,26 @@ return [
     'cancel' => 'Batal',
     'save' => 'Simpan Draf',
     'submit' => 'Serahkan',
-    'reset' => 'Reset Form',
+    'reset' => 'Kosongkan Form',
+    'simpanberhasil' => 'Data Telah Disimpan',
+    'editberhasil' => 'Data berhasil diperbarui dengan status ',
+
+    // confirm delete
+    'hpsdata' => 'Hapus Data Kriteria',
+    'perhatian' => 'Perhatian',
+    'perhatiandet' => 'Berikut ini adalah rincian data kriteria yang ingin Anda hapus.',
+    'komen' => 'Komentar',
+    'hps' => 'Ya, Hapus',
+    'yakin' => 'Apakah anda yakin',
+    'datahps' => 'Data yang dihapus tidak bisa dikembalikan.',
+    'success' => 'Berhasil',
+    'berhasil' => 'Data telah dihapus',
+    'kesalahan' => 'Terjadi Kesalahan',
+
+    // show data
+    'detdata' => 'Detil Data Kriteria',
+    'inform' => 'Detil Data Kriteria',
+    'detinform' => 'Berikut ini adalah rincian kriteria PPEPP dan data formulir.',
+    'komenbelum' => 'Belum ada komentar',
+    'tutup' => 'Tutup',
 ];

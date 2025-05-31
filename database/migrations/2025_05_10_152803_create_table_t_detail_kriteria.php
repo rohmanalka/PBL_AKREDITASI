@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_peningkatan')->index();
             $table->unsignedBigInteger('id_kriteria')->index();
             $table->unsignedBigInteger('id_komentar')->index()->nullable();
+            $table->unsignedBigInteger('id_pengisian')->index();
             $table->enum('status', ['save', 'submitted', 'revisi', 'divalidasi_kajur', 'tervalidasi']);
             $table->timestamps();
 
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->foreign('id_peningkatan')->references('id_peningkatan')->on('t_peningkatan');
             $table->foreign('id_kriteria')->references('id_kriteria')->on('m_kriteria');
             $table->foreign('id_komentar')->references('id_komentar')->on('t_komentar');
+            $table->foreign('id_pengisian')->references('id_pengisian')->on('m_pengisian');
         });
     }
 

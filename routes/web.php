@@ -270,8 +270,9 @@ Route::middleware(['authorize:DIRKJM'])->group(function () {
     Route::group(['prefix' => '/validasi-dir'], function () {
         Route::get('/', [DirekturController::class, 'index']);
         Route::post('/list', [DirekturController::class, 'list']);
-        Route::get('/{id}/show', [DirekturController::class, 'show']);
-        Route::get('/preview/{id}', [DirekturController::class, 'preview'])->name('preview.ppepp');
+        Route::get('/{id_pengisian}/show', [DirekturController::class, 'show']);
+        // Route::get('/preview/{id}', [DirekturController::class, 'preview'])->name('preview.ppepp');
+        Route::get('/export-pdf/{id_pengisian}', [DirekturController::class, 'exportMergedPdf']);
         Route::put('/{id}/update', [DirekturController::class, 'update']);
     });
 });

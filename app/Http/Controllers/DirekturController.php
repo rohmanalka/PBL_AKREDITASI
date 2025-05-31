@@ -7,6 +7,7 @@ use App\Models\KomentarModel;
 use App\Models\KriteriaModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DetailKriteriaModel;
+use App\Models\PengisianModel;
 use Yajra\DataTables\Facades\DataTables;
 
 class DirekturController extends Controller
@@ -27,6 +28,7 @@ class DirekturController extends Controller
 
         $details = DetailKriteriaModel::all();
         $kriteria = KriteriaModel::all();
+        $pengisian = PengisianModel::all();
 
         return view('direktur.index', [
             'breadcrumb' => $breadcrumb,
@@ -34,30 +36,33 @@ class DirekturController extends Controller
             'activeMenu' => $activeMenu,
             'activeSubmenu' => $activeSubmenu,
             'kriteria' => $kriteria,
-            'details' => $details
+            'details' => $details,
+            'pengisian' => $pengisian
         ]);
     }
 
     public function list(Request $request)
     {
-        $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-            ->select('id_detail_kriteria', 'id_kriteria', 'status')
-            ->where('status', '!=', 'save');
+        $pengisian = PengisianModel::whereHas('detail', function ($query) {
+            $query->where('status', '=', 'divalidasi_kajur');
+        })
+            ->with(['detail' => function ($query) {
+                $query->select('id_detail_kriteria', 'id_pengisian', 'status');
+            }])
+            ->select('id_pengisian', 'nama_pengisian');
 
-        // Jika ada filter id_kriteria dari request
-        if ($request->id_kriteria) {
-            $details->where('id_kriteria', $request->id_kriteria);
+        if ($request->id_pengisian) {
+            $pengisian->where('id_pengisian', $request->id_pengisian);
         }
 
-        return DataTables::of($details)
-            // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
+        return DataTables::of($pengisian)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function show(string $id)
+    public function show(string $id_pengisian)
     {
-        $details = DetailKriteriaModel::with('kriteria')->find($id);
+        $pengisian = PengisianModel::where('id_pengisian', $id_pengisian)->first();
 
         $breadcrumb = (object) [
             'title' => 'Detail Kriteria',
@@ -68,7 +73,12 @@ class DirekturController extends Controller
             'title' => 'Detail',
         ];
 
-        return view('direktur.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('direktur.show', [
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'pengisian' => $pengisian,
+            'id_pengisian' => $id_pengisian
+        ]);
     }
 
     private function convertImagesToBase64($html)
@@ -94,36 +104,94 @@ class DirekturController extends Controller
         return $doc->saveHTML($doc->documentElement);
     }
 
-    public function preview($id)
-    {
-        $details = DetailKriteriaModel::with(['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan', 'kriteria'])->findOrFail($id);
+    // public function preview($id)
+    // {
+    //     $details = DetailKriteriaModel::with(['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan', 'kriteria'])->findOrFail($id);
 
-        foreach (['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'] as $bagian) {
-            if ($details->$bagian && $details->$bagian->deskripsi) {
-                $details->$bagian->deskripsi = $this->convertImagesToBase64($details->$bagian->deskripsi);
+    //     foreach (['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'] as $bagian) {
+    //         if ($details->$bagian && $details->$bagian->deskripsi) {
+    //             $details->$bagian->deskripsi = $this->convertImagesToBase64($details->$bagian->deskripsi);
+    //         }
+    //     }
+
+    //     $pdf = Pdf::loadView('direktur.export', compact('details'));
+    //     return $pdf->stream('preview.pdf');
+    // }
+
+    public function exportMergedPdf($id_pengisian)
+    {
+        $details = DetailKriteriaModel::with(['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan', 'kriteria'])
+            ->where('id_pengisian', $id_pengisian)
+            ->orderBy('id_kriteria')
+            ->get();
+
+        foreach ($details as $detail) {
+            foreach (['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'] as $bagian) {
+                if ($detail->$bagian && $detail->$bagian->deskripsi) {
+                    $detail->$bagian->deskripsi = $this->convertImagesToBase64($detail->$bagian->deskripsi);
+                }
             }
         }
 
         $pdf = Pdf::loadView('direktur.export', compact('details'));
-        return $pdf->stream('preview.pdf');
+        return $pdf->stream("validasi_kriteria_batch_{$id_pengisian}.pdf");
     }
 
-    public function update(Request $request, $id)
+    // public function update(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'status' => 'required|in:tervalidasi,revisi',
+    //         'komentar' => 'nullable|string',
+    //     ]);
+
+    //     $detail = DetailKriteriaModel::with('kriteria')->findOrFail($id);
+
+    //     $komentar = KomentarModel::create([
+    //         'komentar' => $request->komentar
+    //     ]);
+
+    //     $detail->status = $request->status;
+    //     $detail->id_komentar = $komentar->id_komentar;
+    //     $detail->save();
+
+    //     return redirect('validasi-dir')->with('success', 'Validasi berhasil disimpan.');
+    // }
+
+    public function update(Request $request, $id_pengisian)
     {
-        $request->validate([
-            'status' => 'required|in:tervalidasi,revisi',
-            'komentar' => 'nullable|string',
-        ]);
+        $pengisian = PengisianModel::with('detail')->findOrFail($id_pengisian);
 
-        $detail = DetailKriteriaModel::with('kriteria')->findOrFail($id);
+        $detailInput = $request->input('detail', []); // ambil semua kriteria revisi dari form
 
-        $komentar = KomentarModel::create([
-            'komentar' => $request->komentar
-        ]);
+        foreach ($pengisian->detail as $detail) {
+            $id_detail = $detail->id_detail_kriteria;
 
-        $detail->status = $request->status;
-        $detail->id_komentar = $komentar->id_komentar;
-        $detail->save();
+            if (isset($detailInput[$id_detail]['revisi'])) {
+                // Revisi dipilih
+                $komentarText = $detailInput[$id_detail]['komentar'] ?? '';
+
+                // Simpan komentar
+                $komentar = KomentarModel::create([
+                    'komentar' => $komentarText
+                ]);
+
+                $detail->status = 'revisi';
+                $detail->id_komentar = $komentar->id_komentar;
+                $detail->save();
+            } else {
+                // Tidak direvisi, maka divalidasi_kajur
+                $detail->status = 'divalidasi_kajur';
+                $detail->save();
+            }
+        }
+
+        // Jika status validasi adalah "tervalidasi", maka ubah semua ke tervalidasi
+        if ($request->status_validasi === 'tervalidasi') {
+            foreach ($pengisian->detail as $detail) {
+                $detail->status = 'tervalidasi';
+                $detail->save();
+            }
+        }
 
         return redirect('validasi-dir')->with('success', 'Validasi berhasil disimpan.');
     }

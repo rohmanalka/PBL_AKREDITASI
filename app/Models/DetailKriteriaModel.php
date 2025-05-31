@@ -19,6 +19,7 @@ class DetailKriteriaModel extends Model
         'id_pengendalian',
         'id_peningkatan',
         'id_kriteria',
+        'id_pengisian',
         'id_komentar',
         'status'
     ];
@@ -62,6 +63,11 @@ class DetailKriteriaModel extends Model
     public function kriteria(): BelongsTo
     {
         return $this->belongsTo(KriteriaModel::class, 'id_kriteria', 'id_kriteria');
+    }
+
+    public function pengisian(): BelongsTo
+    {
+        return $this->belongsTo(PengisianModel::class, 'id_pengisian', 'id_pengisian');
     }
 
     public function komentar(): BelongsTo

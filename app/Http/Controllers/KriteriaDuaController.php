@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\EvaluasiModel;
 use App\Models\KriteriaModel;
 use App\Models\PenetapanModel;
+use App\Models\PengisianModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PelaksanaanModel;
 use App\Models\PeningkatanModel;
@@ -54,7 +55,6 @@ class KriteriaDuaController extends Controller
         }
 
         return DataTables::of($details)
-            // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addIndexColumn()
             ->make(true);
     }
@@ -97,7 +97,7 @@ class KriteriaDuaController extends Controller
             'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'id_kriteria'         => 'required|exists:m_kriteria,id_kriteria',
-            'status'              => 'required|in:save,submit',
+            'status'              => 'required|in:save,submitted',
         ]);
 
         $user = Auth::user();
@@ -108,6 +108,32 @@ class KriteriaDuaController extends Controller
                 'message' => 'Role Anda tidak diizinkan menginput data kriteria.',
             ]);
         }
+
+        $availableBatch = null;
+
+        $batches = PengisianModel::withCount('detail')
+            ->having('detail_count', '<', 9)
+            ->orderBy('id_pengisian', 'asc')
+            ->get();
+
+        foreach ($batches as $batch) {
+            $exists = DetailKriteriaModel::where('id_pengisian', $batch->id_pengisian)
+                ->where('id_kriteria', $request->id_kriteria)
+                ->exists();
+
+            if (!$exists) {
+                $availableBatch = $batch;
+                break;
+            }
+        }
+
+        if (!$availableBatch) {
+            $availableBatch = PengisianModel::create([
+                'nama_pengisian' => 'Pengisian ' . now()->format('Y-m-d H:i:s'),
+            ]);
+        }
+
+        $batch = $availableBatch;
 
         // Upload helper
         $uploadFile = fn($file, $folder) =>
@@ -122,38 +148,39 @@ class KriteriaDuaController extends Controller
         // Simpan data ke masing-masing model
         $penetapan = PenetapanModel::create([
             'id_kriteria' => $request->id_kriteria,
-            'penetapan'   => $request->penetapan,
+            'deskripsi'   => $request->penetapan,
             'pendukung'   => $path_penetapan,
         ]);
 
         $pelaksanaan = PelaksanaanModel::create([
             'id_kriteria'  => $request->id_kriteria,
-            'pelaksanaan'  => $request->pelaksanaan,
+            'deskripsi'  => $request->pelaksanaan,
             'pendukung'    => $path_pelaksanaan,
         ]);
 
         $evaluasi = EvaluasiModel::create([
             'id_kriteria' => $request->id_kriteria,
-            'evaluasi'    => $request->evaluasi,
+            'deskripsi'    => $request->evaluasi,
             'pendukung'   => $path_evaluasi,
         ]);
 
         $pengendalian = PengendalianModel::create([
             'id_kriteria'   => $request->id_kriteria,
-            'pengendalian'  => $request->pengendalian,
+            'deskripsi'  => $request->pengendalian,
             'pendukung'     => $path_pengendalian,
         ]);
 
         $peningkatan = PeningkatanModel::create([
             'id_kriteria'  => $request->id_kriteria,
-            'peningkatan'  => $request->peningkatan,
+            'deskripsi'  => $request->peningkatan,
             'pendukung'    => $path_peningkatan,
         ]);
 
         DetailKriteriaModel::create([
             'id_kriteria'     => $request->id_kriteria,
+            'id_pengisian'    => $batch->id_pengisian,
             'id_komentar'     => null,
-            'status'          => $request->status, // 'save' atau 'submit'
+            'status'          => $request->status,
             'id_penetapan'    => $penetapan->id_penetapan,
             'id_pelaksanaan'  => $pelaksanaan->id_pelaksanaan,
             'id_evaluasi'     => $evaluasi->id_evaluasi,
@@ -177,23 +204,27 @@ class KriteriaDuaController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
-        if ($detail->penetapan && $detail->penetapan->penetapan) {
-            $detail->penetapan->penetapan = str_replace(
-                '../storage/',
-                rtrim(url('storage'), '/') . '/',
-                $detail->penetapan->penetapan
-            );
-        }
+        // $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
+
+        // foreach ($ppeppRelations as $relasi) {
+        //     if ($detail->$relasi && $detail->$relasi->deskripsi) {
+        //         $detail->$relasi->deskripsi = str_replace(
+        //             '../storage/',
+        //             rtrim(url('storage'), '/') . '/',
+        //             $detail->$relasi->deskripsi
+        //         );
+        //     }
+        // }
 
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => __('kriteria.kriteria.2.titleedit'),
-            'list' => __('kriteria.kriteria.2.listedit'),
+            'title' =>  __('kriteria.kriteria.2.titleedit'),
+            'list' =>  __('kriteria.kriteria.2.listedit'),
         ];
 
         $page = (object) [
-            'title' => __('kriteria.kriteria.2.pageedit'),
+            'title' =>  __('kriteria.kriteria.2.pageedit'),
         ];
 
         $activeMenu = 'kriteria';
@@ -209,6 +240,7 @@ class KriteriaDuaController extends Controller
         ]);
     }
 
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -222,7 +254,7 @@ class KriteriaDuaController extends Controller
             'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status'              => 'required|in:save,submit',
+            'status'              => 'required|in:save,submitted',
         ]);
 
         $detail = DetailKriteriaModel::findOrFail($id);
@@ -230,7 +262,7 @@ class KriteriaDuaController extends Controller
         // Penetapan
         $penetapan = PenetapanModel::find($detail->id_penetapan);
         if ($penetapan) {
-            $penetapan->penetapan = $request->penetapan;
+            $penetapan->deskripsi = $request->penetapan;
             if ($request->hasFile('penetapan_file')) {
                 $penetapan->pendukung = $request->file('penetapan_file')->store('pendukung/penetapan');
             }
@@ -240,7 +272,7 @@ class KriteriaDuaController extends Controller
         // Pelaksanaan
         $pelaksanaan = PelaksanaanModel::find($detail->id_pelaksanaan);
         if ($pelaksanaan) {
-            $pelaksanaan->pelaksanaan = $request->pelaksanaan;
+            $pelaksanaan->deskripsi = $request->pelaksanaan;
             if ($request->hasFile('pelaksanaan_file')) {
                 $pelaksanaan->pendukung = $request->file('pelaksanaan_file')->store('pendukung/pelaksanaan');
             }
@@ -250,7 +282,7 @@ class KriteriaDuaController extends Controller
         // Evaluasi
         $evaluasi = EvaluasiModel::find($detail->id_evaluasi);
         if ($evaluasi) {
-            $evaluasi->evaluasi = $request->evaluasi;
+            $evaluasi->deskripsi = $request->evaluasi;
             if ($request->hasFile('evaluasi_file')) {
                 $evaluasi->pendukung = $request->file('evaluasi_file')->store('pendukung/evaluasi');
             }
@@ -260,7 +292,7 @@ class KriteriaDuaController extends Controller
         // Pengendalian
         $pengendalian = PengendalianModel::find($detail->id_pengendalian);
         if ($pengendalian) {
-            $pengendalian->pengendalian = $request->pengendalian;
+            $pengendalian->deskripsi = $request->pengendalian;
             if ($request->hasFile('pengendalian_file')) {
                 $pengendalian->pendukung = $request->file('pengendalian_file')->store('pendukung/pengendalian');
             }
@@ -270,14 +302,15 @@ class KriteriaDuaController extends Controller
         // Peningkatan
         $peningkatan = PeningkatanModel::find($detail->id_peningkatan);
         if ($peningkatan) {
-            $peningkatan->peningkatan = $request->peningkatan;
+            $peningkatan->deskripsi = $request->peningkatan;
             if ($request->hasFile('peningkatan_file')) {
                 $peningkatan->pendukung = $request->file('peningkatan_file')->store('pendukung/peningkatan');
             }
             $peningkatan->save();
         }
 
-        $detail->status = $request->status;
+        // Update status di DetailKriteria
+        $detail->status = $request->status; // 'save' atau 'submitted'
         $detail->save();
 
         return response()->json([
@@ -321,8 +354,8 @@ class KriteriaDuaController extends Controller
         $details = DetailKriteriaModel::with(['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan', 'kriteria'])->findOrFail($id);
 
         foreach (['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'] as $bagian) {
-            if ($details->$bagian && $details->$bagian->$bagian) {
-                $details->$bagian->$bagian = $this->convertImagesToBase64($details->$bagian->$bagian);
+            if ($details->$bagian && $details->$bagian->deskripsi) {
+                $details->$bagian->deskripsi = $this->convertImagesToBase64($details->$bagian->deskripsi);
             }
         }
 
@@ -339,8 +372,10 @@ class KriteriaDuaController extends Controller
 
         try {
             $section = $request->input('section');
+
+            // Simpan ke folder "pendukung/{section}"
             $path = $request->file('image')->store("pendukung/{$section}", 'public');
-            $url = asset("storage/{$path}");
+            $url = asset("storage/{$path}"); // Gunakan URL publik
 
             return response()->json([
                 'status' => true,
@@ -413,11 +448,11 @@ class KriteriaDuaController extends Controller
         $deleteFile($pengendalian);
         $deleteFile($peningkatan);
 
-        $deleteImageFilesFromHtml($penetapan->penetapan ?? '');
-        $deleteImageFilesFromHtml($pelaksanaan->pelaksanaan ?? '');
-        $deleteImageFilesFromHtml($evaluasi->evaluasi ?? '');
-        $deleteImageFilesFromHtml($pengendalian->pengendalian ?? '');
-        $deleteImageFilesFromHtml($peningkatan->peningkatan ?? '');
+        $deleteImageFilesFromHtml($penetapan->deskripsi ?? '');
+        $deleteImageFilesFromHtml($pelaksanaan->deskripsi ?? '');
+        $deleteImageFilesFromHtml($evaluasi->deskripsi ?? '');
+        $deleteImageFilesFromHtml($pengendalian->deskripsi ?? '');
+        $deleteImageFilesFromHtml($peningkatan->deskripsi ?? '');
 
         $penetapan?->delete();
         $pelaksanaan?->delete();

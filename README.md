@@ -9,10 +9,10 @@ Aplikasi berbasis Laravel untuk mengelola dan memvalidasi data akreditasi progra
 ## 📸 Screenshot
 
 ### 📌 Home Sistem
-![Dashboard Sistem](public/images/screenshots/dashboard.png)
+![Dashboard Sistem](public/images/screenshots/Home.png)
 
 ### 📌 Form Input Kriteria
-![Form Kriteria](public/images/screenshots/input.png)
+![Form Kriteria](public/images/screenshots/Input.png)
 
 ---
 

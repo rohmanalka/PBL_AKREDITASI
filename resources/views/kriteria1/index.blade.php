@@ -32,7 +32,7 @@
                                             {{ __('kriteria.nmkrit') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Bagian
+                                            {{ __('kriteria.bagian') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Status

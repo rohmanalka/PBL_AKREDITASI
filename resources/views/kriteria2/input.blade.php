@@ -14,14 +14,14 @@
                         <!-- 1. Penetapan -->
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">1. {{ __('messages.penetapan') }}</h6>
+                                <h6 class="font-weight-bold">1. {{ __('kriteria.penetapan') }}</h6>
                                 <textarea id="editor-penetapan" name="penetapan" class="form-control"></textarea>
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-penetapan">
-                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                            <i class="fas fa-upload"></i> {{ __('kriteria.upload_gambar') }}
                                         </label>
                                         <input type="file" id="input-penetapan" name="penetapan_file"
                                             class="form-control mt-2 d-none" accept="image/*"
@@ -34,14 +34,14 @@
                         <!-- 2. Pelaksanaan -->
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">2. {{ __('messages.pelaksanaan') }}</h6>
+                                <h6 class="font-weight-bold">2. {{ __('kriteria.pelaksanaan') }}</h6>
                                 <textarea id="editor-pelaksanaan" name="pelaksanaan" class="form-control"></textarea>
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-pelaksanaan">
-                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                            <i class="fas fa-upload"></i> {{ __('kriteria.upload_gambar') }}
                                         </label>
                                         <input type="file" id="input-pelaksanaan" name="pelaksanaan_file"
                                             class="form-control mt-2 d-none" accept="image/*"
@@ -54,14 +54,14 @@
                         <!-- 3. Evaluasi -->
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">3. {{ __('messages.evaluasi') }}</h6>
+                                <h6 class="font-weight-bold">3. {{ __('kriteria.evaluasi') }}</h6>
                                 <textarea id="editor-evaluasi" name="evaluasi" class="form-control"></textarea>
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-evaluasi">
-                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                            <i class="fas fa-upload"></i> {{ __('kriteria.upload_gambar') }}
                                         </label>
                                         <input type="file" id="input-evaluasi" name="evaluasi_file"
                                             class="form-control mt-2 d-none" accept="image/*"
@@ -74,14 +74,14 @@
                         <!-- 4. Pengendalian -->
                         <div class="row mx-1 mt-3 border-bottom pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">4. {{ __('messages.pengendalian') }}</h6>
+                                <h6 class="font-weight-bold">4. {{ __('kriteria.pengendalian') }}</h6>
                                 <textarea id="editor-pengendalian" name="pengendalian" class="form-control"></textarea>
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-pengendalian">
-                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                            <i class="fas fa-upload"></i> {{ __('kriteria.upload_gambar') }}
                                         </label>
                                         <input type="file" id="input-pengendalian" name="pengendalian_file"
                                             class="form-control mt-2 d-none" accept="image/*"
@@ -94,14 +94,14 @@
                         <!-- 5. Peningkatan -->
                         <div class="row mx-1 mt-3 pb-3">
                             <div class="col-md-9">
-                                <h6 class="font-weight-bold">5. {{ __('messages.peningkatan') }}</h6>
+                                <h6 class="font-weight-bold">5. {{ __('kriteria.peningkatan') }}</h6>
                                 <textarea id="editor-peningkatan" name="peningkatan" class="form-control"></textarea>
                             </div>
                             <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-peningkatan">
-                                            <i class="fas fa-upload"></i> {{ __('messages.upload_gambar') }}
+                                            <i class="fas fa-upload"></i> {{ __('kriteria.upload_gambar') }}
                                         </label>
                                         <input type="file" id="input-peningkatan" name="peningkatan_file"
                                             class="form-control mt-2 d-none" accept="image/*"
@@ -116,10 +116,10 @@
                                 <!-- Left side buttons -->
                                 <div>
                                     <button type="reset" class="btn btn-outline-secondary me-2" onclick="resetForm()">
-                                        <i class="fas fa-undo-alt me-1"></i> {{ __('messages.reset') }}
+                                        <i class="fas fa-undo-alt me-1"></i> {{ __('kriteria.reset') }}
                                     </button>
                                     <a href="{{ url('kriteria2/') }}" class="btn btn-outline-danger">
-                                        <i class="fas fa-times me-1"></i> {{ __('messages.cancel') }}
+                                        <i class="fas fa-times me-1"></i> {{ __('kriteria.cancel') }}
                                     </a>
                                 </div>
 
@@ -129,12 +129,12 @@
 
                                     <button type="button" class="btn btn-outline-primary me-2"
                                         onclick="submitForm('save')">
-                                        <i class="fas fa-save me-1"></i> {{ __('messages.save') }}
+                                        <i class="fas fa-save me-1"></i> {{ __('kriteria.save') }}
                                     </button>
 
                                     <button type="button" class="btn btn-primary" id="submitBtn"
-                                        onclick="submitForm('submit')">
-                                        <i class="fas fa-paper-plane me-1"></i> {{ __('messages.submit') }}
+                                        onclick="submitForm('submitted')">
+                                        <i class="fas fa-paper-plane me-1"></i> {{ __('kriteria.submit') }}
                                     </button>
                                 </div>
                             </div>
@@ -201,7 +201,6 @@
                                 editor.insertContent(`<img src="${url}" style="max-width:100%;"/>`);
                             }
 
-                            // Tampilkan preview jika ingin
                             const preview = document.getElementById(`preview-${targetId}`);
                             if (preview) {
                                 preview.src = url;
@@ -217,42 +216,6 @@
                     });
             }
         }
-        
-        // function previewAndInsertImage(input, targetId, section) {
-        //     if (input.files && input.files[0]) {
-        //         const formData = new FormData();
-        //         formData.append('image', input.files[0]);
-        //         formData.append('section', section);
-
-        //         fetch("{{ url('kriteria2/upload') }}", {
-        //                 method: "POST",
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
-        //                     'Accept': 'application/json',
-        //                 },
-        //                 body: formData
-        //             })
-        //             .then(res => res.json())
-        //             .then(data => {
-        //                 if (data.status) {
-        //                     const url = data.url;
-
-        //                     // Hanya tampilkan preview (tidak insert ke TinyMCE)
-        //                     const preview = document.getElementById(`preview-${targetId}`);
-        //                     if (preview) {
-        //                         preview.src = url;
-        //                         preview.style.display = 'block';
-        //                     }
-        //                 } else {
-        //                     Swal.fire('Gagal Upload', data.message || 'Gagal mengunggah gambar.', 'error');
-        //                 }
-        //             })
-        //             .catch(err => {
-        //                 console.error(err);
-        //                 Swal.fire('Error', 'Terjadi kesalahan saat mengunggah gambar.', 'error');
-        //             });
-        //     }
-        // }
 
         function submitForm(status) {
             // pastikan semua TinyMCE disimpan
@@ -297,7 +260,7 @@
                 .then(data => {
                     if (data.status) {
                         Swal.fire({
-                            title: 'Sukses!',
+                            title: "{{ __('kriteria.success') }}.",
                             text: data.message,
                             icon: 'success',
                             confirmButtonText: 'OK'

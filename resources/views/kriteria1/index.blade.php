@@ -150,7 +150,7 @@
                             }
 
                             let deleteBtn =
-                                `<button class="btn btn-danger btn-xs mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
+                                `<button class="btn btn-danger btn-xs disabled mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
                             return `${detailBtn} ${editBtn} ${deleteBtn}`;
                         }
 

@@ -108,52 +108,16 @@
                             data: "detail",
                             className: "text-sm",
                             render: function(details) {
-                                let statuses = [];
-
-                                // Ambil status dari kriteria 1-9
-                                if (Array.isArray(details)) {
-                                    details.forEach(item => {
-                                        if (item.id_kriteria >= 1 && item.id_kriteria <=
-                                            9) {
-                                            statuses.push(item.status);
-                                        }
-                                    });
-                                }
-
-                                // Hitung status gabungan
-                                let statusGabungan = 'belum lengkap';
-
-                                if (statuses.length < 9) {
-                                    statusGabungan = 'belum lengkap';
-                                } else if (statuses.includes('revisi')) {
-                                    statusGabungan = 'revisi';
-                                } else if (statuses.includes('submitted')) {
-                                    statusGabungan = 'submitted';
-                                } else if (statuses.includes('save')) {
-                                    statusGabungan = 'save';
-                                } else if (statuses.every(s => s === 'divalidasi_kajur')) {
-                                    statusGabungan = 'divalidasi_kajur';
-                                }
-
-                                // Tampilkan badge
-                                let badgeClass = 'bg-secondary';
-                                switch (statusGabungan) {
-                                    case 'save':
-                                        badgeClass = 'bg-secondary';
-                                        break;
-                                    case 'submitted':
-                                        badgeClass = 'bg-primary';
-                                        break;
-                                    case 'revisi':
-                                        badgeClass = 'bg-warning text-dark';
-                                        break;
-                                    case 'divalidasi_kajur':
-                                        badgeClass = 'bg-success';
-                                        break;
-                                    case 'tervalidasi':
-                                        badgeClass = 'bg-info';
-                                        break;
-                                }
+                                const statusGabungan = getStatusGabungan(details);
+                                const badgeMap = {
+                                    save: 'bg-secondary',
+                                    submitted: 'bg-primary',
+                                    revisi: 'bg-warning text-dark',
+                                    divalidasi_kajur: 'bg-success',
+                                    tervalidasi: 'bg-info',
+                                    'belum lengkap': 'bg-danger'
+                                };
+                                const badgeClass = badgeMap[statusGabungan] || 'bg-secondary';
 
                                 return `<span class="badge ${badgeClass}">${statusGabungan}</span>`;
                             }
@@ -164,46 +128,36 @@
                             orderable: false,
                             searchable: false,
                             render: function(details, type, row) {
-                                let statuses = [];
+                                const statusGabungan = getStatusGabungan(details);
+                                const disabled = (statusGabungan === 'revisi' || statusGabungan ===
+                                    '');
+                                const btnClass = disabled ? 'btn-secondary' : 'btn-info';
+                                const btnAttr = disabled ? 'disabled' : '';
 
-                                if (Array.isArray(details)) {
-                                    details.forEach(item => {
-                                        if (item.id_kriteria >= 1 && item.id_kriteria <=
-                                            9) {
-                                            statuses.push(item.status);
-                                        }
-                                    });
-                                }
-
-                                let statusGabungan = 'belum lengkap';
-
-                                if (statuses.length < 9) {
-                                    statusGabungan = 'belum lengkap';
-                                } else if (statuses.includes('revisi')) {
-                                    statusGabungan = 'revisi';
-                                } else if (statuses.includes('submitted')) {
-                                    statusGabungan = 'submitted';
-                                } else if (statuses.includes('save')) {
-                                    statusGabungan = 'save';
-                                } else if (statuses.every(s => s === 'divalidasi_kajur')) {
-                                    statusGabungan = 'divalidasi_kajur';
-                                }
-
-                                let isDisabled = (statusGabungan === 'revisi' || statusGabungan ===
-                                    'tervalidasi');
-                                let disabledAttr = isDisabled ? 'disabled' : '';
-                                let buttonClass = isDisabled ? 'btn-secondary' : 'btn-info';
-
-                                let detailBtn = `
-                                    <button class="btn ${buttonClass} btn-xs mt-3" onclick="modalAction('${base_url}/${row.id_pengisian}/show')" ${disabledAttr}>
-                                        Validasi
-                                    </button>`;
-                                return detailBtn;
+                                return `
+                                <button class="btn ${btnClass} btn-xs mt-3"
+                                    onclick="modalAction('${base_url}/${row.id_pengisian}/show')"
+                                    ${btnAttr}>
+                                    Validasi
+                                </button>`;
                             }
                         }
-
                     ]
                 });
+            }
+
+            // Fungsi bantu untuk menentukan status gabungan
+            function getStatusGabungan(details) {
+                const statuses = (Array.isArray(details) ? details : [])
+                    .filter(item => item.id_kriteria >= 1 && item.id_kriteria <= 9)
+                    .map(item => item.status);
+
+                if (statuses.length < 9) return 'belum lengkap';
+                if (statuses.includes('revisi')) return 'revisi';
+                if (statuses.includes('submitted')) return 'submitted';
+                if (statuses.includes('save')) return 'save';
+                if (statuses.every(s => s === 'divalidasi_kajur')) return 'divalidasi_kajur';
+                return 'belum lengkap';
             }
 
             $('#id_pengisian').on('change', function() {

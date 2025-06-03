@@ -32,6 +32,9 @@
                                             {{ __('kriteria.nmkrit') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                            {{ __('kriteria.bagian') }}
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Status
                                         </th>
                                         <th
@@ -90,6 +93,12 @@
                         searchable: true
                     },
                     {
+                        data: "pengisian.nama_pengisian",
+                        className: "text-sm",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
                         data: "status",
                         className: "text-sm",
                         orderable: true,
@@ -141,7 +150,7 @@
                             }
 
                             let deleteBtn =
-                                `<button class="btn btn-danger btn-xs mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
+                                `<button class="btn btn-danger btn-xs disabled mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
                             return `${detailBtn} ${editBtn} ${deleteBtn}`;
                         }
 

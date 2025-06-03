@@ -44,8 +44,11 @@ class KriteriaDuaController extends Controller
 
     public function list(Request $request)
     {
-        $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-            ->select('id_detail_kriteria', 'id_kriteria', 'status');
+        $details = DetailKriteriaModel::with([
+            'kriteria:id_kriteria,nama_kriteria',
+            'pengisian:id_pengisian,nama_pengisian'
+        ])
+            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status');
 
         $details->where('id_kriteria', 2);
 
@@ -129,7 +132,11 @@ class KriteriaDuaController extends Controller
 
         if (!$availableBatch) {
             $availableBatch = PengisianModel::create([
-                'nama_pengisian' => 'Pengisian ' . now()->format('Y-m-d H:i:s'),
+                'nama_pengisian' => '',
+            ]);
+
+            $availableBatch->update([
+                'nama_pengisian' => 'Dokumen Final ' . $availableBatch->id_pengisian,
             ]);
         }
 

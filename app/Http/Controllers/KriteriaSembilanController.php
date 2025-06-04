@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\EvaluasiModel;
 use App\Models\KriteriaModel;
 use App\Models\PenetapanModel;
+use App\Models\PengisianModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PelaksanaanModel;
 use App\Models\PeningkatanModel;
@@ -43,8 +44,11 @@ class KriteriaSembilanController extends Controller
 
     public function list(Request $request)
     {
-        $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-            ->select('id_detail_kriteria', 'id_kriteria', 'status');
+        $details = DetailKriteriaModel::with([
+            'kriteria:id_kriteria,nama_kriteria',
+            'pengisian:id_pengisian,nama_pengisian'
+        ])
+            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status');
 
         $details->where('id_kriteria', 9);
 
@@ -108,6 +112,36 @@ class KriteriaSembilanController extends Controller
             ]);
         }
 
+        $availableBatch = null;
+
+        $batches = PengisianModel::withCount('detail')
+            ->having('detail_count', '<', 9)
+            ->orderBy('id_pengisian', 'asc')
+            ->get();
+
+        foreach ($batches as $batch) {
+            $exists = DetailKriteriaModel::where('id_pengisian', $batch->id_pengisian)
+                ->where('id_kriteria', $request->id_kriteria)
+                ->exists();
+
+            if (!$exists) {
+                $availableBatch = $batch;
+                break;
+            }
+        }
+
+        if (!$availableBatch) {
+            $availableBatch = PengisianModel::create([
+                'nama_pengisian' => '',
+            ]);
+
+            $availableBatch->update([
+                'nama_pengisian' => 'Dokumen Final ' . $availableBatch->id_pengisian,
+            ]);
+        }
+
+        $batch = $availableBatch;
+
         // Upload helper
         $uploadFile = fn($file, $folder) =>
         $file ? $file->store("storage/pendukung/{$folder}", 'public') : null;
@@ -151,6 +185,7 @@ class KriteriaSembilanController extends Controller
 
         DetailKriteriaModel::create([
             'id_kriteria'     => $request->id_kriteria,
+            'id_pengisian'    => $batch->id_pengisian,
             'id_komentar'     => null,
             'status'          => $request->status,
             'id_penetapan'    => $penetapan->id_penetapan,
@@ -162,7 +197,7 @@ class KriteriaSembilanController extends Controller
 
         return response()->json([
             'status'  => true,
-            'message' => 'Data berhasil disimpan.',
+            'message' => __('kriteria.simpanberhasil'),
         ]);
     }
 
@@ -176,17 +211,17 @@ class KriteriaSembilanController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
-        $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
+        // $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
 
-        foreach ($ppeppRelations as $relasi) {
-            if ($detail->$relasi && $detail->$relasi->deskripsi) {
-                $detail->$relasi->deskripsi = str_replace(
-                    '../storage/',
-                    rtrim(url('storage'), '/') . '/',
-                    $detail->$relasi->deskripsi
-                );
-            }
-        }
+        // foreach ($ppeppRelations as $relasi) {
+        //     if ($detail->$relasi && $detail->$relasi->deskripsi) {
+        //         $detail->$relasi->deskripsi = str_replace(
+        //             '../storage/',
+        //             rtrim(url('storage'), '/') . '/',
+        //             $detail->$relasi->deskripsi
+        //         );
+        //     }
+        // }
 
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
@@ -287,7 +322,7 @@ class KriteriaSembilanController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil diupdate dengan status ' . $request->status
+            'message' => __('kriteria.editberhasil') . $request->status
         ]);
     }
 
@@ -434,7 +469,7 @@ class KriteriaSembilanController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil dihapus.',
+            'message' => __('kriteria.hpsberhasil'),
         ]);
     }
 }

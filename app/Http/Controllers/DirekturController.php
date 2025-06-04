@@ -45,7 +45,7 @@ class DirekturController extends Controller
     {
         $pengisian = PengisianModel::whereHas('detail', function ($query) {
             $query->whereIn('status', ['divalidasi_kajur', 'revisi', 'tervalidasi']);
-        })
+        }, '=', 9)
             ->with(['detail' => function ($query) {
                 $query->select('id_detail_kriteria', 'id_pengisian', 'status');
             }])
@@ -170,8 +170,9 @@ class DirekturController extends Controller
                 // Revisi dipilih
                 $komentarText = $detailInput[$id_detail]['komentar'] ?? '';
 
-                // Simpan komentar
+                // Simpan komentar beserta id_user
                 $komentar = KomentarModel::create([
+                    'id_user' => auth()->user()->id_user,
                     'komentar' => $komentarText
                 ]);
 
@@ -181,6 +182,7 @@ class DirekturController extends Controller
             } else {
                 // Tidak direvisi, maka divalidasi_kajur
                 $detail->status = 'divalidasi_kajur';
+                $detail->id_komentar = null; // bersihkan jika ada sebelumnya
                 $detail->save();
             }
         }

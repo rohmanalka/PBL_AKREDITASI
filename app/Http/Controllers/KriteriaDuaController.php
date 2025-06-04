@@ -136,7 +136,7 @@ class KriteriaDuaController extends Controller
             ]);
 
             $availableBatch->update([
-                'nama_pengisian' => 'Dokumen Final ' . $availableBatch->id_pengisian,
+                'nama_pengisian' => 'Dokumen Bagian ' . $availableBatch->id_pengisian,
             ]);
         }
 

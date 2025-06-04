@@ -14,20 +14,64 @@
         }
 
         .header {
-            text-align: center;
             margin-bottom: 20px;
-            border-bottom: 2px solid #333;
             padding-bottom: 10px;
+            border-bottom: 2px solid #333;
         }
 
-        .university {
-            font-size: 14px;
+        .header-table {
+            width: 100%;
+        }
+
+        .header-left {
+            width: 15%;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .header-right {
+            width: 85%;
+            text-align: center;
+        }
+
+        .header-right span {
+            line-height: 1.2;
+            display: block;
+        }
+
+        .image {
+            width: auto;
+            height: 120px;
+            max-width: 150px;
+            max-height: 150px;
+        }
+
+        .font-10 {
+            font-size: 10pt;
+        }
+
+        .font-11 {
+            font-size: 11pt;
+        }
+
+        .font-13 {
+            font-size: 13pt;
+        }
+
+        .font-bold {
             font-weight: bold;
+        }
+
+        .mb-1 {
+            margin-bottom: 3px;
+            display: block;
         }
 
         .document-title {
             font-size: 16px;
-            margin: 10px 0;
+            text-align: center;
+            margin: 20px 0 10px 0;
+            font-weight: bold;
         }
 
         .criteria-title {
@@ -71,14 +115,35 @@
             font-size: 11px;
             margin-top: 5px;
         }
+        .header-left {
+            width: 20%;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .header-right {
+            width: 80%;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="header">
-        <div class="university">POLITEKNIK NEGERI MALANG</div>
-        <div class="document-title">DOKUMEN PPEPP</div>
+        <table class="header-table">
+            <tr>
+                <td class="header-left">
+                    <img src="{{ public_path('images/screenshots/Logo-Polinema.png') }}" class="image">
+                </td>
+                <td class="header-right">
+                    <span class="font-10 mb-1">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
+                    <span class="font-13 font-bold mb-1">POLITEKNIK NEGERI MALANG</span>
+                    <span class="font-9 mb-1">Jl. Soekarno-Hatta No. 9 Malang 65141</span>
+                    <span class="font-9 mb-1">Telepon (0341) 404424 Pes. 101-105, 0341-404420, Fax. (0341) 404420</span>
+                    <span class="font-9">Laman: www.polinema.ac.id</span>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="criteria-title">{{ $details->kriteria->nama_kriteria ?? 'Tanpa Kriteria' }}</div>

@@ -21,10 +21,10 @@
                         <form>
                             <div class="row align-items-center">
                                 <div class="col-sm-4">
-                                    <select name="id_kriteria" id="id_kriteria" class="form-select">
-                                        <option value="">- Pilih Kriteria -</option>
-                                        @foreach ($kriteria as $item)
-                                            <option value="{{ $item->id_kriteria }}">{{ $item->nama_kriteria }}</option>
+                                    <select name="id_pengisian" id="id_pengisian" class="form-select">
+                                        <option value="">- Pilih Batch -</option>
+                                        @foreach ($pengisian as $item)
+                                            <option value="{{ $item->id_pengisian }}">{{ $item->nama_pengisian }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -35,20 +35,10 @@
                             <table class="table align-items-center mb-0" id="table_detail_kriteria">
                                 <thead>
                                     <tr>
-                                        <th
-                                            class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-                                            ID
-                                        </th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            {{ __('messages.nmkrit') }}
-                                        </th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Status
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-
-                                        </th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">ID</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Nama Bagian</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Status</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Aksi</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -65,9 +55,6 @@
     </div>
 @endsection
 
-@push('css')
-@endpush
-
 @push('js')
     <script>
         const base_url = "{{ url('preview') }}";
@@ -81,26 +68,27 @@
         $(document).ready(function() {
             let dataDetail;
 
-            function initDataTable(id_kriteria) {
+            function initDataTable(id_pengisian) {
                 dataDetail = $('#table_detail_kriteria').DataTable({
                     serverSide: true,
                     processing: true,
                     destroy: true,
                     ajax: {
-                        url: "{{ url('preview/list') }}",
+                        url: "{{ url('/list') }}",
                         type: "POST",
                         data: function(d) {
-                            d.id_kriteria = id_kriteria;
+                            d.id_pengisian = id_pengisian;
                         }
                     },
-                    columns: [{
+                    columns: [
+                        {
                             data: "DT_RowIndex",
                             className: "text-center text-sm",
                             orderable: false,
                             searchable: false
                         },
                         {
-                            data: "kriteria.nama_kriteria",
+                            data: "bagian.nama_bagian",
                             className: "text-sm",
                             orderable: true,
                             searchable: true
@@ -108,8 +96,6 @@
                         {
                             data: "status",
                             className: "text-sm",
-                            orderable: true,
-                            searchable: true,
                             render: function(data) {
                                 let badgeClass = 'bg-secondary';
                                 switch (data) {
@@ -134,26 +120,22 @@
                         },
                         {
                             data: "aksi",
-                            className: "text-center text-xs ",
+                            className: "text-center text-xs",
                             orderable: false,
                             searchable: false,
                             render: function(data, type, row) {
-                                let id = row.id_detail_kriteria;
-                                let status = row.status;
-
-                                let detailBtn = `
-                                    <button class="btn btn-info btn-xs mt-3" onclick="modalAction('${base_url}/${id}/show')">
+                                return `
+                                    <button class="btn btn-info btn-xs mt-3"
+                                        onclick="modalAction('${base_url}/${row.id_pengisian}/${row.id_bagian}/preview')">
                                         Preview
                                     </button>`;
-                                return `${detailBtn}`;
-
                             }
                         }
                     ]
                 });
             }
 
-            $('#id_kriteria').on('change', function() {
+            $('#id_pengisian').on('change', function() {
                 let selectedId = $(this).val();
                 if (selectedId) {
                     if ($.fn.DataTable.isDataTable('#table_detail_kriteria')) {

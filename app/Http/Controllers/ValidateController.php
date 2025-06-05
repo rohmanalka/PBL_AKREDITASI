@@ -117,12 +117,17 @@ class ValidateController extends Controller
 
         $detail = DetailKriteriaModel::with('kriteria')->findOrFail($id);
 
-        $komentar = KomentarModel::create([
-            'komentar' => $request->komentar
-        ]);
+        if ($request->status === 'revisi' && $request->komentar) {
+            $komentar = KomentarModel::create([
+                'id_user' => auth()->user()->id_user,
+                'komentar' => $request->komentar
+            ]);
+            $detail->id_komentar = $komentar->id_komentar;
+        } else {
+            $detail->id_komentar = null;
+        }
 
         $detail->status = $request->status;
-        $detail->id_komentar = $komentar->id_komentar;
         $detail->save();
 
         return redirect('validasi-kpskjr')->with('success', 'Validasi berhasil disimpan.');

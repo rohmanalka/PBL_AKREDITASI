@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\RoleModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,5 +33,10 @@ class UserModel extends Authenticatable
     public function hasRole($role): bool
     {
         return $this->role->role_kode == $role;
+    }
+
+    public function komentar(): HasMany
+    {
+        return $this->hasMany(KomentarModel::class);
     }
 }

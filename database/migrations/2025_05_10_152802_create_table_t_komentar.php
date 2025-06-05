@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('t_komentar', function (Blueprint $table) {
             $table->id('id_komentar');
+            $table->unsignedBigInteger('id_user')->index();
             $table->text('komentar')->nullable();
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id_user')->on('m_user');
         });
     }
 

@@ -23,6 +23,66 @@
         }
 
         .header-left {
+            width: 20%;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .header-right {
+            width: 80%;
+            text-align: center;
+        }
+
+        .header-right span {
+            line-height: 1.2;
+            display: block;
+        }
+
+        .image {
+            width: auto;
+            height: 120px;
+            max-width: 150px;
+            max-height: 150px;
+        }
+
+        .font-9 {
+            font-size: 9pt;
+        }
+
+        .font-10 {
+            font-size: 10pt;
+        }
+
+        .font-13 {
+            font-size: 13pt;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .mb-1 {
+            margin-bottom: 3px;
+            display: block;
+        }
+
+        h2,
+        h3 {
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+        }
+
+        .header-table {
+            width: 100%;
+        }
+
+        .header-left {
             width: 15%;
             text-align: center;
             vertical-align: top;
@@ -142,7 +202,6 @@
             </tr>
         </table>
     </div>
-
     @foreach ($details as $detail)
         <div class="kriteria-wrapper">
             <h2 class="criteria-title">Kriteria {{ $detail->kriteria->nama_kriteria ?? 'Tanpa Kriteria' }}</h2>

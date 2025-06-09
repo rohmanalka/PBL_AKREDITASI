@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\EvaluasiModel;
 use App\Models\KriteriaModel;
 use App\Models\PenetapanModel;
+use App\Models\PengisianModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PelaksanaanModel;
 use App\Models\PeningkatanModel;
@@ -30,21 +31,22 @@ class KriteriaEmpatController extends Controller
             'title' => __('kriteria.kriteria.4.page'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria4';
+        $activeMenu = 'riwayat1';
 
         return view('kriteria4.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu
+            'activeMenu' => $activeMenu
         ]);
     }
 
     public function list(Request $request)
     {
-        $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-            ->select('id_detail_kriteria', 'id_kriteria', 'status');
+        $details = DetailKriteriaModel::with([
+            'kriteria:id_kriteria,nama_kriteria',
+            'pengisian:id_pengisian,nama_pengisian'
+        ])
+            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status');
 
         $details->where('id_kriteria', 4);
 
@@ -63,22 +65,20 @@ class KriteriaEmpatController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => __('kriteria.kriteria.4.title'),
-            'list' => __('kriteria.kriteria.4.list'),
+            'title' => __('kriteria.kriteria.4.titleinpt'),
+            'list' => __('kriteria.kriteria.4.listinpt'),
         ];
 
         $page = (object) [
-            'title' => __('kriteria.kriteria.4.page'),
+            'title' => __('kriteria.kriteria.4.pageinpt'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria4';
+        $activeMenu = 'input1';
 
         return view('kriteria4.input', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu
+            'activeMenu' => $activeMenu
         ])->with('kriteria', $kriteria);;
     }
 
@@ -90,11 +90,11 @@ class KriteriaEmpatController extends Controller
             'evaluasi'            => 'nullable|string',
             'pengendalian'        => 'nullable|string',
             'peningkatan'         => 'nullable|string',
-            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
-            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
-            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
-            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
-            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'id_kriteria'         => 'required|exists:m_kriteria,id_kriteria',
             'status'              => 'required|in:save,submitted',
         ]);
@@ -107,6 +107,37 @@ class KriteriaEmpatController extends Controller
                 'message' => 'Role Anda tidak diizinkan menginput data kriteria.',
             ]);
         }
+
+        $availableBatch = null;
+
+        $batches = PengisianModel::withCount('detail')
+            ->having('detail_count', '<', 9)
+            ->orderBy('id_pengisian', 'asc')
+            ->get();
+
+        foreach ($batches as $batch) {
+            $exists = DetailKriteriaModel::where('id_pengisian', $batch->id_pengisian)
+                ->where('id_kriteria', $request->id_kriteria)
+                ->exists();
+
+            if (!$exists) {
+                $availableBatch = $batch;
+                break;
+            }
+        }
+
+        if (!$availableBatch) {
+            $availableBatch = PengisianModel::create([
+                'nama_pengisian' => '',
+            ]);
+
+            $availableBatch->update([
+                'nama_pengisian' => 'Dokumen Bagian ' . $availableBatch->id_pengisian,
+            ]);
+        }
+
+        $batch = $availableBatch;
+        $idPengisian = $request->status === 'save' ? null : $batch->id_pengisian;
 
         // Upload helper
         $uploadFile = fn($file, $folder) =>
@@ -151,6 +182,7 @@ class KriteriaEmpatController extends Controller
 
         DetailKriteriaModel::create([
             'id_kriteria'     => $request->id_kriteria,
+            'id_pengisian'    => $idPengisian,
             'id_komentar'     => null,
             'status'          => $request->status,
             'id_penetapan'    => $penetapan->id_penetapan,
@@ -162,7 +194,7 @@ class KriteriaEmpatController extends Controller
 
         return response()->json([
             'status'  => true,
-            'message' => 'Data berhasil disimpan.',
+            'message' => __('kriteria.simpanberhasil'),
         ]);
     }
 
@@ -177,7 +209,6 @@ class KriteriaEmpatController extends Controller
         ])->findOrFail($id);
 
         $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
-
         foreach ($ppeppRelations as $relasi) {
             if ($detail->$relasi && $detail->$relasi->deskripsi) {
                 $detail->$relasi->deskripsi = str_replace(
@@ -199,14 +230,12 @@ class KriteriaEmpatController extends Controller
             'title' =>  __('kriteria.kriteria.4.pageedit'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria4';
+        $activeMenu = 'riwayat4';
 
         return view('kriteria4.edit', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu,
             'detail' => $detail,
             'kriteria' => $kriteria
         ]);
@@ -221,16 +250,36 @@ class KriteriaEmpatController extends Controller
             'evaluasi'            => 'nullable|string',
             'pengendalian'        => 'nullable|string',
             'peningkatan'         => 'nullable|string',
-            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
-            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
-            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
-            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
-            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2044',
+            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status'              => 'required|in:save,submitted',
         ]);
 
         $detail = DetailKriteriaModel::findOrFail($id);
 
+        if ($request->status === 'submitted' && $detail->id_pengisian === null) {
+            $batch = PengisianModel::withCount('detail')
+                ->having('detail_count', '<', 9)
+                ->orderBy('id_pengisian', 'asc')
+                ->get()
+                ->first(function ($batch) use ($detail) {
+                    return !DetailKriteriaModel::where('id_pengisian', $batch->id_pengisian)
+                        ->where('id_kriteria', $detail->id_kriteria)
+                        ->exists();
+                });
+
+            if (!$batch) {
+                $batch = PengisianModel::create(['nama_pengisian' => '']);
+                $batch->update([
+                    'nama_pengisian' => 'Dokumen Bagian ' . $batch->id_pengisian,
+                ]);
+            }
+
+            $detail->id_pengisian = $batch->id_pengisian;
+        }
         // Penetapan
         $penetapan = PenetapanModel::find($detail->id_penetapan);
         if ($penetapan) {
@@ -287,7 +336,7 @@ class KriteriaEmpatController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil diupdate dengan status ' . $request->status
+            'message' => __('kriteria.editberhasil') . $request->status
         ]);
     }
 
@@ -302,7 +351,7 @@ class KriteriaEmpatController extends Controller
     {
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
-        $doc->loadHTML('<?xml encoding="UTF-4">' . $html);
+        $doc->loadHTML('<?xml encoding="UTF-8">' . $html);
         $images = $doc->getElementsByTagName('img');
 
         foreach ($images as $img) {
@@ -338,7 +387,7 @@ class KriteriaEmpatController extends Controller
     public function uploadImage(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2044',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'section' => 'required|string'
         ]);
 
@@ -405,7 +454,7 @@ class KriteriaEmpatController extends Controller
 
             preg_match_all('/<img[^>]+src=["\']([^"\']+)["\']/', $html, $matches);
 
-            foreach ($matches[1 ] as $src) {
+            foreach ($matches[1] as $src) {
                 $relativePath = ltrim(str_replace(['../../storage/', '../storage/', 'storage/'], '', $src), '/');
                 $fullPath = public_path('storage/' . $relativePath);
                 if (file_exists($fullPath)) {
@@ -434,7 +483,7 @@ class KriteriaEmpatController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil dihapus.',
+            'message' => __('kriteria.berhasil'),
         ]);
     }
 }

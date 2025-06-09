@@ -86,7 +86,7 @@
     <div class="ppepp-section">
         <div class="ppepp-number">1. Penetapan</div>
         <div class="ppepp-content">
-            {!! $details->penetapan->penetapan ?? '<i>Tidak ada data</i>' !!}
+            {!! $details->penetapan->deskripsi ?? '<i>Tidak ada data</i>' !!}
             {{-- @if ($details->penetapan && $details->penetapan->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->penetapan->pendukung) }}"
@@ -100,7 +100,7 @@
     <div class="ppepp-section">
         <div class="ppepp-number">2. Pelaksanaan</div>
         <div class="ppepp-content">
-            {!! $details->pelaksanaan->pelaksanaan ?? '<i>Tidak ada data</i>' !!}
+            {!! $details->pelaksanaan->deskripsi ?? '<i>Tidak ada data</i>' !!}
             {{-- @if ($details->pelaksanaan && $details->pelaksanaan->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->pelaksanaan->pendukung) }}"
@@ -114,7 +114,7 @@
     <div class="ppepp-section">
         <div class="ppepp-number">3. Evaluasi</div>
         <div class="ppepp-content">
-            {!! $details->evaluasi->evaluasi ?? '<i>Tidak ada data</i>' !!}
+            {!! $details->evaluasi->deskripsi ?? '<i>Tidak ada data</i>' !!}
             {{-- @if ($details->evaluasi && $details->evaluasi->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->evaluasi->pendukung) }}"
@@ -128,7 +128,7 @@
     <div class="ppepp-section">
         <div class="ppepp-number">4. Pengendalian</div>
         <div class="ppepp-content">
-            {!! $details->pengendalian->pengendalian ?? '<i>Tidak ada data</i>' !!}
+            {!! $details->pengendalian->deskripsi ?? '<i>Tidak ada data</i>' !!}
             {{-- @if ($details->pengendalian && $details->pengendalian->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->pengendalian->pendukung) }}"
@@ -142,7 +142,7 @@
     <div class="ppepp-section">
         <div class="ppepp-number">5. Peningkatan</div>
         <div class="ppepp-content">
-            {!! $details->peningkatan->peningkatan ?? '<i>Tidak ada data</i>' !!}
+            {!! $details->peningkatan->deskripsi ?? '<i>Tidak ada data</i>' !!}
             {{-- @if ($details->peningkatan && $details->peningkatan->pendukung)
                 <div class="image-container">
                     <img src="{{ storage_path('app/public/' . $details->peningkatan->pendukung) }}"
@@ -156,4 +156,3 @@
 </body>
 
 </html>
-

@@ -116,7 +116,7 @@
                                         $('#myModal').modal('hide');
                                         Swal.fire({
                                             icon: 'success',
-                                            title: "{{ __('kriteria.sucess') }}.",
+                                            title: "{{ __('kriteria.success') }}.",
                                             text: response.message
                                         });
                                         dataDetail.ajax.reload();

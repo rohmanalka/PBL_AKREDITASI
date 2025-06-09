@@ -32,7 +32,7 @@
                         <select name="id_kriteria" id="id_kriteria" class="form-control" required>
                             <option value="">- Pilih Kriteria -</option>
                             @foreach ($kriteria as $r)
-                                <option {{ $r->id_kriteria == $user->id_kriteria ? 'selected' : '' }} value="{{ $r->id_kriteria }}">
+                                <option {{ $r->id_kriteria == $r->id_kriteria ? 'selected' : '' }} value="{{ $r->id_kriteria }}">
                                     {{ $r->nama_kriteria }}</option>
                             @endforeach
                         </select>

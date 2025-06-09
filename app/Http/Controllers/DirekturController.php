@@ -45,7 +45,7 @@ class DirekturController extends Controller
     {
         $pengisian = PengisianModel::whereHas('detail', function ($query) {
             $query->whereIn('status', ['divalidasi_kajur', 'revisi', 'tervalidasi']);
-        }, '=', 9)
+        }, '=', 1)
             ->with(['detail' => function ($query) {
                 $query->select('id_detail_kriteria', 'id_pengisian', 'status');
             }])

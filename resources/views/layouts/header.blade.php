@@ -67,7 +67,7 @@
                     $query->where('status', 'divalidasi_kajur');
                 },
             ])
-            ->having('jumlah_divalidasi_kajur', '=', 9)
+            ->having('jumlah_divalidasi_kajur', '=', 1)
             ->get();
     }
 

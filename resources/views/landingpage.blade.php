@@ -63,6 +63,7 @@
                 <ul>
                     <li><a href="#hero" class="active">{{ __('landingpg.home') }}<br></a></li>
                     <li><a href="#about">{{ __('landingpg.about') }}</a></li>
+                    <li><a href="#services">{{ __('landingpg.visi') }}</a></li>
                     <li><a href="#team">{{ __('landingpg.team') }}</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -112,14 +113,15 @@
 
                 <div class="row gy-4">
                     <div class="col-lg-6 order-1 order-lg-2">
-                        <img src="{{ asset('gplanding/assets/img/profilti-bg.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('gplanding/assets/img/profilti-bg.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-lg-6 order-2 order-lg-1 content">
                         <p class="fst-italic">
-                            {{ __('landingpg.profile')}}
+                            {{ __('landingpg.profile') }}
                         </p>
                         <ul>
-                            <li><i class="bi bi-clock"></i> <span>{{ __('landingpg.profile_prodi')}}</span></li>
+                            <li><i class="bi bi-clock"></i> <span>{{ __('landingpg.profile_prodi') }}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -145,8 +147,13 @@
                             <a href="service-details.html" class="stretched-link">
                                 <h3>{{ __('landingpg.sasaran') }}</h3>
                             </a>
-                            <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores
-                                iure perferendis tempore et consequatur.</p>
+                            <p style="text-align: justify;"> 
+                                1. Meningkatnya akses relevansi, kuantitas, dan kualitas Pendidikan Program Studi D4 - SIB. <br>
+                                2. Meningkatnya relevansi dan kualitas kegiatan pembelajaran di Program Studi D4 - SIB. <br>
+                                3. Meningkatnya kualitas hasil kegiatan kemahasiswaan D4 - SIB dan inisiasi pembinaan karier untuk pembekalan lulusan.<br>
+                                4. Meningkatnya relevansi, kuantitas, kualitas, dan kemanfaatan hasil penelitian seluruh sivitas akademika.<br>
+                                5. Meningkatnya relevansi, kuantitas, kualitas, dan kemanfaatan hasil pengabdian kepada masyarakat untuk kesejahteraan masyarakat.<br>
+                            </p>
                         </div>
                     </div><!-- End Service Item -->
 
@@ -158,7 +165,10 @@
                             <a href="service-details.html" class="stretched-link">
                                 <h3>{{ __('landingpg.visi') }}</h3>
                             </a>
-                            <p>Menjadi Program Studi Unggul dalam Bidang Sistem Informasi Bisnis di Tingkat Nasional dan Internasional.</p>
+                            <p style="text-align: justify;">
+                                Menjadi Program Studi Unggul dalam Bidang Sistem Informasi Bisnis di Tingkat Nasional dan
+                                Internasional.
+                            </p>
                         </div>
                     </div><!-- End Service Item -->
 
@@ -170,10 +180,17 @@
                             <a href="service-details.html" class="stretched-link">
                                 <h3>{{ __('landingpg.misi') }}</h3>
                             </a>
-                            <p>1. Melaksanakan pendidikan vokasi yang inovatif berdasarkan pada sistem pendidikan terapan dengan memanfaatkan kemajuan teknologi, sehingga mampu menghasilkan lulusan yang memiliki kompetensi di bidang sistem informasi bisnis dan siap bersaing di tingkat nasional dan global.
-                                2. Melaksanakan penelitian terapan berbasis produk dan jasa bidang Sistem Informasi Bisnis.
-                                3. Melaksanakan pengabdian masyarakat dengan menggunakan kemajuan Sistem Informasi Bisnis untuk meningkatkan kesejahteraan.
-                                4. Mewujudkan kerja sama yang saling menguntungkan dengan berbagai pihak baik di dalam maupun di luar negeri pada bidang Sistem Informasi Bisnis
+                            <p style="text-align: justify;">
+                                1. Melaksanakan pendidikan vokasi yang inovatif berdasarkan pada sistem pendidikan
+                                terapan dengan memanfaatkan kemajuan teknologi, sehingga mampu menghasilkan lulusan yang
+                                memiliki kompetensi di bidang sistem informasi bisnis dan siap bersaing di tingkat
+                                nasional dan global. <br>
+                                2. Melaksanakan penelitian terapan berbasis produk dan jasa bidang Sistem Informasi
+                                Bisnis.<br>
+                                3. Melaksanakan pengabdian masyarakat dengan menggunakan kemajuan Sistem Informasi
+                                Bisnis untuk meningkatkan kesejahteraan.<br>
+                                4. Mewujudkan kerja sama yang saling menguntungkan dengan berbagai pihak baik di dalam
+                                maupun di luar negeri pada bidang Sistem Informasi Bisnis
                             </p>
                         </div>
                     </div><!-- End Service Item -->
@@ -303,9 +320,12 @@
                     <div class="col-lg-3 col-md-3 footer-links">
                         <h4>{{ __('landingpg.link') }}</h4>
                         <ul>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> {{ __('landingpg.home') }}</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#about"> {{ __('landingpg.about') }}</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> {{ __('landingpg.team') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> {{ __('landingpg.home') }}</a>
+                            </li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#about">
+                                    {{ __('landingpg.about') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> {{ __('landingpg.team') }}</a>
+                            </li>
                         </ul>
                     </div>
 

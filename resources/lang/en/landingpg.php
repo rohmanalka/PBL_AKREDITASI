@@ -2,6 +2,7 @@
 return [
     'home'          => 'Home',
     'about'         => 'About',
+    'visi'         =>  'Vision',
     'team'          => 'Team',
     'login'         => 'LOGIN',
     'judulhead'     => 'ACCREDITATION',

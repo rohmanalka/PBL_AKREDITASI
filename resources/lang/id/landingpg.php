@@ -2,6 +2,7 @@
 return [
     'home'          => 'Beranda',
     'about'         => 'Tentang',
+    'visi'          => 'Visi',
     'team'          => 'Kelompok',
     'login'         => 'MASUK',
     'judulhead'     => 'AKREDITASI',

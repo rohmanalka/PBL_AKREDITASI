@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetailKriteriaModel;
 use App\Models\KriteriaModel;
+use App\Models\UserModel;
+use App\Models\RoleModel;
 
 class WelcomeController extends Controller
 {
@@ -21,12 +23,21 @@ class WelcomeController extends Controller
             ];
             $activeMenu = 'dashboard';
             $activeSubmenu = null;
+            $total_pengguna = UserModel::count();
+            $total_role = RoleModel::count();
+            $users = UserModel::with('role')->get();
+            $roles = RoleModel::all()->map(function ($role) {
+                $jumlah_pengguna = \App\Models\UserModel::where('id_role', $role->id_role)->count();
+                $role->users_count = $jumlah_pengguna;
+                return $role;
+            });
+
 
             $jumlah_tervalidasi = DetailKriteriaModel::whereIn('status', ['acc1', 'acc2'])->count();
             $jumlah_revisi = DetailKriteriaModel::where('status', 'revisi')->count();
             $menunggu_validasi = DetailKriteriaModel::where('status', 'submit')->count();
 
-            return view('dashboard.super', compact('breadcrumb', 'activeMenu', 'activeSubmenu'));
+            return view('dashboard.super', compact('breadcrumb', 'activeMenu', 'activeSubmenu', 'total_pengguna', 'total_role', 'users', 'roles'));
         }
 
         if (Auth::guard('web')->check()) {

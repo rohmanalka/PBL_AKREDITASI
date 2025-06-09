@@ -8,10 +8,11 @@ use App\Models\KriteriaModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DetailKriteriaModel;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\PengisianModel;
 
 class SPIController extends Controller
 {
-    public function index()
+   public function index()
     {
         $breadcrumb = (object) [
             'title' => 'SPI',
@@ -27,6 +28,7 @@ class SPIController extends Controller
 
         $details = DetailKriteriaModel::all();
         $kriteria = KriteriaModel::all();
+        $pengisian = PengisianModel::all(); 
 
         return view('spi.index', [
             'breadcrumb' => $breadcrumb,
@@ -34,21 +36,22 @@ class SPIController extends Controller
             'activeMenu' => $activeMenu,
             'activeSubmenu' => $activeSubmenu,
             'kriteria' => $kriteria,
-            'details' => $details
+            'details' => $details,
+            'pengisian' => $pengisian,
         ]);
     }
 
     public function list(Request $request)
     {
         $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-            ->select('id_detail_kriteria', 'id_kriteria', 'status')
+            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian','status')
             ->whereNotIn('status', ['save', 'submitted', 'divalidasi_kajur', 'revisi'])
             ->get();
 
 
         // Jika ada filter id_kriteria dari request
         if ($request->id_kriteria) {
-            $details->where('id_kriteria', $request->id_kriteria);
+            $details->where('id_pengisian', $request->id_pengisian);
         }
 
         return DataTables::of($details)

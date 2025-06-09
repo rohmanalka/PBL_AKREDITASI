@@ -96,7 +96,10 @@
                         data: "pengisian.nama_pengisian",
                         className: "text-sm",
                         orderable: true,
-                        searchable: true
+                        searchable: true,
+                        render: function(data, type, row, meta) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: "status",

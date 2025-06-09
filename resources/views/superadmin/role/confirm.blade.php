@@ -16,15 +16,16 @@
         </div>
     </div>
 @else
-    <form action="{{ url('/role/' . $role->id_role . '/delete') }}" method="POST" id="form-delete">
+    <form action="{{ url('superadmin/role/' . $role->id_role . '/delete') }}" method="POST" id="form-delete">
         @csrf
         @method('DELETE')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Dosen</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                <div class="modal-header position-relative">
+                    <h5 class="modal-title w-100 text-center"> Hapus Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-warning">
@@ -49,6 +50,26 @@
             </div>
         </div>
     </form>
+
+    <style>
+        .close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 10;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+    </style>
+
     <script>
         $('.close, .btn-warning').on('click', function() {
             $('#myModal').modal('hide');

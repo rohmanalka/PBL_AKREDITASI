@@ -56,76 +56,214 @@
                         $roleKode = $user?->role?->role_kode ?? null;
                     @endphp
                     @if (!in_array($roleKode, ['KPSKJR', 'DIRKJM', 'USERSPI']))
-                        <li class="nav-item">
-                            <a class="nav-link {{ $activeMenu == 'kriteria' ? 'active' : 'collapsed' }}"
-                                data-bs-toggle="collapse" href="#kriteriaMenu" role="button"
-                                aria-expanded="{{ $activeMenu == 'kriteria' ? 'true' : 'false' }}"
-                                aria-controls="kriteriaMenu">
-                                <div
-                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-folder-open text-sm opacity-10"></i>
-                                </div>
-                                <span class="nav-link-text ms-1">{{ __('sidebar.sidekrit') }}</span>
-                            </a>
-                            <div class="collapse {{ $activeMenu == 'kriteria' ? 'show' : '' }}" id="kriteriaMenu">
-                                <ul class="nav ms-4 ps-3">
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $activeSubmenu == 'kriteria1' ? 'active' : '' }}"
-                                            href="{{ url('/kriteria1') }}">
-                                            <span class="sidenav-normal">{{ __('sidebar.sidekrit1') }}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $activeSubmenu == 'kriteria2' ? 'active' : '' }}"
-                                            href="{{ url('/kriteria2') }}">
-                                            <span class="sidenav-normal">{{ __('sidebar.sidekrit2') }}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $activeSubmenu == 'kriteria3' ? 'active' : '' }}"
-                                            href="{{ url('/kriteria3') }}">
-                                            <span class="sidenav-normal">{{ __('sidebar.sidekrit3') }}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $activeSubmenu == 'kriteria4' ? 'active' : '' }}"
-                                            href="{{ url('/kriteria4') }}">
-                                            <span class="sidenav-normal">{{ __('sidebar.sidekrit4') }}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $activeSubmenu == 'kriteria5' ? 'active' : '' }}"
-                                            href="{{ url('/kriteria5') }}">
-                                            <span class="sidenav-normal">{{ __('sidebar.sidekrit5') }}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $activeSubmenu == 'kriteria6' ? 'active' : '' }}"
-                                            href="{{ url('/kriteria6') }}">
-                                            <span class="sidenav-normal">{{ __('sidebar.sidekrit6') }}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $activeSubmenu == 'kriteria7' ? 'active' : '' }}"
-                                            href="{{ url('/kriteria7') }}">
-                                            <span class="sidenav-normal">{{ __('sidebar.sidekrit7') }}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $activeSubmenu == 'kriteria8' ? 'active' : '' }}"
-                                            href="{{ url('/kriteria8') }}">
-                                            <span class="sidenav-normal">{{ __('sidebar.sidekrit8') }}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $activeSubmenu == 'kriteria9' ? 'active' : '' }}"
-                                            href="{{ url('/kriteria9') }}">
-                                            <span class="sidenav-normal">{{ __('sidebar.sidekrit9') }}</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        @switch($roleKode)
+                            @case('KRIT1')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'input1' ? 'active' : '' }}"
+                                        href="{{ url('kriteria1/input') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-pen-to-square text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Input Kriteria 1</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'riwayat1' ? 'active' : '' }}"
+                                        href="{{ url('/kriteria1') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-folder-open text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Riwayat Kriteria 1</span>
+                                    </a>
+                                </li>
+                            @break
+
+                            @case('KRIT2')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'input2' ? 'active' : '' }}"
+                                        href="{{ url('kriteria2/input') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-pen-to-square text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Input Kriteria 2</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'riwayat2' ? 'active' : '' }}"
+                                        href="{{ url('/kriteria2') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-folder-open text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Riwayat Kriteria 2</span>
+                                    </a>
+                                </li>
+                            @break
+
+                            @case('KRIT3')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'input3' ? 'active' : '' }}"
+                                        href="{{ url('kriteria3/input') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-pen-to-square text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Input Kriteria 3</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'riwayat3' ? 'active' : '' }}"
+                                        href="{{ url('/kriteria3') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-folder-open text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Riwayat Kriteria 3</span>
+                                    </a>
+                                </li>
+                            @break
+
+                            @case('KRIT4')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'input4' ? 'active' : '' }}"
+                                        href="{{ url('kriteria4/input') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-pen-to-square text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Input Kriteria 4</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'riwayat4' ? 'active' : '' }}"
+                                        href="{{ url('/kriteria4') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-folder-open text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Riwayat Kriteria 4</span>
+                                    </a>
+                                </li>
+                            @break
+
+                            @case('KRIT5')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'input5' ? 'active' : '' }}"
+                                        href="{{ url('kriteria5/input') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-pen-to-square text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Input Kriteria 5</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'riwayat5' ? 'active' : '' }}"
+                                        href="{{ url('/kriteria5') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-folder-open text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Riwayat Kriteria 5</span>
+                                    </a>
+                                </li>
+                            @break
+
+                            @case('KRIT6')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'input6' ? 'active' : '' }}"
+                                        href="{{ url('kriteria6/input') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-pen-to-square text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Input Kriteria 6</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'riwayat6' ? 'active' : '' }}"
+                                        href="{{ url('/kriteria6') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-folder-open text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Riwayat Kriteria 6</span>
+                                    </a>
+                                </li>
+                            @break
+
+                            @case('KRIT7')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'input7' ? 'active' : '' }}"
+                                        href="{{ url('kriteria7/input') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-pen-to-square text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Input Kriteria 7</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'riwayat7' ? 'active' : '' }}"
+                                        href="{{ url('/kriteria7') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-folder-open text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Riwayat Kriteria 7</span>
+                                    </a>
+                                </li>
+                            @break
+
+                            @case('KRIT8')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'input8' ? 'active' : '' }}"
+                                        href="{{ url('kriteria8/input') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-pen-to-square text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Input Kriteria 8</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'riwayat8' ? 'active' : '' }}"
+                                        href="{{ url('/kriteria8') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-folder-open text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Riwayat Kriteria 8</span>
+                                    </a>
+                                </li>
+                            @break
+
+                            @case('KRIT9')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'input9' ? 'active' : '' }}"
+                                        href="{{ url('kriteria9/input') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-pen-to-square text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Input Kriteria 9</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $activeMenu == 'riwayat9' ? 'active' : '' }}"
+                                        href="{{ url('/kriteria9') }}">
+                                        <div
+                                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-folder-open text-sm opacity-10"></i>
+                                        </div>
+                                        <span class="nav-link-text ms-1">Riwayat Kriteria 9</span>
+                                    </a>
+                                </li>
+                            @break
+                        @endswitch
                     @endif
                     {{-- Khusus untuk kpskajur atau direktur --}}
                     @php

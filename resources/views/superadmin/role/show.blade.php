@@ -19,10 +19,10 @@
 @else
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Informasi Data Role</h5>
+            <div class="modal-header position-relative">
+                <h5 class="modal-title w-100 text-center"> Informasi Data Role</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
@@ -56,3 +56,22 @@
         });
     </script>
 @endempty
+
+<style>
+    .close {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        background: none;
+        border: none;
+        font-size: 1.25rem;
+        color: #aaa;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        z-index: 10;
+    }
+
+    .close:hover {
+        color: #333;
+    }
+</style>

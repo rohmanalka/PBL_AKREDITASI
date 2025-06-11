@@ -23,7 +23,7 @@
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header position-relative">
-                    <h5 class="modal-title w-100 text-center">Hapus Data Kriteria</h5>
+                    <h5 class="modal-title w-100 text-center"> {{ __('kriteria.hpsdata') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="fas fa-times"></i>
                     </button>
@@ -31,14 +31,14 @@
 
                 <div class="modal-body">
                     <div class="alert alert-danger">
-                        <h5><i class="icon fas fa-exclamation-triangle"></i> Perhatian!</h5>
-                        Berikut adalah detail data kriteria yang ingin dihapus:
+                        <h5><i class="icon fas fa-exclamation-triangle"></i> {{ __('kriteria.perhatian') }}!</h5>
+                        {{ __('kriteria.perhatiandet') }}:
                     </div>
                     <div class="row g-3">
                         <div class="col-md-12">
                             <table class="table table-sm table-bordered table-striped">
                                 <tr>
-                                    <th class="text-right col-4">Nama Kriteria:</th>
+                                    <th class="text-right col-4"> {{ __('kriteria.nmkrit') }}:</th>
                                     <td class="col-8">{{ $details->kriteria->nama_kriteria ?? '-' }}</td>
                                 </tr>
                                 <tr>
@@ -46,7 +46,7 @@
                                     <td>{{ ucfirst($details->status) }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-right">Komentar:</th>
+                                    <th class="text-right"> {{ __('kriteria.komen') }}:</th>
                                     <td>{{ $details->komentar->komentar ?? 'Belum ada komentar' }}</td>
                                 </tr>
                             </table>
@@ -59,8 +59,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                    <button type="submit" class="btn btn-primary">Ya, Hapus</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-warning">{{ __('kriteria.cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('kriteria.hps') }}</button>
                 </div>
             </div>
         </div>
@@ -96,14 +96,14 @@
                 rules: {},
                 submitHandler: function(form) {
                     Swal.fire({
-                        title: 'Apakah Anda yakin?',
-                        text: "Data yang dihapus tidak dapat dikembalikan.",
+                        title: "{{ __('kriteria.yakin') }}?",
+                        text: "{{ __('kriteria.datahps') }}.",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#d33',
                         cancelButtonColor: '#6c757d',
-                        confirmButtonText: 'Ya, Hapus',
-                        cancelButtonText: 'Batal'
+                        confirmButtonText: "{{ __('kriteria.hps') }}.",
+                        cancelButtonText: "{{ __('kriteria.cancel') }}."
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -115,7 +115,7 @@
                                         $('#myModal').modal('hide');
                                         Swal.fire({
                                             icon: 'success',
-                                            title: 'Berhasil',
+                                            title: "{{ __('kriteria.success') }}.",
                                             text: response.message
                                         });
                                         dataDetail.ajax.reload();
@@ -128,7 +128,7 @@
                                         });
                                         Swal.fire({
                                             icon: 'error',
-                                            title: 'Terjadi Kesalahan',
+                                            title: "{{ __('kriteria.kesalahan') }}.",
                                             text: response.message
                                         });
                                     }

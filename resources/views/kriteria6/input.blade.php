@@ -118,7 +118,7 @@
                                     <button type="reset" class="btn btn-outline-secondary me-2" onclick="resetForm()">
                                         <i class="fas fa-undo-alt me-1"></i> {{ __('kriteria.reset') }}
                                     </button>
-                                    <a href="{{ url('kriteria5/') }}" class="btn btn-outline-danger">
+                                    <a href="{{ url('kriteria6/') }}" class="btn btn-outline-danger">
                                         <i class="fas fa-times me-1"></i> {{ __('kriteria.cancel') }}
                                     </a>
                                 </div>
@@ -260,7 +260,7 @@
                 .then(data => {
                     if (data.status) {
                         Swal.fire({
-                            title: 'Sukses!',
+                            title: "{{ __('kriteria.success') }}.",
                             text: data.message,
                             icon: 'success',
                             confirmButtonText: 'OK'

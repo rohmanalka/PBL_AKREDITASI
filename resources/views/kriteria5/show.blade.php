@@ -20,7 +20,7 @@
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header position-relative">
-                <h5 class="modal-title w-100 text-center">Detail Data Kriteria</h5>
+                <h5 class="modal-title w-100 text-center">{{ __('kriteria.detdata') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
@@ -28,14 +28,14 @@
 
             <div class="modal-body">
                 <div class="alert alert-info">
-                    <h5><i class="icon fas fa-info-circle"></i> Informasi</h5>
-                    Berikut adalah detail data kriteria dan isian PPEPP:
+                    <h5><i class="icon fas fa-info-circle"></i> {{ __('kriteria.inform') }}</h5>
+                    {{ __('kriteria.detinform') }}:
                 </div>
                 <div class="row g-3">
                     <div class="col-md-12">
                         <table class="table table-sm table-bordered table-striped">
                             <tr>
-                                <th class="text-right col-4">Nama Kriteria:</th>
+                                <th class="text-right col-4">{{ __('kriteria.nmkrit') }}:</th>
                                 <td class="col-8">{{ $details->kriteria->nama_kriteria ?? '-' }}</td>
                             </tr>
                             <tr>
@@ -43,8 +43,8 @@
                                 <td>{{ ucfirst($details->status) }}</td>
                             </tr>
                             <tr>
-                                <th class="text-right">Komentar:</th>
-                                <td>{{ $details->komentar->komentar ?? 'Belum ada komentar' }}</td>
+                                <th class="text-right">{{ __('kriteria.komen') }}:</th>
+                                <td>{{ $details->komentar->komentar ?? __('kriteria.komenbelum') }}</td>
                             </tr>
                         </table>
                         <div>
@@ -57,7 +57,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('kriteria.tutup') }}</button>
             </div>
         </div>
     </div>

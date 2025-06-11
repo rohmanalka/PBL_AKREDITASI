@@ -7,9 +7,6 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>{{ $page->title }}</h6>
-                        <a href="{{ url('kriteria5/input') }}" class="btn btn-sm btn-success">
-                            {{ __('kriteria.input') }}
-                        </a>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="px-3 mt-3">
@@ -30,6 +27,9 @@
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             {{ __('kriteria.nmkrit') }}
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                            {{ __('kriteria.bagian') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Status
@@ -88,6 +88,15 @@
                         className: "text-sm",
                         orderable: true,
                         searchable: true
+                    },
+                    {
+                        data: "pengisian.nama_pengisian",
+                        className: "text-sm",
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row, meta) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: "status",

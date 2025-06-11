@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>{{ $page->title }}</h6>
+                        <h6> {{ __('direktur.title') }}</h6>
                     </div>
                     <div class="card-body px-4 pt-3 pb-2">
                         <div class="mb-3">
@@ -22,7 +22,7 @@
                             <div class="row align-items-center">
                                 <div class="col-sm-4">
                                     <select name="id_pengisian" id="id_pengisian" class="form-select">
-                                        <option value="">- Pilih Batch -</option>
+                                        <option value="">- {{ __('direktur.pilih_batch') }} -</option>
                                         @foreach ($pengisian as $item)
                                             <option value="{{ $item->id_pengisian }}">{{ $item->nama_pengisian }}</option>
                                         @endforeach
@@ -37,16 +37,16 @@
                                     <tr>
                                         <th
                                             class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-                                            ID
+                                            {{ __('direktur.no') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Nama Bagian
+                                            {{ __('direktur.nama_bagian') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Status
+                                            {{ __('direktur.status') }}
                                         </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
+                                            {{ __('direktur.aksi') }}
                                         </th>
                                     </tr>
                                 </thead>

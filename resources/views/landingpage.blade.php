@@ -220,8 +220,8 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>Walter White</h4>
-                                <span>Chief Executive Officer</span>
+                                <h4>Muhammad Rohman Al Kautsar</h4>
+                                <span>2341760055</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
@@ -230,7 +230,7 @@
                         data-aos-delay="200">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-2.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/puput.jpg') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
                                     <a href=""><i class="bi bi-instagram"></i></a>
@@ -238,8 +238,8 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>Sarah Jhonson</h4>
-                                <span>Product Manager</span>
+                                <h4>Aprilia Putri Anggraini</h4>
+                                <span>2341760043</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
@@ -248,7 +248,7 @@
                         data-aos-delay="300">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-3.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/erika.jpg') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
                                     <a href=""><i class="bi bi-instagram"></i></a>
@@ -256,8 +256,8 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>William Anderson</h4>
-                                <span>CTO</span>
+                                <h4>Erika Atthacarya Putri Cahyani</h4>
+                                <span>2341760158</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
@@ -266,7 +266,7 @@
                         data-aos-delay="400">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-4.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/malik.jpg') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
                                     <a href=""><i class="bi bi-instagram"></i></a>
@@ -274,8 +274,8 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>Amanda Jepson</h4>
-                                <span>Accountant</span>
+                                <h4>Malik Adzano Aryasatya D</h4>
+                                <span>2341760161</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
@@ -284,7 +284,7 @@
                         data-aos-delay="400">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-4.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/lia.png') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
                                     <a href=""><i class="bi bi-instagram"></i></a>
@@ -292,8 +292,8 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>Amanda Jepson</h4>
-                                <span>Accountant</span>
+                                <h4>Rahmalia Mutia Farda</h4>
+                                <span>2341760130</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->

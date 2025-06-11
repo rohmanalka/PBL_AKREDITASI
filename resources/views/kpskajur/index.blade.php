@@ -6,9 +6,9 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>{{ $page->title }}</h6>
+                        <h6>{{ __('kpskjr.title') }}</h6>
                     </div>
-                    <div class="card-body px-4 pt-3 pb-2"> {{-- padding kiri-kanan dibuat px-4 supaya lebih lega --}}
+                    <div class="card-body px-4 pt-3 pb-2"> 
                         <div class="mb-3">
                             @if (session('success'))
                                 <div class="alert alert-success">{{ session('success') }}</div>
@@ -22,7 +22,7 @@
                             <div class="row align-items-center">
                                 <div class="col-sm-4">
                                     <select name="id_kriteria" id="id_kriteria" class="form-select">
-                                        <option value="">- Pilih Kriteria -</option>
+                                        <option value="">- {{ __('kpskjr.pilih_batch') }} -</option>
                                         @foreach ($kriteria as $item)
                                             <option value="{{ $item->id_kriteria }}">{{ $item->nama_kriteria }}</option>
                                         @endforeach
@@ -37,17 +37,16 @@
                                     <tr>
                                         <th
                                             class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-                                            ID
+                                            {{ __('kpskjr.no') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            {{ __('messages.nmkrit') }}
+                                            {{ __('kpskjr.nama_bagian') }}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Status
+                                            {{ __('kpskjr.status') }}
                                         </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
+                                            {{ __('direktur.aksi') }}
                                         </th>
                                     </tr>
                                 </thead>

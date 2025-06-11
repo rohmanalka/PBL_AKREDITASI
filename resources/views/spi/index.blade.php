@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>{{ $page->title }}</h6>
+                        <h6>{{ __('spi.title') }}</h6>
                     </div>
                     <div class="card-body px-4 pt-3 pb-2">
                         <div class="mb-3">
@@ -22,7 +22,7 @@
                             <div class="row align-items-center">
                                 <div class="col-sm-4">
                                     <select name="id_pengisian" id="id_pengisian" class="form-select">
-                                        <option value="">- Pilih Batch -</option>
+                                        <option value="">- {{ __('kpskjr.pilih_batch') }} -</option>
                                         @foreach ($pengisian as $item)
                                             <option value="{{ $item->id_pengisian }}">{{ $item->nama_pengisian }}</option>
                                         @endforeach
@@ -35,10 +35,10 @@
                             <table class="table align-items-center mb-0" id="table_detail_kriteria">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">ID</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Nama Bagian</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Status</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Aksi</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">{{ __('spi.no') }}</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">{{ __('spi.nama_bagian') }}</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">{{ __('spi.status') }}</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">{{ __('spi.aksi') }}</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -54,7 +54,7 @@
         data-keyboard="false" data-width="75%" aria-hidden="true" style="display: none;">
     </div>
 @endsection
-
+    
 @push('js')
     <script>
         const base_url = "{{ url('preview') }}";

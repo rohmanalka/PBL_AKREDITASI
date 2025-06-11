@@ -12,9 +12,10 @@
                             <div class="row">
                                 <div class="col-8">
                                     <div class="numbers text-black">
-                                        <p class="text-sm mb-0 text-uppercase font-weight-bolder">Total Pengguna</p>
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bolder"></p>
+                                        {{ __('superadmin.total_pengguna') }}
                                         <h5 class="text-black" id="total-pengguna">
-                                            {{ $total_pengguna }} Pengguna
+                                            {{ $total_pengguna }} {{ __('superadmin.dashboard.data_pengguna') }}
                                         </h5>
                                     </div>
                                 </div>
@@ -35,9 +36,10 @@
                             <div class="row">
                                 <div class="col-8">
                                     <div class="numbers text-black">
-                                        <p class="text-sm mb-0 text-uppercase font-weight-bolder">Total Role</p>
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bolder"></p>
+                                            {{ __('superadmin.total_role') }}
                                         <h5 class="text-black" id="total-role">
-                                            {{ $total_role }} Role
+                                            {{ $total_role }} {{ __('superadmin.data_role') }}
                                         </h5>
                                     </div>
                                 </div>
@@ -58,7 +60,7 @@
                 <div class="col-md-6">
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6>Pengguna</h6>
+                            <h6>{{ __('superadmin.data_pengguna') }}</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-3">
@@ -66,7 +68,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder">ID</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder">Nama</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder">{{ __('Nama') }}</th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder">Username</th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder">Role</th>
                                     </tr>
@@ -91,7 +93,7 @@
                 <div class="col-md-6">
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6>Role</h6>
+                            <h6>{{ __('superadmin.data_role') }}</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-3">
@@ -99,8 +101,8 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Nama Role</th>
-                                            <th>Jumlah Pengguna</th>
+                                            <th>{{ __('superadmin.data_role') }}</th>
+                                            <th>{{ __('superadmin.total_pengguna') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>

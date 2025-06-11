@@ -130,7 +130,7 @@
                             render: function(details, type, row) {
                                 const statusGabungan = getStatusGabungan(details);
                                 const disabled = (statusGabungan === 'revisi' || statusGabungan ===
-                                    '');
+                                    'belum lengkap' || statusGabungan === 'tervalidasi');
                                 const btnClass = disabled ? 'btn-secondary' : 'btn-info';
                                 const btnAttr = disabled ? 'disabled' : '';
 
@@ -146,19 +146,21 @@
                 });
             }
 
-            // Fungsi bantu untuk menentukan status gabungan
             function getStatusGabungan(details) {
-                const statuses = (Array.isArray(details) ? details : [])
-                    .filter(item => item.id_kriteria >= 1 && item.id_kriteria <= 9)
-                    .map(item => item.status);
+                const filtered = (Array.isArray(details) ? details : [])
+                    .filter(item => item.id_kriteria >= 1 && item.id_kriteria <= 9);
+                const uniqueKriteria = [...new Set(filtered.map(item => item.id_kriteria))];
+                const statuses = filtered.map(item => item.status);
 
-                if (statuses.length < 9) return 'belum lengkap';
+                if (uniqueKriteria.length < 9) return 'belum lengkap';
+                if (statuses.every(s => s === 'tervalidasi')) return 'tervalidasi';
+                if (statuses.every(s => s === 'divalidasi_kajur')) return 'divalidasi_kajur';
                 if (statuses.includes('revisi')) return 'revisi';
                 if (statuses.includes('submitted')) return 'submitted';
                 if (statuses.includes('save')) return 'save';
-                if (statuses.every(s => s === 'divalidasi_kajur')) return 'divalidasi_kajur';
                 return 'belum lengkap';
             }
+
 
             $('#id_pengisian').on('change', function() {
                 let selectedId = $(this).val();

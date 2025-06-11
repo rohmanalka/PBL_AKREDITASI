@@ -12,7 +12,7 @@ use App\Models\PengisianModel;
 
 class SPIController extends Controller
 {
-   public function index()
+    public function index()
     {
         $breadcrumb = (object) [
             'title' => 'SPI',
@@ -28,7 +28,7 @@ class SPIController extends Controller
 
         $details = DetailKriteriaModel::all();
         $kriteria = KriteriaModel::all();
-        $pengisian = PengisianModel::all(); 
+        $pengisian = PengisianModel::all();
 
         return view('spi.index', [
             'breadcrumb' => $breadcrumb,
@@ -43,26 +43,27 @@ class SPIController extends Controller
 
     public function list(Request $request)
     {
-        $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian','status')
-            ->whereNotIn('status', ['save', 'submitted', 'divalidasi_kajur', 'revisi'])
-            ->get();
+        $pengisian = PengisianModel::whereHas('detail', function ($query) {
+            $query->whereIn('status', ['divalidasi_kajur', 'revisi', 'tervalidasi']);
+        })
+            ->with(['detail' => function ($query) {
+                $query->whereIn('id_kriteria', range(1, 9))
+                    ->select('id_detail_kriteria', 'id_pengisian', 'id_kriteria', 'status');
+            }])
+            ->select('id_pengisian', 'nama_pengisian');
 
-
-        // Jika ada filter id_kriteria dari request
-        if ($request->id_kriteria) {
-            $details->where('id_pengisian', $request->id_pengisian);
+        if ($request->id_pengisian) {
+            $pengisian->where('id_pengisian', $request->id_pengisian);
         }
 
-        return DataTables::of($details)
-            // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
+        return DataTables::of($pengisian)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function show(string $id)
+    public function show(string $id_pengisian)
     {
-        $details = DetailKriteriaModel::with('kriteria')->find($id);
+        $pengisian = PengisianModel::where('id_pengisian', $id_pengisian)->first();
 
         $breadcrumb = (object) [
             'title' => 'Detail Kriteria',
@@ -73,7 +74,12 @@ class SPIController extends Controller
             'title' => 'Detail',
         ];
 
-        return view('spi.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'details' => $details, 'id' => $id]);
+        return view('spi.show', [
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'pengisian' => $pengisian,
+            'id_pengisian' => $id_pengisian
+        ]);
     }
 
     private function convertImagesToBase64($html)
@@ -99,17 +105,22 @@ class SPIController extends Controller
         return $doc->saveHTML($doc->documentElement);
     }
 
-    public function preview($id)
+    public function exportMergedPdf($id_pengisian)
     {
-        $details = DetailKriteriaModel::with(['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan', 'kriteria'])->findOrFail($id);
+        $details = DetailKriteriaModel::with(['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan', 'kriteria'])
+            ->where('id_pengisian', $id_pengisian)
+            ->orderBy('id_kriteria')
+            ->get();
 
-        foreach (['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'] as $bagian) {
-            if ($details->$bagian && $details->$bagian->deskripsi) {
-                $details->$bagian->deskripsi = $this->convertImagesToBase64($details->$bagian->deskripsi);
+        foreach ($details as $detail) {
+            foreach (['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'] as $bagian) {
+                if ($detail->$bagian && $detail->$bagian->deskripsi) {
+                    $detail->$bagian->deskripsi = $this->convertImagesToBase64($detail->$bagian->deskripsi);
+                }
             }
         }
 
-        $pdf = Pdf::loadView('spi.export', compact('details'));
-        return $pdf->stream('preview.pdf');
+        $pdf = Pdf::loadView('direktur.export', compact('details'));
+        return $pdf->stream("validasi_kriteria_batch_{$id_pengisian}.pdf");
     }
 }

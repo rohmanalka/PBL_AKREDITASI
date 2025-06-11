@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DOMDocument;
 use Illuminate\Http\Request;
 use App\Models\EvaluasiModel;
 use App\Models\KriteriaModel;
@@ -211,11 +212,23 @@ class KriteriaSembilanController extends Controller
         $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
         foreach ($ppeppRelations as $relasi) {
             if ($detail->$relasi && $detail->$relasi->deskripsi) {
-                $detail->$relasi->deskripsi = str_replace(
-                    '../storage/',
-                    rtrim(url('storage'), '/') . '/',
-                    $detail->$relasi->deskripsi
-                );
+                $deskripsi = $detail->$relasi->deskripsi;
+
+                libxml_use_internal_errors(true);
+                $dom = new DOMDocument();
+                $dom->loadHTML('<?xml encoding="utf-8" ?>' . $deskripsi, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+                $images = $dom->getElementsByTagName('img');
+                foreach ($images as $img) {
+                    $src = $img->getAttribute('src');
+                    if (strpos($src, '../storage/') !== false || strpos($src, '/storage/') === 0) {
+                        $absoluteUrl = url(ltrim(str_replace('../', '', $src), '/'));
+                        $img->setAttribute('src', $absoluteUrl);
+                    }
+                }
+
+                $detail->$relasi->deskripsi = $dom->saveHTML();
+                libxml_clear_errors();
             }
         }
 

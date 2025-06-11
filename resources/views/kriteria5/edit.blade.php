@@ -19,7 +19,7 @@
                                     {!! old('penetapan', $detail->penetapan->deskripsi ?? '') !!}
                                 </textarea>
                             </div>  
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-penetapan">
@@ -41,7 +41,7 @@
                                     {!! old('pelaksanaan', $detail->pelaksanaan->deskripsi ?? '') !!}
                                 </textarea>
                             </div>
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-pelaksanaan">
@@ -63,7 +63,7 @@
                                     {!! old('evaluasi', $detail->evaluasi->deskripsi ?? '') !!}
                                 </textarea>
                             </div>
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-evaluasi">
@@ -85,7 +85,7 @@
                                     {!! old('pengendalian', $detail->pengendalian->deskripsi ?? '') !!}
                                 </textarea>
                             </div>
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-pengendalian">
@@ -107,7 +107,7 @@
                                     {!! old('peningkatan', $detail->peningkatan->deskripsi ?? '') !!}
                                 </textarea>
                             </div>
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-peningkatan">

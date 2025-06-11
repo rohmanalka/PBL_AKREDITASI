@@ -3,6 +3,7 @@ return [
     'input' => 'Input Kriteria',
     'nmkrit' => 'Nama Kriteria',
     'detail' => 'Detail',
+    'bagian' => 'Bagian',
     'edit' => 'Sunting',
     'delete' => 'Hapus',
     'kriteria' => [

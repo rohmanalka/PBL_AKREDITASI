@@ -142,17 +142,13 @@
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
                             <div class="icon">
-                                <i class="fa-solid fa-bullseye"></i>
+                                <i class="bi bi-bullseye"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
                                 <h3>{{ __('landingpg.sasaran') }}</h3>
                             </a>
-                            <p style="text-align: justify;"> 
-                                1. Meningkatnya akses relevansi, kuantitas, dan kualitas Pendidikan Program Studi D4 - SIB. <br>
-                                2. Meningkatnya relevansi dan kualitas kegiatan pembelajaran di Program Studi D4 - SIB. <br>
-                                3. Meningkatnya kualitas hasil kegiatan kemahasiswaan D4 - SIB dan inisiasi pembinaan karier untuk pembekalan lulusan.<br>
-                                4. Meningkatnya relevansi, kuantitas, kualitas, dan kemanfaatan hasil penelitian seluruh sivitas akademika.<br>
-                                5. Meningkatnya relevansi, kuantitas, kualitas, dan kemanfaatan hasil pengabdian kepada masyarakat untuk kesejahteraan masyarakat.<br>
+                            <p style="text-align: justify;">
+                                {!! __('landingpg.target') !!}
                             </p>
                         </div>
                     </div><!-- End Service Item -->
@@ -166,8 +162,7 @@
                                 <h3>{{ __('landingpg.visi') }}</h3>
                             </a>
                             <p style="text-align: justify;">
-                                Menjadi Program Studi Unggul dalam Bidang Sistem Informasi Bisnis di Tingkat Nasional dan
-                                Internasional.
+                                {!! __('landingpg.vision') !!}
                             </p>
                         </div>
                     </div><!-- End Service Item -->
@@ -181,16 +176,7 @@
                                 <h3>{{ __('landingpg.misi') }}</h3>
                             </a>
                             <p style="text-align: justify;">
-                                1. Melaksanakan pendidikan vokasi yang inovatif berdasarkan pada sistem pendidikan
-                                terapan dengan memanfaatkan kemajuan teknologi, sehingga mampu menghasilkan lulusan yang
-                                memiliki kompetensi di bidang sistem informasi bisnis dan siap bersaing di tingkat
-                                nasional dan global. <br>
-                                2. Melaksanakan penelitian terapan berbasis produk dan jasa bidang Sistem Informasi
-                                Bisnis.<br>
-                                3. Melaksanakan pengabdian masyarakat dengan menggunakan kemajuan Sistem Informasi
-                                Bisnis untuk meningkatkan kesejahteraan.<br>
-                                4. Mewujudkan kerja sama yang saling menguntungkan dengan berbagai pihak baik di dalam
-                                maupun di luar negeri pada bidang Sistem Informasi Bisnis
+                                {!! __('landingpg.mission') !!}
                             </p>
                         </div>
                     </div><!-- End Service Item -->

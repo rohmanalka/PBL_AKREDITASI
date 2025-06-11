@@ -32,13 +32,22 @@
                         </form>
 
                         <div class="table-responsive mt-4 p-0">
-                            <table class="table align-items-center mb-0" id="table_detail_kriteria">
+                            <table class="table align-items-center mb-0" id="table_pengisian">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">ID</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Nama Bagian</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Status</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Aksi</th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
+                                            ID
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                            Nama Bagian
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                            Status
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
+                                        </th>
                                     </tr>
                                 </thead>
                             </table>
@@ -55,6 +64,9 @@
     </div>
 @endsection
 
+@push('css')
+@endpush
+
 @push('js')
     <script>
         const base_url = "{{ url('preview') }}";
@@ -69,81 +81,96 @@
             let dataDetail;
 
             function initDataTable(id_pengisian) {
-                dataDetail = $('#table_detail_kriteria').DataTable({
+                dataDetail = $('#table_pengisian').DataTable({
                     serverSide: true,
                     processing: true,
                     destroy: true,
                     ajax: {
-                        url: "{{ url('/list') }}",
+                        url: "{{ url('preview/list') }}",
                         type: "POST",
                         data: function(d) {
                             d.id_pengisian = id_pengisian;
                         }
                     },
-                    columns: [
-                        {
+                    columns: [{
                             data: "DT_RowIndex",
                             className: "text-center text-sm",
                             orderable: false,
                             searchable: false
                         },
                         {
-                            data: "bagian.nama_bagian",
+                            data: "nama_pengisian",
                             className: "text-sm",
                             orderable: true,
                             searchable: true
                         },
                         {
-                            data: "status",
+                            data: "detail",
                             className: "text-sm",
-                            render: function(data) {
-                                let badgeClass = 'bg-secondary';
-                                switch (data) {
-                                    case 'save':
-                                        badgeClass = 'bg-secondary';
-                                        break;
-                                    case 'submitted':
-                                        badgeClass = 'bg-primary';
-                                        break;
-                                    case 'revisi':
-                                        badgeClass = 'bg-warning text-dark';
-                                        break;
-                                    case 'divalidasi_kajur':
-                                        badgeClass = 'bg-success';
-                                        break;
-                                    case 'tervalidasi':
-                                        badgeClass = 'bg-info';
-                                        break;
-                                }
-                                return `<span class="badge ${badgeClass}">${data}</span>`;
+                            render: function(details) {
+                                const statusGabungan = getStatusGabungan(details);
+                                const badgeMap = {
+                                    save: 'bg-secondary',
+                                    submitted: 'bg-primary',
+                                    revisi: 'bg-warning text-dark',
+                                    divalidasi_kajur: 'bg-success',
+                                    tervalidasi: 'bg-info',
+                                    'belum lengkap': 'bg-danger'
+                                };
+                                const badgeClass = badgeMap[statusGabungan] || 'bg-secondary';
+
+                                return `<span class="badge ${badgeClass}">${statusGabungan}</span>`;
                             }
                         },
                         {
-                            data: "aksi",
+                            data: "detail",
                             className: "text-center text-xs",
                             orderable: false,
                             searchable: false,
-                            render: function(data, type, row) {
+                            render: function(details, type, row) {
+                                const statusGabungan = getStatusGabungan(details);
+                                const disabled = (statusGabungan === 'revisi' || statusGabungan ===
+                                    'belum lengkap');
+                                const btnClass = disabled ? 'btn-secondary' : 'btn-info';
+                                const btnAttr = disabled ? 'disabled' : '';
+
                                 return `
-                                    <button class="btn btn-info btn-xs mt-3"
-                                        onclick="modalAction('${base_url}/${row.id_pengisian}/${row.id_bagian}/preview')">
-                                        Preview
-                                    </button>`;
+                                <button class="btn ${btnClass} btn-xs mt-3"
+                                    onclick="modalAction('${base_url}/${row.id_pengisian}/show')"
+                                    ${btnAttr}>
+                                    Preview
+                                </button>`;
                             }
                         }
                     ]
                 });
             }
 
+            function getStatusGabungan(details) {
+                const filtered = (Array.isArray(details) ? details : [])
+                    .filter(item => item.id_kriteria >= 1 && item.id_kriteria <= 9);
+                const uniqueKriteria = [...new Set(filtered.map(item => item.id_kriteria))];
+                const statuses = filtered.map(item => item.status);
+
+                if (uniqueKriteria.length < 9) return 'belum lengkap';
+                if (statuses.every(s => s === 'tervalidasi')) return 'tervalidasi';
+                if (statuses.every(s => s === 'divalidasi_kajur')) return 'divalidasi_kajur';
+                if (statuses.includes('revisi')) return 'revisi';
+                if (statuses.includes('submitted')) return 'submitted';
+                if (statuses.includes('save')) return 'save';
+                return 'belum lengkap';
+            }
+
+
             $('#id_pengisian').on('change', function() {
                 let selectedId = $(this).val();
                 if (selectedId) {
-                    if ($.fn.DataTable.isDataTable('#table_detail_kriteria')) {
+                    if ($.fn.DataTable.isDataTable('#table_pengisian')) {
                         dataDetail.destroy();
                     }
                     initDataTable(selectedId);
                 } else {
-                    if ($.fn.DataTable.isDataTable('#table_detail_kriteria')) {
+                    if ($.fn.DataTable.isDataTable('#table_pengisian')) {
                         dataDetail.clear().draw();
                     }
                 }

@@ -14,12 +14,12 @@ class RoleController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Daftar Role',
-            'list' => ['Home', 'Role'],
+            'title' => __('superadmin.role.title'),
+            'list' => __('superadmin.role.breadcrumb'),
         ];
 
         $page = (object) [
-            'title' => 'Daftar role yang terdaftar dalam sistem',
+            'title' => __('superadmin.role.page_title'),
         ];
 
         $activeMenu = 'suprole';
@@ -86,12 +86,12 @@ class RoleController extends Controller
         $role = RoleModel::with('kriteria')->find($id);
 
         $breadcrumb = (object) [
-            'title' => 'Detail Role',
-            'list' => ['Home', 'Role', 'Detail'],
+            'title' => __('superadmin.role.detail_title'),
+            'list' => __('superadmin.role.detail_breadcrumb'),
         ];
 
         $page = (object) [
-            'title' => 'Detail role',
+            'title' => __('superadmin.role.detail_title'),
         ];
 
         $activeMenu = 'role';
@@ -131,12 +131,12 @@ class RoleController extends Controller
                 $check->update($request->all());
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data role berhasil diubah',
+                    'message' => __('superadmin.role.ubah_sukses'),
                 ]);
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Data role tidak ditemukan',
+                    'message' => __('superadmin.role.data_tidak_ditemukan'),
                 ]);
             }
         }
@@ -158,12 +158,12 @@ class RoleController extends Controller
                 $role->delete();
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data berhasil dihapus'
+                    'message' => __('superadmin.role.hapus_sukses')
                 ]);
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Data tidak ditemukan'
+                    'message' => __('superadmin.role.data_tidak_ditemukan')
                 ]);
             }
         }

@@ -14,12 +14,12 @@ class UserController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Daftar User',
-            'list' => ['Home', 'User'],
+            'title' => __('superadmin.user.title'),
+            'list' => __('superadmin.user.breadcrumb'),
         ];
 
         $page = (object) [
-            'title' => 'Daftar user yang terdaftar dalam sistem',
+            'title' => __('superadmin.user.page_title'),
         ];
 
         $activeMenu = 'supuser';
@@ -76,7 +76,7 @@ class UserController extends Controller
             UserModel::create($request->all());
             return response()->json([
                 'status' => true,
-                'message' => 'Data user berhasil disimpan',
+                'message' => __('superadmin.user.simpan_sukses'),
             ]);
         }
         return redirect('superadmin/user/');
@@ -87,12 +87,12 @@ class UserController extends Controller
         $user = UserModel::with('role')->find($id);
 
         $breadcrumb = (object) [
-            'title' => 'Detail User',
-            'list' => ['Home', 'User', 'Detail'],
+            'title' => __('superadmin.user.detail_title'),
+            'list' => __('superadmin.user.detail_breadcrumb'),
         ];
 
         $page = (object) [
-            'title' => 'Detail user',
+            'title' => __('superadmin.user.detail_title'),
         ];
 
         $activeMenu = 'user';
@@ -134,12 +134,12 @@ class UserController extends Controller
                 $check->update($request->all());
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data berhasil diupdate',
+                    'message' => __('superadmin.user.ubah_sukses'),
                 ]);
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Data tidak ditemukan',
+                    'message' => __('superadmin.user.data_tidak_ditemukan'),
                 ]);
             }
         }
@@ -161,12 +161,12 @@ class UserController extends Controller
                 $user->delete();
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data berhasil dihapus'
+                    'message' => __('superadmin.role.hapus_sukses')
                 ]);
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Data tidak ditemukan'
+                    'message' => __('superadmin.role.data_tidak_ditemukan')
                 ]);
             }
         }

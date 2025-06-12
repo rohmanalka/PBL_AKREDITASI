@@ -11,7 +11,7 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('superadmin/role') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('superadmin/role') }}" class="btn btn-warning">{{ __('superadmin.role.kembali')}}</a>
             </div>
         </div>
     </div>
@@ -22,30 +22,30 @@
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header position-relative">
-                    <h5 class="modal-title w-100 text-center"> Hapus Role</h5>
+                    <h5 class="modal-title w-100 text-center"> {{ __('superadmin.role.confirm_title')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-warning">
-                        <h5><i class="icon fas fa-ban"></i> Konfirmasi !!!</h5>
-                        Apakah Anda ingin menghapus data seperti di bawah ini?
+                        <h5><i class="icon fas fa-ban"></i> {{ __('superadmin.role.conf')}}</h5>
+                        {{ __('superadmin.role.confdel')}}
                     </div>
                     <table class="table table-sm table-bordered table-striped">
                         <tr>
-                            <th class="text-right col-3">Role Code :</th>
+                            <th class="text-right col-3">{{ __('superadmin.role.role_kode')}} :</th>
                             <td class="col-9">{{ $role->role_kode }}</td>
                         </tr>
                         <tr>
-                            <th class="text-right col-3">Role Name :</th>
+                            <th class="text-right col-3">{{ __('superadmin.role.role_name')}} :</th>
                             <td class="col-9">{{ $role->role_name }}</td>
                         </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                    <button type="submit" class="btn btn-primary">Ya, Hapus</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-warning">{{ __('superadmin.role.batal')}}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('superadmin.role.yahps')}}</button>
                 </div>
             </div>
         </div>

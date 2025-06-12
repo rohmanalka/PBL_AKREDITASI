@@ -21,16 +21,17 @@
         @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                <div class="modal-header position-relative">
+                    <h5 class="modal-title w-100 text-center"> {{ __('superadmin.user.edit_title') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Role Pengguna</label>
+                        <label>{{ __('superadmin.user.roleusr') }}</label>
                         <select name="id_role" id="id_role" class="form-control" required>
-                            <option value="">- Pilih Role -</option>
+                            <option value="">- {{ __('superadmin.user.plhrole') }}-</option>
                             @foreach ($role as $r)
                                 <option {{ $r->id_role == $user->id_role ? 'selected' : '' }} value="{{ $r->id_role }}">
                                     {{ $r->role_name }}</option>
@@ -39,31 +40,52 @@
                         <small id="error-id_role" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
-                        <label>Username</label>
+                        <label>{{ __('superadmin.dashboard.username') }}</label>
                         <input value="{{ $user->username }}" type="text" name="username" id="username"
                             class="form-control" required>
                         <small id="error-username" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
-                        <label>Name</label>
-                        <input value="{{ $user->name }}" type="text" name="name" id="name" class="form-control"
-                            required>
+                        <label>{{ __('superadmin.dashboard.nama') }}</label>
+                        <input value="{{ $user->name }}" type="text" name="name" id="name"
+                            class="form-control" required>
                         <small id="error-name" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
                         <input value="" type="password" name="password" id="password" class="form-control">
-                        <small class="form-text text-muted">Abaikan jika tidak ingin ubah password</small>
+                        <small class="form-text text-muted">{{ __('superadmin.user.abaikan') }}</small>
                         <small id="error-password" class="error-text form-text text-danger"></small>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" data-dismiss="modal"
+                        class="btn btn-warning">{{ __('superadmin.role.batal') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('superadmin.role.simpan') }}</button>
                 </div>
             </div>
         </div>
     </form>
+
+    <style>
+        .close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 10;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+    </style>
+
     <script>
         $('.close, .btn-warning').on('click', function() {
             $('#myModal').modal('hide');

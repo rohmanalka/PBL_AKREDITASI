@@ -20,33 +20,33 @@
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header position-relative">
-                <h5 class="modal-title w-100 text-center"> Informasi Data Role</h5>
+                <h5 class="modal-title w-100 text-center"> {{ __('superadmin.role.showtit')}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info">
-                    <h5><i class="icon fas fa-info-circle"></i> Informasi</h5>
-                    Berikut adalah detail data role:
+                    <h5><i class="icon fas fa-info-circle"></i> {{ __('superadmin.role.informasi')}}</h5>
+                    {{ __('superadmin.role.informdet')}}
                 </div>
                 <table class="table table-sm table-bordered table-striped">
                     <tr>
-                        <th class="text-right col-3">Role Code :</th>
+                        <th class="text-right col-3">{{ __('superadmin.role.role_kode')}} :</th>
                         <td class="col-9">{{ $role->role_kode }}</td>
                     </tr>
                     <tr>
-                        <th class="text-right col-3">Role Name :</th>
+                        <th class="text-right col-3">{{ __('superadmin.role.role_name')}} :</th>
                         <td class="col-9">{{ $role->role_name }}</td>
                     </tr>
                     <tr>
-                        <th class="text-right col-3">Kriteria :</th>
+                        <th class="text-right col-3">{{ __('superadmin.role.kriteria')}} :</th>
                         <td class="col-9">{{ $role->kriteria->nama_kriteria }}</td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('superadmin.role.tutup')}}</button>
             </div>
         </div>
     </div>

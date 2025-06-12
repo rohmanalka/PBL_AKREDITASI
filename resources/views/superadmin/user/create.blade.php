@@ -3,15 +3,15 @@
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data User</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('superadmin.user.adduser')}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Role Pengguna</label>
+                    <label>{{ __('superadmin.user.roleusr')}}</label>
                     <select name="id_role" id="id_role" class="form-control" required>
-                        <option value="">- Pilih Role -</option>
+                        <option value="">- {{ __('superadmin.user.plhrole')}} -</option>
                         @foreach ($role as $l)
                             <option value="{{ $l->id_role }}">{{ $l->role_name }}</option>
                         @endforeach
@@ -19,24 +19,24 @@
                     <small id="error-id_role" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Username</label>
+                    <label>{{ __('superadmin.dashboard.username')}}</label>
                     <input value="" type="text" name="username" id="username" class="form-control" required>
                     <small id="error-username" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Name</label>
+                    <label>{{ __('superadmin.dashboard.nama')}}</label>
                     <input value="" type="text" name="name" id="name" class="form-control" required>
                     <small id="error-name" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
+                    <label>{{ __('superadmin.user.pass')}}</label>
                     <input value="" type="password" name="password" id="password" class="form-control" required>
                     <small id="error-password" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" data-dismiss="modal" class="btn btn-warning">{{ __('superadmin.role.batal')}}</button>
+                <button type="submit" class="btn btn-primary">{{ __('superadmin.role.simpan')}}</button>
             </div>
         </div>
     </div>

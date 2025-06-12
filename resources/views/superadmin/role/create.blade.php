@@ -9,9 +9,9 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Kriteria</label>
+                    <label>{{ __('superadmin.role.kriteria')}}</label>
                     <select name="id_kriteria" id="id_kriteria" class="form-control">
-                        <option value="">- Pilih Kriteria -</option>
+                        <option value="">- {{ __('superadmin.role.plhkriteria')}} -</option>
                         @foreach ($kriteria as $l)
                             <option value="{{ $l->id_kriteria }}">{{ $l->nama_kriteria }}</option>
                         @endforeach
@@ -19,19 +19,19 @@
                     <small id="error-id_kriteria" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Role Code</label>
+                    <label>{{ __('superadmin.role.role_kode')}}</label>
                     <input value="" type="text" name="role_kode" id="role_kode" class="form-control" required>
                     <small id="error-role_kode" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Role Name</label>
+                    <label>{{ __('superadmin.role.role_name')}}</label>
                     <input value="" type="text" name="role_name" id="role_name" class="form-control" required>
                     <small id="error-role_name" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" data-dismiss="modal" class="btn btn-warning">{{ __('superadmin.role.batal')}}</button>
+                <button type="submit" class="btn btn-primary">{{ __('superadmin.role.simpan')}}</button>
             </div>
         </div>
     </div>

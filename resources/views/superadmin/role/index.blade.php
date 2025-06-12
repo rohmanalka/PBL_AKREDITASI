@@ -26,10 +26,10 @@
                                             ID
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Role Code
+                                            {{ __('superadmin.role.role_kode')}}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Role Name
+                                            {{ __('superadmin.role.role_name')}}
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
@@ -100,9 +100,9 @@
                         render: function(data, type, row, meta) {
                             let id = row.id_role;
                             return `
-                                <button class="btn btn-info btn-xs" onclick="modalAction('${base_url}/${id}/show')">Detail</button>
-                                <button class="btn btn-warning btn-xs" onclick="modalAction('${base_url}/${id}/edit')">Edit</button>
-                                <button class="btn btn-danger btn-xs" onclick="modalAction('${base_url}/${id}/delete')">Hapus</button>
+                                <button class="btn btn-info btn-xs" onclick="modalAction('${base_url}/${id}/show')">{{ __('superadmin.role.lihat')}}l</button>
+                                <button class="btn btn-warning btn-xs" onclick="modalAction('${base_url}/${id}/edit')">{{ __('superadmin.role.edit')}}</button>
+                                <button class="btn btn-danger btn-xs" onclick="modalAction('${base_url}/${id}/delete')">{{ __('superadmin.role.hapus')}}</button>
                             `;
                         }
 

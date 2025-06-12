@@ -198,11 +198,11 @@
                         data-aos-delay="100">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-1.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/alka.jpg') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
-                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/rohmanalka_/profilecard/?igsh=cDNzMzMxbDV0MTdi"><i class="bi bi-instagram"></i></a>
+                                    <a href="https://www.linkedin.com/in/muhammad-rohman-al-kautsar-b5b52322a"><i class="bi bi-linkedin"></i></a>
                                 </div>
                             </div>
                             <div class="member-info">

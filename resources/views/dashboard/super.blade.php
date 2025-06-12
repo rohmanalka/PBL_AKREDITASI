@@ -13,9 +13,9 @@
                                 <div class="col-8">
                                     <div class="numbers text-black">
                                         <p class="text-sm mb-0 text-uppercase font-weight-bolder"></p>
-                                        {{ __('superadmin.total_pengguna') }}
+                                        {{ __('superadmin.dashboard.total_pengguna') }}
                                         <h5 class="text-black" id="total-pengguna">
-                                            {{ $total_pengguna }} {{ __('superadmin.dashboard.data_pengguna') }}
+                                            {{ $total_pengguna }} {{ __('superadmin.dashboard.pengguna') }}
                                         </h5>
                                     </div>
                                 </div>
@@ -37,9 +37,9 @@
                                 <div class="col-8">
                                     <div class="numbers text-black">
                                         <p class="text-sm mb-0 text-uppercase font-weight-bolder"></p>
-                                            {{ __('superadmin.total_role') }}
+                                            {{ __('superadmin.dashboard.total_role') }}
                                         <h5 class="text-black" id="total-role">
-                                            {{ $total_role }} {{ __('superadmin.data_role') }}
+                                            {{ $total_role }} {{ __('superadmin.dashboard.role') }}
                                         </h5>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@
                 <div class="col-md-6">
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6>{{ __('superadmin.data_pengguna') }}</h6>
+                            <h6>{{ __('superadmin.dashboard.tabel_pengguna') }}</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-3">
@@ -68,9 +68,9 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder">ID</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder">{{ __('Nama') }}</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder">Username</th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder">Role</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder">{{ __('superadmin.dashboard.nama') }}</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder">{{ __('superadmin.dashboard.username') }}</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder">{{ __('superadmin.dashboard.role') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,7 +93,7 @@
                 <div class="col-md-6">
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6>{{ __('superadmin.data_role') }}</h6>
+                            <h6>{{ __('superadmin.dashboard.tabel_role') }}</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-3">
@@ -101,8 +101,8 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>{{ __('superadmin.data_role') }}</th>
-                                            <th>{{ __('superadmin.total_pengguna') }}</th>
+                                            <th>{{ __('superadmin.dashboard.role') }}</th>
+                                            <th>{{ __('superadmin.dashboard.total_pengguna') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>

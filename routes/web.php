@@ -282,7 +282,8 @@ Route::middleware(['authorize:USERSPI'])->group(function () {
         Route::get('/', [SPIController::class, 'index']);
         Route::post('/list', [SPIController::class, 'list']);
         Route::get('/{id}/show', [SPIController::class, 'show']);
-        Route::get('/preview/{id}', [SPIController::class, 'preview'])->name('preview.ppepp');
+        // Route::get('/preview/{id}', [SPIController::class, 'preview'])->name('preview.ppepp');
+        Route::get('/export-pdf/{id_pengisian}', [SPIController::class, 'exportMergedPdf']);
         Route::put('/{id}/update', [SPIController::class, 'update']);
     });
 });

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DOMDocument;
 use Illuminate\Http\Request;
 use App\Models\EvaluasiModel;
 use App\Models\KriteriaModel;
 use App\Models\PenetapanModel;
+use App\Models\PengisianModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PelaksanaanModel;
 use App\Models\PeningkatanModel;
@@ -30,21 +32,22 @@ class KriteriaTigaController extends Controller
             'title' => __('kriteria.kriteria.3.page'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria3';
+        $activeMenu = 'riwayat1';
 
         return view('kriteria3.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu
+            'activeMenu' => $activeMenu
         ]);
     }
 
     public function list(Request $request)
     {
-        $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-            ->select('id_detail_kriteria', 'id_kriteria', 'status');
+        $details = DetailKriteriaModel::with([
+            'kriteria:id_kriteria,nama_kriteria',
+            'pengisian:id_pengisian,nama_pengisian'
+        ])
+            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status');
 
         $details->where('id_kriteria', 3);
 
@@ -63,22 +66,20 @@ class KriteriaTigaController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => __('kriteria.kriteria.3.title'),
-            'list' => __('kriteria.kriteria.3.list'),
+            'title' => __('kriteria.kriteria.3.titleinpt'),
+            'list' => __('kriteria.kriteria.3.listinpt'),
         ];
 
         $page = (object) [
-            'title' => __('kriteria.kriteria.3.page'),
+            'title' => __('kriteria.kriteria.3.pageinpt'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria3';
+        $activeMenu = 'input1';
 
         return view('kriteria3.input', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu
+            'activeMenu' => $activeMenu
         ])->with('kriteria', $kriteria);;
     }
 
@@ -90,11 +91,11 @@ class KriteriaTigaController extends Controller
             'evaluasi'            => 'nullable|string',
             'pengendalian'        => 'nullable|string',
             'peningkatan'         => 'nullable|string',
-            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
-            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
-            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
-            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
-            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
+            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'id_kriteria'         => 'required|exists:m_kriteria,id_kriteria',
             'status'              => 'required|in:save,submitted',
         ]);
@@ -108,6 +109,38 @@ class KriteriaTigaController extends Controller
             ]);
         }
 
+        $availableBatch = null;
+
+        $batches = PengisianModel::withCount('detail')
+            ->having('detail_count', '<', 9)
+            ->orderBy('id_pengisian', 'asc')
+            ->get();
+
+        foreach ($batches as $batch) {
+            $exists = DetailKriteriaModel::where('id_pengisian', $batch->id_pengisian)
+                ->where('id_kriteria', $request->id_kriteria)
+                ->exists();
+
+            if (!$exists) {
+                $availableBatch = $batch;
+                break;
+            }
+        }
+
+        if (!$availableBatch) {
+            $availableBatch = PengisianModel::create([
+                'nama_pengisian' => '',
+            ]);
+
+            $availableBatch->update([
+                'nama_pengisian' => 'Dokumen Bagian ' . $availableBatch->id_pengisian,
+            ]);
+        }
+
+        $batch = $availableBatch;
+        $idPengisian = $request->status === 'save' ? null : $batch->id_pengisian;
+
+        // Upload helper
         $uploadFile = fn($file, $folder) =>
         $file ? $file->store("storage/pendukung/{$folder}", 'public') : null;
 
@@ -150,6 +183,7 @@ class KriteriaTigaController extends Controller
 
         DetailKriteriaModel::create([
             'id_kriteria'     => $request->id_kriteria,
+            'id_pengisian'    => $idPengisian,
             'id_komentar'     => null,
             'status'          => $request->status,
             'id_penetapan'    => $penetapan->id_penetapan,
@@ -161,7 +195,7 @@ class KriteriaTigaController extends Controller
 
         return response()->json([
             'status'  => true,
-            'message' => 'Data berhasil disimpan.',
+            'message' => __('kriteria.simpanberhasil'),
         ]);
     }
 
@@ -176,14 +210,25 @@ class KriteriaTigaController extends Controller
         ])->findOrFail($id);
 
         $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
-
         foreach ($ppeppRelations as $relasi) {
             if ($detail->$relasi && $detail->$relasi->deskripsi) {
-                $detail->$relasi->deskripsi = str_replace(
-                    '../storage/',
-                    rtrim(url('storage'), '/') . '/',
-                    $detail->$relasi->deskripsi
-                );
+                $deskripsi = $detail->$relasi->deskripsi;
+
+                libxml_use_internal_errors(true);
+                $dom = new DOMDocument();
+                $dom->loadHTML('<?xml encoding="utf-8" ?>' . $deskripsi, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+                $images = $dom->getElementsByTagName('img');
+                foreach ($images as $img) {
+                    $src = $img->getAttribute('src');
+                    if (strpos($src, '../storage/') !== false || strpos($src, '/storage/') === 0) {
+                        $absoluteUrl = url(ltrim(str_replace('../', '', $src), '/'));
+                        $img->setAttribute('src', $absoluteUrl);
+                    }
+                }
+
+                $detail->$relasi->deskripsi = $dom->saveHTML();
+                libxml_clear_errors();
             }
         }
 
@@ -198,14 +243,12 @@ class KriteriaTigaController extends Controller
             'title' =>  __('kriteria.kriteria.3.pageedit'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria3';
+        $activeMenu = 'riwayat3';
 
         return view('kriteria3.edit', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu,
             'detail' => $detail,
             'kriteria' => $kriteria
         ]);
@@ -220,16 +263,36 @@ class KriteriaTigaController extends Controller
             'evaluasi'            => 'nullable|string',
             'pengendalian'        => 'nullable|string',
             'peningkatan'         => 'nullable|string',
-            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
-            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
-            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
-            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
-            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2043',
+            'penetapan_file'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pelaksanaan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'evaluasi_file'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pengendalian_file'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'peningkatan_file'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status'              => 'required|in:save,submitted',
         ]);
 
         $detail = DetailKriteriaModel::findOrFail($id);
 
+        if ($request->status === 'submitted' && $detail->id_pengisian === null) {
+            $batch = PengisianModel::withCount('detail')
+                ->having('detail_count', '<', 9)
+                ->orderBy('id_pengisian', 'asc')
+                ->get()
+                ->first(function ($batch) use ($detail) {
+                    return !DetailKriteriaModel::where('id_pengisian', $batch->id_pengisian)
+                        ->where('id_kriteria', $detail->id_kriteria)
+                        ->exists();
+                });
+
+            if (!$batch) {
+                $batch = PengisianModel::create(['nama_pengisian' => '']);
+                $batch->update([
+                    'nama_pengisian' => 'Dokumen Bagian ' . $batch->id_pengisian,
+                ]);
+            }
+
+            $detail->id_pengisian = $batch->id_pengisian;
+        }
         // Penetapan
         $penetapan = PenetapanModel::find($detail->id_penetapan);
         if ($penetapan) {
@@ -280,12 +343,13 @@ class KriteriaTigaController extends Controller
             $peningkatan->save();
         }
 
-        $detail->status = $request->status;
+        // Update status di DetailKriteria
+        $detail->status = $request->status; // 'save' atau 'submitted'
         $detail->save();
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil diupdate dengan status ' . $request->status
+            'message' => __('kriteria.editberhasil') . $request->status
         ]);
     }
 
@@ -300,7 +364,7 @@ class KriteriaTigaController extends Controller
     {
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
-        $doc->loadHTML('<?xml encoding="UTF-3">' . $html);
+        $doc->loadHTML('<?xml encoding="UTF-8">' . $html);
         $images = $doc->getElementsByTagName('img');
 
         foreach ($images as $img) {
@@ -336,15 +400,16 @@ class KriteriaTigaController extends Controller
     public function uploadImage(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2043',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'section' => 'required|string'
         ]);
 
         try {
             $section = $request->input('section');
 
+            // Simpan ke folder "pendukung/{section}"
             $path = $request->file('image')->store("pendukung/{$section}", 'public');
-            $url = asset("storage/{$path}");
+            $url = asset("storage/{$path}"); // Gunakan URL publik
 
             return response()->json([
                 'status' => true,
@@ -402,7 +467,7 @@ class KriteriaTigaController extends Controller
 
             preg_match_all('/<img[^>]+src=["\']([^"\']+)["\']/', $html, $matches);
 
-            foreach ($matches[1 ] as $src) {
+            foreach ($matches[1] as $src) {
                 $relativePath = ltrim(str_replace(['../../storage/', '../storage/', 'storage/'], '', $src), '/');
                 $fullPath = public_path('storage/' . $relativePath);
                 if (file_exists($fullPath)) {
@@ -417,11 +482,11 @@ class KriteriaTigaController extends Controller
         $deleteFile($pengendalian);
         $deleteFile($peningkatan);
 
-        $deleteImageFilesFromHtml($penetapan->penetapan ?? '');
-        $deleteImageFilesFromHtml($pelaksanaan->pelaksanaan ?? '');
-        $deleteImageFilesFromHtml($evaluasi->evaluasi ?? '');
-        $deleteImageFilesFromHtml($pengendalian->pengendalian ?? '');
-        $deleteImageFilesFromHtml($peningkatan->peningkatan ?? '');
+        $deleteImageFilesFromHtml($penetapan->deskripsi ?? '');
+        $deleteImageFilesFromHtml($pelaksanaan->deskripsi ?? '');
+        $deleteImageFilesFromHtml($evaluasi->deskripsi ?? '');
+        $deleteImageFilesFromHtml($pengendalian->deskripsi ?? '');
+        $deleteImageFilesFromHtml($peningkatan->deskripsi ?? '');
 
         $penetapan?->delete();
         $pelaksanaan?->delete();
@@ -431,7 +496,7 @@ class KriteriaTigaController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil dihapus.',
+            'message' => __('kriteria.berhasil'),
         ]);
     }
 }

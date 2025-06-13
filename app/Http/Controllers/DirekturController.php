@@ -45,9 +45,10 @@ class DirekturController extends Controller
     {
         $pengisian = PengisianModel::whereHas('detail', function ($query) {
             $query->whereIn('status', ['divalidasi_kajur', 'revisi', 'tervalidasi']);
-        }, '=', 9)
+        })
             ->with(['detail' => function ($query) {
-                $query->select('id_detail_kriteria', 'id_pengisian', 'status');
+                $query->whereIn('id_kriteria', range(1, 9))
+                    ->select('id_detail_kriteria', 'id_pengisian', 'id_kriteria', 'status');
             }])
             ->select('id_pengisian', 'nama_pengisian');
 
@@ -59,6 +60,7 @@ class DirekturController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
+
 
     public function show(string $id_pengisian)
     {

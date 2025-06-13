@@ -96,7 +96,10 @@
                         data: "pengisian.nama_pengisian",
                         className: "text-sm",
                         orderable: true,
-                        searchable: true
+                        searchable: true,
+                        render: function(data, type, row, meta) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: "status",
@@ -148,9 +151,14 @@
                                 editBtn =
                                     `<a class="btn btn-warning btn-xs mt-3" href="${base_url}/${id}/edit">{{ __('kriteria.edit') }}</a>`;
                             }
-
-                            let deleteBtn =
-                                `<button class="btn btn-danger btn-xs disabled mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
+                            let deleteBtn = '';
+                            if (status === 'save') {
+                                deleteBtn =
+                                    `<button class="btn btn-danger btn-xs mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
+                            } else {
+                                deleteBtn =
+                                    `<button class="btn btn-danger disabled btn-xs mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
+                            }
                             return `${detailBtn} ${editBtn} ${deleteBtn}`;
                         }
 

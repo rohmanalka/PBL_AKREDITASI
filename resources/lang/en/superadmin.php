@@ -1,0 +1,78 @@
+<?php
+
+return [
+    'dashboard' => [
+        'title' => 'Superadmin - Dashboard',
+        'breadcrumb' => ['Home', 'Superadmin'],
+        'detail_title' => 'User Details',
+        'detail_breadcrumb' => ['Home', 'User Details'],
+
+        'total_pengguna' => 'Total Users',
+        'pengguna' => 'Users',
+        'total_role' => 'Total Roles',
+
+        'tabel_pengguna' => 'User Table',
+        'tabel_role' => 'Role Table',
+        'nama' => 'Name',
+        'username' => 'Username',
+        'role' => 'Role',
+    ],
+    'role' => [
+        'title' => 'Role List',
+        'breadcrumb' => ['Home', 'Roles'],
+        'detail_title' => 'Role Details',
+        'detail_breadcrumb' => ['Home', 'Roles', 'Details'],
+        'edit_title' => 'Edit Role',
+        'confirm_title' => 'Confirm Delete Role',
+        'confdel' => 'Do you want to delete data like below?',
+        'conf' => 'Confirmation!!',
+        'editdata' => 'Edit Data Role',
+        'page_title' => 'List of roles registered in the system',
+
+        'role_kode' => 'Role Code',
+        'role_name' => 'Role Name',
+        'kriteria' => 'Criteria',
+        'plhkriteria' => 'Choose Criteria',
+
+        'showtit' => 'Data Roles',
+        'informasi' => 'Information',
+        'informdet' => 'Here are the role data details:',
+        'simpan_sukses' => 'Role saved successfully',
+        'ubah_sukses' => 'Role updated successfully',
+        'hapus_sukses' => 'Role deleted successfully',
+        'data_tidak_ditemukan' => 'Role data not found',
+
+        'lihat' => 'View',
+        'edit' => 'Edit',
+        'hapus' => 'Delete',
+
+        'simpan' => 'Save',
+        'yahps' => 'Yes, Delete it',
+        'batal' => 'Cancel',
+        'tutup' => 'Close',
+        'konfirmasi_hapus' => 'Are you sure you want to delete this role?',
+    ],
+    'user' => [
+        'title' => 'User List',
+        'breadcrumb' => ['Home', 'User'],
+        'detail_title' => 'User Details',
+        'detail_breadcrumb' => ['Home', 'User', 'Detail'],
+        'page_title' => 'List of users registered in the system',
+        'create_title' => 'Add User',
+        'edit_title' => 'Edit User',
+        'confirm_title' => 'Delete User Confirmation',
+        'validasi_gagal' => 'Validation failed.',
+        'simpan_sukses' => 'User data saved successfully',
+        'ubah_sukses' => 'Data updated successfully',
+        'hapus_sukses' => 'Data deleted successfully',
+        'data_tidak_ditemukan' => 'Data not found',
+        'hpsuser' => 'Delete User',
+        'adduser' => 'Add User Data',
+        'roleusr' => 'User Role',
+        'plhrole' => 'Choose Role',
+        'pass' => 'Password',
+        'abaikan' => 'Ignore if you dont want to change the password',
+        'informdet' => 'Here are the user data details:',
+        'informtit' => 'User Data',
+    ]
+];

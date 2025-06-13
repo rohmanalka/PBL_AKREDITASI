@@ -1,0 +1,78 @@
+<?php
+
+return [
+    'dashboard' => [
+        'title' => 'Superadmin - Dashboard',
+        'breadcrumb' => ['Beranda', 'Superadmin'],
+        'detail_title' => 'Detail Pengguna',
+        'detail_breadcrumb' => ['Beranda', 'Detail Pengguna'],
+
+        'total_pengguna' => 'Total Pengguna',
+        'pengguna' => 'Pengguna',
+        'total_role' => 'Total Peran',
+
+        'tabel_pengguna' => 'Tabel Pengguna',
+        'tabel_role' => 'Tabel Peran',
+        'nama' => 'Nama',
+        'username' => 'Username',
+        'role' => 'Peran',
+    ],
+    'role' => [
+        'title' => 'Daftar Peran',
+        'breadcrumb' => ['Beranda', 'Peran'],
+        'detail_title' => 'Detail Peran',
+        'detail_breadcrumb' => ['Beranda', 'Peran', 'Detail'],
+        'edit_title' => 'Edit Peran',
+        'confirm_title' => 'Konfirmasi Hapus Peran',
+        'confdel' => 'Apakah Anda ingin menghapus data seperti di bawah ini?',
+        'conf' => 'Konfirmasi!!',
+        'editdata' => 'Edit Data Peran',
+        'page_title' => 'Daftar peran yang terdaftar dalam sistem',
+
+        'role_kode' => 'Kode Peran',
+        'role_name' => 'Nama Peran',
+        'kriteria' => 'Kriteria',
+        'plhkriteria' => 'Pilih Kriteria',
+
+        'showtit' => 'Data Peran',
+        'informasi' => 'Informasi',
+        'informdet' => 'Berikut detail data peran:',
+        'simpan_sukses' => 'Peran berhasil disimpan',
+        'ubah_sukses' => 'Peran berhasil diperbarui',
+        'hapus_sukses' => 'Peran berhasil dihapus',
+        'data_tidak_ditemukan' => 'Data peran tidak ditemukan',
+
+        'lihat' => 'Lihat',
+        'edit' => 'Edit',
+        'hapus' => 'Hapus',
+
+        'simpan' => 'Simpan',
+        'yahps' => 'Ya, Hapus',
+        'batal' => 'Batal',
+        'tutup' => 'Tutup',
+        'konfirmasi_hapus' => 'Apakah Anda yakin ingin menghapus peran ini?',
+    ],
+    'user' => [
+        'title' => 'Daftar Pengguna',
+        'breadcrumb' => ['Beranda', 'Pengguna'],
+        'detail_title' => 'Detail Pengguna',
+        'detail_breadcrumb' => ['Beranda', 'Pengguna', 'Detail'],
+        'page_title' => 'Daftar pengguna yang terdaftar dalam sistem',
+        'create_title' => 'Tambah Pengguna',
+        'edit_title' => 'Edit Pengguna',
+        'confirm_title' => 'Konfirmasi Hapus Pengguna',
+        'validasi_gagal' => 'Validasi gagal.',
+        'simpan_sukses' => 'Data pengguna berhasil disimpan',
+        'ubah_sukses' => 'Data berhasil diperbarui',
+        'hapus_sukses' => 'Data berhasil dihapus',
+        'data_tidak_ditemukan' => 'Data tidak ditemukan',
+        'hpsuser' => 'Hapus Pengguna',
+        'adduser' => 'Tambah Data Pengguna',
+        'roleusr' => 'Peran Pengguna',
+        'plhrole' => 'Pilih Peran',
+        'pass' => 'Password',
+        'abaikan' => 'Abaikan jika tidak ingin mengubah password',
+        'informdet' => 'Berikut detail data pengguna:',
+        'informtit' => 'Data Pengguna',
+    ]
+];

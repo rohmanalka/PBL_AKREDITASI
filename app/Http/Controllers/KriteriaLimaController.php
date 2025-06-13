@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DOMDocument;
 use Illuminate\Http\Request;
 use App\Models\EvaluasiModel;
 use App\Models\KriteriaModel;
 use App\Models\PenetapanModel;
+use App\Models\PengisianModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PelaksanaanModel;
 use App\Models\PeningkatanModel;
@@ -30,21 +32,22 @@ class KriteriaLimaController extends Controller
             'title' => __('kriteria.kriteria.5.page'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria5';
+        $activeMenu = 'riwayat1';
 
         return view('kriteria5.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu
+            'activeMenu' => $activeMenu
         ]);
     }
 
     public function list(Request $request)
     {
-        $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-            ->select('id_detail_kriteria', 'id_kriteria', 'status');
+        $details = DetailKriteriaModel::with([
+            'kriteria:id_kriteria,nama_kriteria',
+            'pengisian:id_pengisian,nama_pengisian'
+        ])
+            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status');
 
         $details->where('id_kriteria', 5);
 
@@ -63,22 +66,20 @@ class KriteriaLimaController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => __('kriteria.kriteria.5.title'),
-            'list' => __('kriteria.kriteria.5.list'),
+            'title' => __('kriteria.kriteria.5.titleinpt'),
+            'list' => __('kriteria.kriteria.5.listinpt'),
         ];
 
         $page = (object) [
-            'title' => __('kriteria.kriteria.5.page'),
+            'title' => __('kriteria.kriteria.5.pageinpt'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria5';
+        $activeMenu = 'input1';
 
         return view('kriteria5.input', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu
+            'activeMenu' => $activeMenu
         ])->with('kriteria', $kriteria);;
     }
 
@@ -107,6 +108,37 @@ class KriteriaLimaController extends Controller
                 'message' => 'Role Anda tidak diizinkan menginput data kriteria.',
             ]);
         }
+
+        $availableBatch = null;
+
+        $batches = PengisianModel::withCount('detail')
+            ->having('detail_count', '<', 9)
+            ->orderBy('id_pengisian', 'asc')
+            ->get();
+
+        foreach ($batches as $batch) {
+            $exists = DetailKriteriaModel::where('id_pengisian', $batch->id_pengisian)
+                ->where('id_kriteria', $request->id_kriteria)
+                ->exists();
+
+            if (!$exists) {
+                $availableBatch = $batch;
+                break;
+            }
+        }
+
+        if (!$availableBatch) {
+            $availableBatch = PengisianModel::create([
+                'nama_pengisian' => '',
+            ]);
+
+            $availableBatch->update([
+                'nama_pengisian' => 'Dokumen Bagian ' . $availableBatch->id_pengisian,
+            ]);
+        }
+
+        $batch = $availableBatch;
+        $idPengisian = $request->status === 'save' ? null : $batch->id_pengisian;
 
         // Upload helper
         $uploadFile = fn($file, $folder) =>
@@ -151,6 +183,7 @@ class KriteriaLimaController extends Controller
 
         DetailKriteriaModel::create([
             'id_kriteria'     => $request->id_kriteria,
+            'id_pengisian'    => $idPengisian,
             'id_komentar'     => null,
             'status'          => $request->status,
             'id_penetapan'    => $penetapan->id_penetapan,
@@ -162,7 +195,7 @@ class KriteriaLimaController extends Controller
 
         return response()->json([
             'status'  => true,
-            'message' => 'Data berhasil disimpan.',
+            'message' => __('kriteria.simpanberhasil'),
         ]);
     }
 
@@ -177,14 +210,25 @@ class KriteriaLimaController extends Controller
         ])->findOrFail($id);
 
         $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
-
         foreach ($ppeppRelations as $relasi) {
             if ($detail->$relasi && $detail->$relasi->deskripsi) {
-                $detail->$relasi->deskripsi = str_replace(
-                    '../storage/',
-                    rtrim(url('storage'), '/') . '/',
-                    $detail->$relasi->deskripsi
-                );
+                $deskripsi = $detail->$relasi->deskripsi;
+
+                libxml_use_internal_errors(true);
+                $dom = new DOMDocument();
+                $dom->loadHTML('<?xml encoding="utf-8" ?>' . $deskripsi, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+                $images = $dom->getElementsByTagName('img');
+                foreach ($images as $img) {
+                    $src = $img->getAttribute('src');
+                    if (strpos($src, '../storage/') !== false || strpos($src, '/storage/') === 0) {
+                        $absoluteUrl = url(ltrim(str_replace('../', '', $src), '/'));
+                        $img->setAttribute('src', $absoluteUrl);
+                    }
+                }
+
+                $detail->$relasi->deskripsi = $dom->saveHTML();
+                libxml_clear_errors();
             }
         }
 
@@ -199,14 +243,12 @@ class KriteriaLimaController extends Controller
             'title' =>  __('kriteria.kriteria.5.pageedit'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria5';
+        $activeMenu = 'riwayat5';
 
         return view('kriteria5.edit', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu,
             'detail' => $detail,
             'kriteria' => $kriteria
         ]);
@@ -231,6 +273,26 @@ class KriteriaLimaController extends Controller
 
         $detail = DetailKriteriaModel::findOrFail($id);
 
+        if ($request->status === 'submitted' && $detail->id_pengisian === null) {
+            $batch = PengisianModel::withCount('detail')
+                ->having('detail_count', '<', 9)
+                ->orderBy('id_pengisian', 'asc')
+                ->get()
+                ->first(function ($batch) use ($detail) {
+                    return !DetailKriteriaModel::where('id_pengisian', $batch->id_pengisian)
+                        ->where('id_kriteria', $detail->id_kriteria)
+                        ->exists();
+                });
+
+            if (!$batch) {
+                $batch = PengisianModel::create(['nama_pengisian' => '']);
+                $batch->update([
+                    'nama_pengisian' => 'Dokumen Bagian ' . $batch->id_pengisian,
+                ]);
+            }
+
+            $detail->id_pengisian = $batch->id_pengisian;
+        }
         // Penetapan
         $penetapan = PenetapanModel::find($detail->id_penetapan);
         if ($penetapan) {
@@ -287,7 +349,7 @@ class KriteriaLimaController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil diupdate dengan status ' . $request->status
+            'message' => __('kriteria.editberhasil') . $request->status
         ]);
     }
 
@@ -434,7 +496,7 @@ class KriteriaLimaController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Data berhasil dihapus.',
+            'message' => __('kriteria.berhasil'),
         ]);
     }
 }

@@ -29,7 +29,8 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-danger me-4" data-bs-dismiss="modal">{{ __('landingpg.cancel') }}</button>
+                    <button type="button" class="btn btn-outline-danger me-4"
+                        data-bs-dismiss="modal">{{ __('landingpg.cancel') }}</button>
                     <button type="submit" class="btn btn-info">{{ __('landingpg.log') }}</button>
                 </div>
             </div>
@@ -113,6 +114,11 @@
         }
     });
     $(document).ready(function() {
+        const remembered = localStorage.getItem('remembered_username');
+        if (remembered) {
+            $('#username').val(remembered).trigger('input');
+        }
+
         $("#form-login").validate({
             rules: {
                 username: {
@@ -140,7 +146,13 @@
                     type: form.method,
                     data: $(form).serialize(),
                     success: function(response) {
-                        if (response.status) { // jika sukses
+                        if (response.status) {
+                            if ($('#remember').is(':checked')) {
+                                localStorage.setItem('remembered_username', $(
+                                    '#username').val());
+                            } else {
+                                localStorage.removeItem('remembered_username');
+                            }
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',

@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>{{ $page->title }}</h6>
                         <button onclick="modalAction('{{ url('superadmin/user/create') }}')" class="btn btn-sm btn-success">
-                            Tambah Data
+                            {{ __('superadmin.user.create_title')}}
                         </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -29,13 +29,13 @@
                                             ID
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Username
+                                            {{ __('superadmin.dashboard.username')}}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Name
+                                            {{ __('superadmin.dashboard.nama')}}
                                         </th>
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Role
+                                            {{ __('superadmin.dashboard.role')}}
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
@@ -112,9 +112,9 @@
                         render: function(data, type, row, meta) {
                             let id = row.id_user;
                             return `
-                                <button class="btn btn-info btn-xs" onclick="modalAction('${base_url}/${id}/show')">Detail</button>
-                                <button class="btn btn-warning btn-xs" onclick="modalAction('${base_url}/${id}/edit')">Edit</button>
-                                <button class="btn btn-danger btn-xs" onclick="modalAction('${base_url}/${id}/delete')">Hapus</button>
+                                <button class="btn btn-info btn-xs" onclick="modalAction('${base_url}/${id}/show')">{{ __('superadmin.role.lihat')}}</button>
+                                <button class="btn btn-warning btn-xs" onclick="modalAction('${base_url}/${id}/edit')">{{ __('superadmin.role.edit')}}</button>
+                                <button class="btn btn-danger btn-xs" onclick="modalAction('${base_url}/${id}/delete')">{{ __('superadmin.role.hapus')}}</button>
                             `;
                         }
 

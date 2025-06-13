@@ -17,7 +17,7 @@
                                 <h6 class="font-weight-bold">1. {{ __('kriteria.penetapan') }}</h6>
                                 <textarea id="editor-penetapan" name="penetapan" class="form-control"></textarea>
                             </div>
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-penetapan">
@@ -37,7 +37,7 @@
                                 <h6 class="font-weight-bold">2. {{ __('kriteria.pelaksanaan') }}</h6>
                                 <textarea id="editor-pelaksanaan" name="pelaksanaan" class="form-control"></textarea>
                             </div>
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-pelaksanaan">
@@ -57,7 +57,7 @@
                                 <h6 class="font-weight-bold">3. {{ __('kriteria.evaluasi') }}</h6>
                                 <textarea id="editor-evaluasi" name="evaluasi" class="form-control"></textarea>
                             </div>
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-evaluasi">
@@ -77,7 +77,7 @@
                                 <h6 class="font-weight-bold">4. {{ __('kriteria.pengendalian') }}</h6>
                                 <textarea id="editor-pengendalian" name="pengendalian" class="form-control"></textarea>
                             </div>
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-pengendalian">
@@ -97,7 +97,7 @@
                                 <h6 class="font-weight-bold">5. {{ __('kriteria.peningkatan') }}</h6>
                                 <textarea id="editor-peningkatan" name="peningkatan" class="form-control"></textarea>
                             </div>
-                            <div class="col-md-3 d-flex align-items-start justify-content-end pt-4">
+                            <div class="col-md-3 d-flex align-items-start pt-4">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <label class="btn btn-outline-primary btn-sm mb-2" for="input-peningkatan">
@@ -118,7 +118,7 @@
                                     <button type="reset" class="btn btn-outline-secondary me-2" onclick="resetForm()">
                                         <i class="fas fa-undo-alt me-1"></i> {{ __('kriteria.reset') }}
                                     </button>
-                                    <a href="{{ url('kriteria5/') }}" class="btn btn-outline-danger">
+                                    <a href="{{ url('kriteria6/') }}" class="btn btn-outline-danger">
                                         <i class="fas fa-times me-1"></i> {{ __('kriteria.cancel') }}
                                     </a>
                                 </div>
@@ -260,7 +260,7 @@
                 .then(data => {
                     if (data.status) {
                         Swal.fire({
-                            title: 'Sukses!',
+                            title: "{{ __('kriteria.success') }}.",
                             text: data.message,
                             icon: 'success',
                             confirmButtonText: 'OK'

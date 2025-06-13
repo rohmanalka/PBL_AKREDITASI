@@ -11,7 +11,7 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('superadmin/role') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('superadmin/role') }}" class="btn btn-warning">{{ __('superadmin.role.kembali') }}</a>
             </div>
         </div>
     </div>
@@ -21,43 +21,66 @@
         @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Role</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                <div class="modal-header position-relative">
+                    <h5 class="modal-title w-100 text-center"> {{ __('superadmin.role.editdata') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Kriteria</label>
+                        <label>{{ __('superadmin.role.kriteria') }}</label>
                         <select name="id_kriteria" id="id_kriteria" class="form-control" required>
-                            <option value="">- Pilih Kriteria -</option>
+                            <option value="">- {{ __('superadmin.role.plhkriteria') }} -</option>
                             @foreach ($kriteria as $r)
-                                <option {{ $r->id_kriteria == $user->id_kriteria ? 'selected' : '' }} value="{{ $r->id_kriteria }}">
+                                <option {{ $r->id_kriteria == $r->id_kriteria ? 'selected' : '' }}
+                                    value="{{ $r->id_kriteria }}">
                                     {{ $r->nama_kriteria }}</option>
                             @endforeach
                         </select>
                         <small id="error-id_role" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
-                        <label>Role Kode</label>
+                        <label>{{ __('superadmin.role.role_kode') }}</label>
                         <input value="{{ $role->role_kode }}" type="text" name="role_kode" id="role_kode"
                             class="form-control" required>
                         <small id="error-role_kode" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
-                        <label>Role Name</label>
+                        <label>{{ __('superadmin.role.role_name') }}</label>
                         <input value="{{ $role->role_name }}" type="text" name="role_name" id="role_name"
                             class="form-control" required>
                         <small id="error-role_name" class="error-text form-text text-danger"></small>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" data-dismiss="modal"
+                        class="btn btn-warning">{{ __('superadmin.role.batal') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('superadmin.role.simpan') }}</button>
                 </div>
             </div>
         </div>
     </form>
+
+    <style>
+        .close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 10;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+    </style>
+
     <script>
         $('.close, .btn-warning').on('click', function() {
             $('#myModal').modal('hide');

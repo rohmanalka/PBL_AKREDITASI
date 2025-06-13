@@ -63,6 +63,7 @@
                 <ul>
                     <li><a href="#hero" class="active">{{ __('landingpg.home') }}<br></a></li>
                     <li><a href="#about">{{ __('landingpg.about') }}</a></li>
+                    <li><a href="#services">{{ __('landingpg.visi') }}</a></li>
                     <li><a href="#team">{{ __('landingpg.team') }}</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -112,14 +113,15 @@
 
                 <div class="row gy-4">
                     <div class="col-lg-6 order-1 order-lg-2">
-                        <img src="{{ asset('gplanding/assets/img/profilti-bg.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('gplanding/assets/img/profilti-bg.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-lg-6 order-2 order-lg-1 content">
                         <p class="fst-italic">
-                            {{ __('landingpg.profile')}}
+                            {{ __('landingpg.profile') }}
                         </p>
                         <ul>
-                            <li><i class="bi bi-clock"></i> <span>{{ __('landingpg.profile_prodi')}}</span></li>
+                            <li><i class="bi bi-clock"></i> <span>{{ __('landingpg.profile_prodi') }}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -140,13 +142,14 @@
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
                             <div class="icon">
-                                <i class="fa-solid fa-bullseye"></i>
+                                <i class="bi bi-bullseye"></i>
                             </div>
                             <a href="service-details.html" class="stretched-link">
                                 <h3>{{ __('landingpg.sasaran') }}</h3>
                             </a>
-                            <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores
-                                iure perferendis tempore et consequatur.</p>
+                            <p style="text-align: justify;">
+                                {!! __('landingpg.target') !!}
+                            </p>
                         </div>
                     </div><!-- End Service Item -->
 
@@ -158,7 +161,9 @@
                             <a href="service-details.html" class="stretched-link">
                                 <h3>{{ __('landingpg.visi') }}</h3>
                             </a>
-                            <p>Menjadi Program Studi Unggul dalam Bidang Sistem Informasi Bisnis di Tingkat Nasional dan Internasional.</p>
+                            <p style="text-align: justify;">
+                                {!! __('landingpg.vision') !!}
+                            </p>
                         </div>
                     </div><!-- End Service Item -->
 
@@ -170,10 +175,8 @@
                             <a href="service-details.html" class="stretched-link">
                                 <h3>{{ __('landingpg.misi') }}</h3>
                             </a>
-                            <p>1. Melaksanakan pendidikan vokasi yang inovatif berdasarkan pada sistem pendidikan terapan dengan memanfaatkan kemajuan teknologi, sehingga mampu menghasilkan lulusan yang memiliki kompetensi di bidang sistem informasi bisnis dan siap bersaing di tingkat nasional dan global.
-                                2. Melaksanakan penelitian terapan berbasis produk dan jasa bidang Sistem Informasi Bisnis.
-                                3. Melaksanakan pengabdian masyarakat dengan menggunakan kemajuan Sistem Informasi Bisnis untuk meningkatkan kesejahteraan.
-                                4. Mewujudkan kerja sama yang saling menguntungkan dengan berbagai pihak baik di dalam maupun di luar negeri pada bidang Sistem Informasi Bisnis
+                            <p style="text-align: justify;">
+                                {!! __('landingpg.mission') !!}
                             </p>
                         </div>
                     </div><!-- End Service Item -->
@@ -195,16 +198,16 @@
                         data-aos-delay="100">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-1.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/alka.jpg') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
-                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/rohmanalka_/profilecard/?igsh=cDNzMzMxbDV0MTdi"><i class="bi bi-instagram"></i></a>
+                                    <a href="https://www.linkedin.com/in/muhammad-rohman-al-kautsar-b5b52322a"><i class="bi bi-linkedin"></i></a>
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>Walter White</h4>
-                                <span>Chief Executive Officer</span>
+                                <h4>Muhammad Rohman Al Kautsar</h4>
+                                <span>2341760055</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
@@ -213,7 +216,7 @@
                         data-aos-delay="200">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-2.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/puput.jpg') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
                                     <a href=""><i class="bi bi-instagram"></i></a>
@@ -221,8 +224,8 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>Sarah Jhonson</h4>
-                                <span>Product Manager</span>
+                                <h4>Aprilia Putri Anggraini</h4>
+                                <span>2341760043</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
@@ -231,7 +234,7 @@
                         data-aos-delay="300">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-3.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/erika.jpg') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
                                     <a href=""><i class="bi bi-instagram"></i></a>
@@ -239,8 +242,8 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>William Anderson</h4>
-                                <span>CTO</span>
+                                <h4>Erika Atthacarya Putri Cahyani</h4>
+                                <span>2341760158</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
@@ -249,7 +252,7 @@
                         data-aos-delay="400">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-4.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/malik.jpg') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
                                     <a href=""><i class="bi bi-instagram"></i></a>
@@ -257,8 +260,8 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>Amanda Jepson</h4>
-                                <span>Accountant</span>
+                                <h4>Malik Adzano Aryasatya D</h4>
+                                <span>2341760161</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
@@ -267,7 +270,7 @@
                         data-aos-delay="400">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('gplanding/assets/img/team/team-4.jpg') }}" class="img-fluid"
+                                <img src="{{ asset('gplanding/assets/img/team/lia.png') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
                                     <a href=""><i class="bi bi-instagram"></i></a>
@@ -275,8 +278,8 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>Amanda Jepson</h4>
-                                <span>Accountant</span>
+                                <h4>Rahmalia Mutia Farda</h4>
+                                <span>2341760130</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
@@ -303,9 +306,12 @@
                     <div class="col-lg-3 col-md-3 footer-links">
                         <h4>{{ __('landingpg.link') }}</h4>
                         <ul>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> {{ __('landingpg.home') }}</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#about"> {{ __('landingpg.about') }}</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> {{ __('landingpg.team') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#hero"> {{ __('landingpg.home') }}</a>
+                            </li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#about">
+                                    {{ __('landingpg.about') }}</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#team"> {{ __('landingpg.team') }}</a>
+                            </li>
                         </ul>
                     </div>
 

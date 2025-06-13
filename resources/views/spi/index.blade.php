@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>{{ $page->title }}</h6>
+                        <h6>{{ __('spi.title') }}</h6>
                     </div>
                     <div class="card-body px-4 pt-3 pb-2">
                         <div class="mb-3">
@@ -21,10 +21,10 @@
                         <form>
                             <div class="row align-items-center">
                                 <div class="col-sm-4">
-                                    <select name="id_kriteria" id="id_kriteria" class="form-select">
-                                        <option value="">- Pilih Kriteria -</option>
-                                        @foreach ($kriteria as $item)
-                                            <option value="{{ $item->id_kriteria }}">{{ $item->nama_kriteria }}</option>
+                                    <select name="id_pengisian" id="id_pengisian" class="form-select">
+                                        <option value="">- {{ __('kpskjr.pilih_batch') }} -</option>
+                                        @foreach ($pengisian as $item)
+                                            <option value="{{ $item->id_pengisian }}">{{ $item->nama_pengisian }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -32,23 +32,13 @@
                         </form>
 
                         <div class="table-responsive mt-4 p-0">
-                            <table class="table align-items-center mb-0" id="table_detail_kriteria">
+                            <table class="table align-items-center mb-0" id="table_pengisian">
                                 <thead>
                                     <tr>
-                                        <th
-                                            class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-                                            ID
-                                        </th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            {{ __('messages.nmkrit') }}
-                                        </th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                            Status
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-
-                                        </th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">{{ __('spi.no') }}</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">{{ __('spi.nama_bagian') }}</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">{{ __('spi.status') }}</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">{{ __('spi.aksi') }}</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -81,8 +71,8 @@
         $(document).ready(function() {
             let dataDetail;
 
-            function initDataTable(id_kriteria) {
-                dataDetail = $('#table_detail_kriteria').DataTable({
+            function initDataTable(id_pengisian) {
+                dataDetail = $('#table_pengisian').DataTable({
                     serverSide: true,
                     processing: true,
                     destroy: true,
@@ -90,7 +80,7 @@
                         url: "{{ url('preview/list') }}",
                         type: "POST",
                         data: function(d) {
-                            d.id_kriteria = id_kriteria;
+                            d.id_pengisian = id_pengisian;
                         }
                     },
                     columns: [{
@@ -100,68 +90,78 @@
                             searchable: false
                         },
                         {
-                            data: "kriteria.nama_kriteria",
+                            data: "nama_pengisian",
                             className: "text-sm",
                             orderable: true,
                             searchable: true
                         },
                         {
-                            data: "status",
+                            data: "detail",
                             className: "text-sm",
-                            orderable: true,
-                            searchable: true,
-                            render: function(data) {
-                                let badgeClass = 'bg-secondary';
-                                switch (data) {
-                                    case 'save':
-                                        badgeClass = 'bg-secondary';
-                                        break;
-                                    case 'submitted':
-                                        badgeClass = 'bg-primary';
-                                        break;
-                                    case 'revisi':
-                                        badgeClass = 'bg-warning text-dark';
-                                        break;
-                                    case 'divalidasi_kajur':
-                                        badgeClass = 'bg-success';
-                                        break;
-                                    case 'tervalidasi':
-                                        badgeClass = 'bg-info';
-                                        break;
-                                }
-                                return `<span class="badge ${badgeClass}">${data}</span>`;
+                            render: function(details) {
+                                const statusGabungan = getStatusGabungan(details);
+                                const badgeMap = {
+                                    save: 'bg-secondary',
+                                    submitted: 'bg-primary',
+                                    revisi: 'bg-warning text-dark',
+                                    divalidasi_kajur: 'bg-success',
+                                    tervalidasi: 'bg-info',
+                                    'belum lengkap': 'bg-danger'
+                                };
+                                const badgeClass = badgeMap[statusGabungan] || 'bg-secondary';
+
+                                return `<span class="badge ${badgeClass}">${statusGabungan}</span>`;
                             }
                         },
                         {
-                            data: "aksi",
-                            className: "text-center text-xs ",
+                            data: "detail",
+                            className: "text-center text-xs",
                             orderable: false,
                             searchable: false,
-                            render: function(data, type, row) {
-                                let id = row.id_detail_kriteria;
-                                let status = row.status;
+                            render: function(details, type, row) {
+                                const statusGabungan = getStatusGabungan(details);
+                                const disabled = (statusGabungan === 'revisi' || statusGabungan ===
+                                    'belum lengkap');
+                                const btnClass = disabled ? 'btn-secondary' : 'btn-info';
+                                const btnAttr = disabled ? 'disabled' : '';
 
-                                let detailBtn = `
-                                    <button class="btn btn-info btn-xs mt-3" onclick="modalAction('${base_url}/${id}/show')">
-                                        Preview
-                                    </button>`;
-                                return `${detailBtn}`;
-
+                                return `
+                                <button class="btn ${btnClass} btn-xs mt-3"
+                                    onclick="modalAction('${base_url}/${row.id_pengisian}/show')"
+                                    ${btnAttr}>
+                                    Preview
+                                </button>`;
                             }
                         }
                     ]
                 });
             }
 
-            $('#id_kriteria').on('change', function() {
+            function getStatusGabungan(details) {
+                const filtered = (Array.isArray(details) ? details : [])
+                    .filter(item => item.id_kriteria >= 1 && item.id_kriteria <= 9);
+                const uniqueKriteria = [...new Set(filtered.map(item => item.id_kriteria))];
+                const statuses = filtered.map(item => item.status);
+
+                if (uniqueKriteria.length < 9) return 'belum lengkap';
+                if (statuses.every(s => s === 'tervalidasi')) return 'tervalidasi';
+                if (statuses.every(s => s === 'divalidasi_kajur')) return 'divalidasi_kajur';
+                if (statuses.includes('revisi')) return 'revisi';
+                if (statuses.includes('submitted')) return 'submitted';
+                if (statuses.includes('save')) return 'save';
+                return 'belum lengkap';
+            }
+
+
+            $('#id_pengisian').on('change', function() {
                 let selectedId = $(this).val();
                 if (selectedId) {
-                    if ($.fn.DataTable.isDataTable('#table_detail_kriteria')) {
+                    if ($.fn.DataTable.isDataTable('#table_pengisian')) {
                         dataDetail.destroy();
                     }
                     initDataTable(selectedId);
                 } else {
-                    if ($.fn.DataTable.isDataTable('#table_detail_kriteria')) {
+                    if ($.fn.DataTable.isDataTable('#table_pengisian')) {
                         dataDetail.clear().draw();
                     }
                 }

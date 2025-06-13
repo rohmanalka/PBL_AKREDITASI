@@ -13,7 +13,7 @@
                                     <p class="text-sm mb-0 text-uppercase font-weight-bolder">Tervalidasi</p>
                                     <h5 class="text-white" id="jumlah-tervalidasi">
                                         {{ $jumlah_tervalidasi }}
-                                        <span style="font-size: 15px;">Kriteria Tervalidasi</span>
+                                        <span style="font-size: 15px;">Tervalidasi</span>
                                     </h5>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                     <p class="text-sm mb-0 text-uppercase font-weight-bolder">Revisi</p>
                                     <h5 class="text-white" id="jumlah-revisi">
                                         {{ $jumlah_revisi }}
-                                        <span style="font-size: 15px;">Kriteria Memerlukan Revisi</span>
+                                        <span style="font-size: 15px;">Memerlukan Revisi</span>
                                     </h5>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                                     <p class="text-sm mb-0 text-uppercase font-weight-bolder">Menunggu Validasi</p>
                                     <h5 class="text-white" id="jumlah-menunggu-validasi">
                                         {{ $menunggu_validasi }}
-                                        <span style="font-size: 15px;">Kriteria Menunggu Validasi</span>
+                                        <span style="font-size: 15px;">Menunggu Validasi</span>
                                     </h5>
                                 </div>
                             </div>
@@ -112,8 +112,8 @@
                                     @foreach ($data as $i => $item)
                                         <tr>
                                             <td class="text-center">{{ $i + 1 }}</td>
-                                            <td>{{ $item['dokumen'] }}</td>
-                                            <td>
+                                            <td class="ps-4">{{ $item['dokumen'] }}</td>
+                                            <td class="ps-3">
                                                 @php
                                                     $badgeClass = 'bg-secondary';
                                                     $badgeText = ucfirst($item['status']);
@@ -144,8 +144,8 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ url('/' . strtolower($roleKode)) }}"
-                                                    class="btn btn-sm btn-primary">Lihat</a>
+                                                <a href="{{ url('/' . strtolower(str_replace('KRIT', 'kriteria', $roleKode))) }}"
+                                                    class="btn btn-sm btn-primary mt-3">Lihat</a>
                                             </td>
                                         </tr>
                                     @endforeach

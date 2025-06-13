@@ -7,9 +7,6 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>{{ $page->title }}</h6>
-                        <a href="{{ url('kriteria7/input') }}" class="btn btn-sm btn-success">
-                            {{ __('kriteria.input') }}
-                        </a>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="px-3 mt-3">
@@ -96,7 +93,10 @@
                         data: "pengisian.nama_pengisian",
                         className: "text-sm",
                         orderable: true,
-                        searchable: true
+                        searchable: true,
+                        render: function(data, type, row, meta) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: "status",
@@ -148,9 +148,15 @@
                                 editBtn =
                                     `<a class="btn btn-warning btn-xs mt-3" href="${base_url}/${id}/edit">{{ __('kriteria.edit') }}</a>`;
                             }
-
-                            let deleteBtn =
-                                `<button class="btn btn-danger btn-xs disabled mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
+                            
+                            let deleteBtn = '';
+                            if (status === 'save') {
+                                deleteBtn =
+                                    `<button class="btn btn-danger btn-xs mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
+                            } else {
+                                deleteBtn =
+                                    `<button class="btn btn-danger disabled btn-xs mt-3" onclick="modalAction('${base_url}/${id}/delete')">{{ __('kriteria.delete') }}</button>`;
+                            }
                             return `${detailBtn} ${editBtn} ${deleteBtn}`;
                         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DOMDocument;
 use Illuminate\Http\Request;
 use App\Models\EvaluasiModel;
 use App\Models\KriteriaModel;
@@ -31,14 +32,12 @@ class KriteriaDelapanController extends Controller
             'title' => __('kriteria.kriteria.8.page'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria8';
+        $activeMenu = 'riwayat8';
 
         return view('kriteria8.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu
+            'activeMenu' => $activeMenu
         ]);
     }
 
@@ -67,22 +66,20 @@ class KriteriaDelapanController extends Controller
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
         $breadcrumb = (object) [
-            'title' => __('kriteria.kriteria.8.title'),
-            'list' => __('kriteria.kriteria.8.list'),
+            'title' => __('kriteria.kriteria.8.titleinpt'),
+            'list' => __('kriteria.kriteria.8.listinpt'),
         ];
 
         $page = (object) [
-            'title' => __('kriteria.kriteria.8.page'),
+            'title' => __('kriteria.kriteria.8.pageinpt'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria8';
+        $activeMenu = 'input8';
 
         return view('kriteria8.input', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu
+            'activeMenu' => $activeMenu
         ])->with('kriteria', $kriteria);;
     }
 
@@ -136,11 +133,12 @@ class KriteriaDelapanController extends Controller
             ]);
 
             $availableBatch->update([
-                'nama_pengisian' => 'Dokumen Final ' . $availableBatch->id_pengisian,
+                'nama_pengisian' => 'Dokumen Bagian ' . $availableBatch->id_pengisian,
             ]);
         }
 
         $batch = $availableBatch;
+        $idPengisian = $request->status === 'save' ? null : $batch->id_pengisian;
 
         // Upload helper
         $uploadFile = fn($file, $folder) =>
@@ -185,7 +183,7 @@ class KriteriaDelapanController extends Controller
 
         DetailKriteriaModel::create([
             'id_kriteria'     => $request->id_kriteria,
-            'id_pengisian'    => $batch->id_pengisian,
+            'id_pengisian'    => $idPengisian,
             'id_komentar'     => null,
             'status'          => $request->status,
             'id_penetapan'    => $penetapan->id_penetapan,
@@ -211,17 +209,29 @@ class KriteriaDelapanController extends Controller
             'peningkatan'
         ])->findOrFail($id);
 
-        // $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
+        $ppeppRelations = ['penetapan', 'pelaksanaan', 'evaluasi', 'pengendalian', 'peningkatan'];
+        foreach ($ppeppRelations as $relasi) {
+            if ($detail->$relasi && $detail->$relasi->deskripsi) {
+                $deskripsi = $detail->$relasi->deskripsi;
 
-        // foreach ($ppeppRelations as $relasi) {
-        //     if ($detail->$relasi && $detail->$relasi->deskripsi) {
-        //         $detail->$relasi->deskripsi = str_replace(
-        //             '../storage/',
-        //             rtrim(url('storage'), '/') . '/',
-        //             $detail->$relasi->deskripsi
-        //         );
-        //     }
-        // }
+                libxml_use_internal_errors(true);
+                $dom = new DOMDocument();
+                $dom->loadHTML('<?xml encoding="utf-8" ?>' . $deskripsi, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+                $images = $dom->getElementsByTagName('img');
+                foreach ($images as $img) {
+                    $src = $img->getAttribute('src');
+                    if (strpos($src, '../storage/') !== false || strpos($src, '/storage/') === 0) {
+                        $absoluteUrl = url(ltrim(str_replace('../', '', $src), '/'));
+                        $img->setAttribute('src', $absoluteUrl);
+                    }
+                }
+
+                $detail->$relasi->deskripsi = $dom->saveHTML();
+                libxml_clear_errors();
+            }
+        }
+
 
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
@@ -234,14 +244,12 @@ class KriteriaDelapanController extends Controller
             'title' =>  __('kriteria.kriteria.8.pageedit'),
         ];
 
-        $activeMenu = 'kriteria';
-        $activeSubmenu = 'kriteria8';
+        $activeMenu = 'riwayat8';
 
         return view('kriteria8.edit', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu,
-            'activeSubmenu' => $activeSubmenu,
             'detail' => $detail,
             'kriteria' => $kriteria
         ]);
@@ -266,6 +274,26 @@ class KriteriaDelapanController extends Controller
 
         $detail = DetailKriteriaModel::findOrFail($id);
 
+        if ($request->status === 'submitted' && $detail->id_pengisian === null) {
+            $batch = PengisianModel::withCount('detail')
+                ->having('detail_count', '<', 9)
+                ->orderBy('id_pengisian', 'asc')
+                ->get()
+                ->first(function ($batch) use ($detail) {
+                    return !DetailKriteriaModel::where('id_pengisian', $batch->id_pengisian)
+                        ->where('id_kriteria', $detail->id_kriteria)
+                        ->exists();
+                });
+
+            if (!$batch) {
+                $batch = PengisianModel::create(['nama_pengisian' => '']);
+                $batch->update([
+                    'nama_pengisian' => 'Dokumen Bagian ' . $batch->id_pengisian,
+                ]);
+            }
+
+            $detail->id_pengisian = $batch->id_pengisian;
+        }
         // Penetapan
         $penetapan = PenetapanModel::find($detail->id_penetapan);
         if ($penetapan) {
@@ -469,7 +497,7 @@ class KriteriaDelapanController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => __('kriteria.hpsberhasil'),
+            'message' => __('kriteria.berhasil'),
         ]);
     }
 }

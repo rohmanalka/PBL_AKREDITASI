@@ -108,10 +108,15 @@
                     <a href="#" class="nav-link text-white p-0 position-relative" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-bell cursor-pointer"></i>
-                        @if ($jumlahRevisi + $jumlahValidasi > 0)
+                        @php
+                            $jumlahNotif =
+                                $jumlahRevisi + $jumlahValidasi + ($isDirkjm ? $pengisianSiapValidasi->count() : 0);
+                        @endphp
+
+                        @if ($jumlahNotif > 0)
                             <span
                                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                {{ $jumlahRevisi + $jumlahValidasi }}
+                                {{ $jumlahNotif }}
                             </span>
                         @endif
                     </a>

@@ -16,12 +16,13 @@
                 </div>
 
                 <div class="form-group mb-4 position-relative floating-label-group">
-                    <input type="password" name="password" id="password" class="form-control text-white"
-                        placeholder=" " required>
+                    <input type="password" name="password" id="password" class="form-control text-white" placeholder=" " required>
                     <label for="password" class="floating-label">{{ __('landingpg.pass') }}</label>
+                    <span class="toggle-password" toggle="#password" style="position:absolute; right:15px; top:50%; transform:translateY(-50%); cursor:pointer;">
+                        👁️
+                    </span>
                     <small id="error-password" class="error-text form-text text-danger"></small>
                 </div>
-
 
                 <div class="form-check form-switch mb-3">
                     <input class="form-check-input" type="checkbox" name="remember" id="remember" checked>
@@ -197,4 +198,14 @@
             }
         });
     });
+
+    $(document).on('click', '.toggle-password', function () {
+    let input = $($(this).attr('toggle'));
+    let type = input.attr('type') === 'password' ? 'text' : 'password';
+    input.attr('type', type);
+
+    // Opsional: Ganti ikon mata tergantung status
+    $(this).text(type === 'password' ? '👁️' : '🙈');
+});
+
 </script>

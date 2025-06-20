@@ -48,7 +48,8 @@ class DirekturController extends Controller
         })
             ->with(['detail' => function ($query) {
                 $query->whereIn('id_kriteria', range(1, 9))
-                    ->select('id_detail_kriteria', 'id_pengisian', 'id_kriteria', 'status');
+                    ->select('id_detail_kriteria', 'id_pengisian', 'id_kriteria', 'status')
+                    ->orderByDesc('id_detail_kriteria');
             }])
             ->select('id_pengisian', 'nama_pengisian');
 
@@ -76,6 +77,27 @@ class DirekturController extends Controller
         ];
 
         return view('direktur.show', [
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'pengisian' => $pengisian,
+            'id_pengisian' => $id_pengisian
+        ]);
+    }
+
+    public function preview(string $id_pengisian)
+    {
+        $pengisian = PengisianModel::where('id_pengisian', $id_pengisian)->first();
+
+        $breadcrumb = (object) [
+            'title' => 'Detail Kriteria',
+            'list' => ['Home', 'Detail'],
+        ];
+
+        $page = (object) [
+            'title' => 'Detail',
+        ];
+
+        return view('direktur.preview', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'pengisian' => $pengisian,

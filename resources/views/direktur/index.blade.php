@@ -45,8 +45,8 @@
                                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             {{ __('direktur.status') }}
                                         </th>
-                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-                                            {{ __('direktur.aksi') }}
+                                        <th
+                                            class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
                                         </th>
                                     </tr>
                                 </thead>
@@ -135,11 +135,16 @@
                                 const btnAttr = disabled ? 'disabled' : '';
 
                                 return `
-                                <button class="btn ${btnClass} btn-xs mt-3"
-                                    onclick="modalAction('${base_url}/${row.id_pengisian}/show')"
-                                    ${btnAttr}>
-                                    Validasi
-                                </button>`;
+                                    <div class="mt-3">
+                                        <button class="btn btn-info btn-xs"
+                                            onclick="modalAction('${base_url}/${row.id_pengisian}/preview')">
+                                            Lihat
+                                        </button>
+                                        <button class="btn ${btnClass} btn-xs"
+                                            onclick="modalAction('${base_url}/${row.id_pengisian}/show')" ${btnAttr}>
+                                            Validasi
+                                        </button>
+                                    </div>`;
                             }
                         }
                     ]

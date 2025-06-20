@@ -8,6 +8,7 @@ return [
     'judulhead'     => 'AKREDITASI',
     'judullanding'  => 'Sistem Akreditasi',
     'prodi'         => 'Sistem Informasi Bisnis',
+    'poltek'        => 'Politeknik Negeri Malang',
     'profil'        => 'Profil',
     'vismis'        => 'Visi Misi',
     'sasaran'       => 'Sasaran',

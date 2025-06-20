@@ -40,9 +40,13 @@ class ValidateController extends Controller
 
     public function list(Request $request)
     {
-        $details = DetailKriteriaModel::with('kriteria:id_kriteria,nama_kriteria')
-            ->select('id_detail_kriteria', 'id_kriteria', 'status')
-            ->where('status', '!=', 'save');
+        $details = DetailKriteriaModel::with([
+            'kriteria:id_kriteria,nama_kriteria',
+            'pengisian:id_pengisian,nama_pengisian'
+        ])
+            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status')
+            ->where('status', '!=', 'save')
+            ->orderByDesc('id_detail_kriteria');
 
         // Jika ada filter id_kriteria dari request
         if ($request->id_kriteria) {

@@ -8,6 +8,7 @@ return [
     'judulhead'     => 'ACCREDITATION',
     'judullanding'  => 'Accreditation System',
     'prodi'         => 'Business Information System',
+    'poltek'        => 'State Polytechnic of Malang',
     'profil'        => 'Profile',
     'vismis'        => 'Vision Mission',
     'sasaran'       => 'Target',

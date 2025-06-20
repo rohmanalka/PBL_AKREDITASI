@@ -14,7 +14,7 @@ return [
     'kriteria' => 'Criteria',
     'pengisian' => 'Submission',
     'validasi' => 'Validation',
-    'pilih_batch' => 'Select Batch',
+    'pilih_batch' => 'Select Criteria',
     'nama_bagian' => 'Section Name',
 
     // Status

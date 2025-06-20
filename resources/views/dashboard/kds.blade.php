@@ -83,7 +83,7 @@
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ url('/' . strtolower($roleKode)) }}" class="btn btn-sm btn-primary">Lihat</a>
+                                        <a href="{{ url('/preview') }}" class="btn btn-sm btn-primary">Lihat</a>
                                     </td>
                                 </tr>
                             @endforeach

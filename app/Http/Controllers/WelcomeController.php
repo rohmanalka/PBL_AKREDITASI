@@ -45,14 +45,15 @@ class WelcomeController extends Controller
             /** @var \App\Models\UserModel $user */
             $user = Auth::guard('web')->user();
 
-            $roleKode = $user->role->role_kode ?? null; // Menghindari null error
+            $roleKode = $user->role->role_name ?? null;
+            $username = $user->name ?? null;
 
             if (!$roleKode) {
                 abort(403, 'User tidak memiliki role.');
             }
 
             $breadcrumb = (object) [
-                'title' => 'Dashboard ' . ucfirst($roleKode),
+                'title' => 'Dashboard ' . ucfirst($username),
                 'list' => ['Home', ucfirst($roleKode)]
             ];
             $activeMenu = 'dashboard';

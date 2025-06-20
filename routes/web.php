@@ -271,6 +271,7 @@ Route::middleware(['authorize:DIRKJM'])->group(function () {
         Route::get('/', [DirekturController::class, 'index']);
         Route::post('/list', [DirekturController::class, 'list']);
         Route::get('/{id_pengisian}/show', [DirekturController::class, 'show']);
+        Route::get('/{id_pengisian}/preview', [DirekturController::class, 'preview']);
         // Route::get('/preview/{id}', [DirekturController::class, 'preview'])->name('preview.ppepp');
         Route::get('/export-pdf/{id_pengisian}', [DirekturController::class, 'exportMergedPdf']);
         Route::put('/{id}/update', [DirekturController::class, 'update']);

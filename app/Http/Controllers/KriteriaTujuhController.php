@@ -23,9 +23,12 @@ class KriteriaTujuhController extends Controller
 {
     public function index()
     {
+        $user = Auth::guard('web')->user();
+        $username = $user->name ?? null;
+
         $breadcrumb = (object) [
-            'title' => __('kriteria.kriteria.7.title'),
-            'list' => __('kriteria.kriteria.7.list'),
+            'title' => __('kriteria.kriteria.7.title',  ['username' => $username]),
+            'list' => __('kriteria.kriteria.7.list')
         ];
 
         $page = (object) [
@@ -47,7 +50,8 @@ class KriteriaTujuhController extends Controller
             'kriteria:id_kriteria,nama_kriteria',
             'pengisian:id_pengisian,nama_pengisian'
         ])
-            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status');
+            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status')
+            ->orderByDesc('id_detail_kriteria');
 
         $details->where('id_kriteria', 7);
 
@@ -65,9 +69,12 @@ class KriteriaTujuhController extends Controller
     {
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
+        $user = Auth::guard('web')->user();
+        $username = $user->name ?? null;
+
         $breadcrumb = (object) [
-            'title' => __('kriteria.kriteria.7.titleinpt'),
-            'list' => __('kriteria.kriteria.7.listinpt'),
+            'title' => __('kriteria.kriteria.7.titleinpt',  ['username' => $username]),
+            'list' => __('kriteria.kriteria.7.listinpt')
         ];
 
         $page = (object) [
@@ -234,9 +241,12 @@ class KriteriaTujuhController extends Controller
 
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
+        $user = Auth::guard('web')->user();
+        $username = $user->name ?? null;
+
         $breadcrumb = (object) [
-            'title' =>  __('kriteria.kriteria.7.titleedit'),
-            'list' =>  __('kriteria.kriteria.7.listedit'),
+            'title' => __('kriteria.kriteria.7.titleedit',  ['username' => $username]),
+            'list' => __('kriteria.kriteria.7.listedit')
         ];
 
         $page = (object) [

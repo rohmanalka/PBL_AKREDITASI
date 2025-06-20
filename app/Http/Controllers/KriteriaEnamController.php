@@ -23,9 +23,12 @@ class KriteriaEnamController extends Controller
 {
     public function index()
     {
+        $user = Auth::guard('web')->user();
+        $username = $user->name ?? null;
+
         $breadcrumb = (object) [
-            'title' => __('kriteria.kriteria.6.title'),
-            'list' => __('kriteria.kriteria.6.list'),
+            'title' => __('kriteria.kriteria.6.title',  ['username' => $username]),
+            'list' => __('kriteria.kriteria.6.list')
         ];
 
         $page = (object) [
@@ -47,7 +50,8 @@ class KriteriaEnamController extends Controller
             'kriteria:id_kriteria,nama_kriteria',
             'pengisian:id_pengisian,nama_pengisian'
         ])
-            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status');
+            ->select('id_detail_kriteria', 'id_kriteria', 'id_pengisian', 'status')
+            ->orderByDesc('id_detail_kriteria');
 
         $details->where('id_kriteria', 6);
 
@@ -65,9 +69,12 @@ class KriteriaEnamController extends Controller
     {
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
+        $user = Auth::guard('web')->user();
+        $username = $user->name ?? null;
+
         $breadcrumb = (object) [
-            'title' => __('kriteria.kriteria.6.titleinpt'),
-            'list' => __('kriteria.kriteria.6.listinpt'),
+            'title' => __('kriteria.kriteria.6.titleinpt',  ['username' => $username]),
+            'list' => __('kriteria.kriteria.6.listinpt')
         ];
 
         $page = (object) [
@@ -234,9 +241,12 @@ class KriteriaEnamController extends Controller
 
         $kriteria = KriteriaModel::select('id_kriteria', 'nama_kriteria')->get();
 
+        $user = Auth::guard('web')->user();
+        $username = $user->name ?? null;
+
         $breadcrumb = (object) [
-            'title' =>  __('kriteria.kriteria.6.titleedit'),
-            'list' =>  __('kriteria.kriteria.6.listedit'),
+            'title' => __('kriteria.kriteria.6.titleedit',  ['username' => $username]),
+            'list' => __('kriteria.kriteria.6.listedit')
         ];
 
         $page = (object) [

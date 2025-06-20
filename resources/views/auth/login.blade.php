@@ -19,6 +19,13 @@
                     <input type="password" name="password" id="password" class="form-control text-white"
                         placeholder=" " required>
                     <label for="password" class="floating-label">{{ __('landingpg.pass') }}</label>
+
+                    <!-- Toggle Eye Icon -->
+                    <span class="toggle-password" onclick="togglePassword()"
+                        style="position:absolute; top:50%; right:15px; transform:translateY(-50%); cursor:pointer; color:white;">
+                        <i id="eye-icon" class="fa-solid fa-eye"></i>
+                    </span>
+
                     <small id="error-password" class="error-text form-text text-danger"></small>
                 </div>
 
@@ -197,4 +204,19 @@
             }
         });
     });
+
+    function togglePassword() {
+        const passwordField = document.getElementById('password');
+        const eyeIcon = document.getElementById('eye-icon');
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    }
 </script>

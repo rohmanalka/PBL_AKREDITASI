@@ -21,6 +21,7 @@
     <!-- SweetAlert untuk notifikasi -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -40,7 +41,6 @@
     <link href="{{ asset('gplanding/assets/css/main.css') }}" rel="stylesheet">
 
     <script src="https://kit.fontawesome.com/349ee9c857.js" crossorigin="anonymous"></script>
-
     <!-- =======================================================
   * Template Name: Gp
   * Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
@@ -55,8 +55,8 @@
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">{{ __('landingpg.judulhead') }}</h1>
+                <img src="{{ asset('gplanding/assets/img/logopoltek2.png') }}" style="width: 150px;">
+                {{-- <h1 class="sitename">{{ __('landingpg.judulhead') }}</h1> --}}
                 <span></span>
             </a>
             <nav id="navmenu" class="navmenu">
@@ -93,6 +93,7 @@
                 <div class="row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
                     <div class="col-xl-6 col-lg-8">
                         <h2>{{ __('landingpg.judullanding') }}</h2>
+                        <h3>{{ __('landingpg.poltek') }}</h3>
                         <p>{{ __('landingpg.prodi') }}</p>
                     </div>
                 </div>
@@ -201,8 +202,10 @@
                                 <img src="{{ asset('gplanding/assets/img/team/alka.jpg') }}" class="img-fluid"
                                     alt="">
                                 <div class="social">
-                                    <a href="https://www.instagram.com/rohmanalka_/profilecard/?igsh=cDNzMzMxbDV0MTdi"><i class="bi bi-instagram"></i></a>
-                                    <a href="https://www.linkedin.com/in/muhammad-rohman-al-kautsar-b5b52322a"><i class="bi bi-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/rohmanalka_/profilecard/?igsh=cDNzMzMxbDV0MTdi"><i
+                                            class="bi bi-instagram"></i></a>
+                                    <a href="https://www.linkedin.com/in/muhammad-rohman-al-kautsar-b5b52322a"><i
+                                            class="bi bi-linkedin"></i></a>
                                 </div>
                             </div>
                             <div class="member-info">

@@ -160,13 +160,8 @@
                             } else {
                                 localStorage.removeItem('remembered_username');
                             }
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: response.message,
-                            }).then(function() {
-                                window.location = response.redirect;
-                            });
+                            window.location = response.redirect;
+
                         } else {
                             $('.error-text').text('');
                             if (response.errors) {

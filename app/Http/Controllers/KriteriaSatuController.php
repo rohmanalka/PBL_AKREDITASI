@@ -55,7 +55,6 @@ class KriteriaSatuController extends Controller
 
         $details->where('id_kriteria', 1);
 
-        //Filter data berdasarkan id_detail_kriteria
         if ($request->id_detail_kriteria) {
             $details->where('id_detail_kriteria', $request->id_detail_kriteria);
         }
@@ -107,6 +106,19 @@ class KriteriaSatuController extends Controller
             'status'              => 'required|in:save,submitted',
         ]);
 
+        $isAllEmpty = empty(trim($request->penetapan))
+            && empty(trim($request->pelaksanaan))
+            && empty(trim($request->evaluasi))
+            && empty(trim($request->pengendalian))
+            && empty(trim($request->peningkatan));
+
+        if ($isAllEmpty) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Minimal satu bagian PPEPP harus diisi.',
+            ]);
+        }
+
         $user = Auth::user();
 
         if (!$user->role->id_kriteria) {
@@ -147,7 +159,6 @@ class KriteriaSatuController extends Controller
         $batch = $availableBatch;
         $idPengisian = $request->status === 'save' ? null : $batch->id_pengisian;
 
-        // Upload helper
         $uploadFile = fn($file, $folder) =>
         $file ? $file->store("storage/pendukung/{$folder}", 'public') : null;
 
@@ -157,7 +168,6 @@ class KriteriaSatuController extends Controller
         $path_pengendalian = $uploadFile($request->file('pengendalian_file'), 'pengendalian');
         $path_peningkatan  = $uploadFile($request->file('peningkatan_file'), 'peningkatan');
 
-        // Simpan data ke masing-masing model
         $penetapan = PenetapanModel::create([
             'id_kriteria' => $request->id_kriteria,
             'deskripsi'   => $request->penetapan,
@@ -200,9 +210,13 @@ class KriteriaSatuController extends Controller
             'id_peningkatan'  => $peningkatan->id_peningkatan,
         ]);
 
+        $message = $request->status === 'save'
+            ? __('kriteria.simpanberhasil') . ' draft disimpan'
+            : __('kriteria.simpanberhasil') . ' berhasil disubmit';
+
         return response()->json([
             'status'  => true,
-            'message' => __('kriteria.simpanberhasil'),
+            'message' => $message,
         ]);
     }
 
@@ -353,8 +367,7 @@ class KriteriaSatuController extends Controller
             $peningkatan->save();
         }
 
-        // Update status di DetailKriteria
-        $detail->status = $request->status; // 'save' atau 'submitted'
+        $detail->status = $request->status;
         $detail->save();
 
         return response()->json([

@@ -144,8 +144,9 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ url('/' . strtolower(str_replace('KRIT', 'kriteria', $roleKode))) }}"
+                                                <a href="{{ url('/' . strtolower(str_replace(' ', '', str_replace('KRIT', 'kriteria', $roleKode)))) }}"
                                                     class="btn btn-sm btn-primary mt-3">Lihat</a>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
